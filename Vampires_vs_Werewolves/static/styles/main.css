@@ -1,0 +1,22 @@
+body {
+    background: url("../pictures/maxresdefault.jpg") no-repeat;
+    background-size: cover;
+}
+
+.home-buttons {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-20%, -50%);
+    text-align: center;
+}
+
+.home-buttons a {
+    text-decoration: none;
+    color: white;
+    font-size: 34px;
+}
+
+.home-buttons p{
+    margin-bottom: 14px;
+}

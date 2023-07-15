@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vampires vs Werewolves</title>
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+    {% block content %}
+    <div class="home-buttons">
+        <p><a href="{% url 'register user' %}">Register</a></p>
+        <p><a href="">Login</a></p>
+    </div>
+    {% endblock %}
+</body>
+</html>

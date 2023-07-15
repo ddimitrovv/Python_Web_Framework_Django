@@ -1,0 +1,19 @@
+{% extends 'common/index.html' %}
+{% load static %}
+
+{% block content %}
+
+        <section id="registerPage">
+        <form method="POST">
+            <fieldset>
+                <legend>Profile</legend>
+                <!-- Form for Registration -->
+                {{ form }}
+                {% csrf_token %}
+                <!-- Button to Create Profile -->
+                <button type="submit" class="register">Register</button>
+            </fieldset>
+        </form>
+    </section>
+
+{% endblock %}
