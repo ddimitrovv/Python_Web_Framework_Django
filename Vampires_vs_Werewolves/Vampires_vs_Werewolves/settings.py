@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'Vampires_vs_Werewolves.profiles',
+    'Vampires_vs_Werewolves.common',
 ]
 
 MIDDLEWARE = [
