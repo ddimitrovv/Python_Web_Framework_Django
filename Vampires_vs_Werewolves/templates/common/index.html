@@ -6,21 +6,41 @@
     <title>Vampires vs Werewolves</title>
     <link rel="stylesheet" href="{% static 'styles/styles.css' %}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    {% block content %}
 
-     {% if not user.is_authenticated %}
-        <div class="home-buttons">
-            <p><a href="{% url 'register user' %}">Register</a></p>
-            <p><a href="{% url 'login user' %}">Login</a></p>
-        </div>
-    {% else %}
-         <div class="user-options">
-             <h1 class="hello-user">Hello, {{ user }}</h1>
-             <p><a class="logout-button" href="{% url 'logout user' %}">Logout</a></p>
-         </div>
-    {% endif %}
+    <header>
+        <nav>
+             {% if not user.is_authenticated %}
+                <div class="home-buttons">
+                    <p><a href="{% url 'register user' %}">Register</a></p>
+                    <p><a href="{% url 'login user' %}">Login</a></p>
+                </div>
+             {% else %}
+                 <div class="user-options">
+                     <h1 class="hello-user">
+                         <a href="{% url 'details user' %}">
+                             Hello,
+                            {% if profile.name %}
+                                {{ profile.name }}
+                            {% else %}
+                                {{ user }}
+                            {% endif %}
+                         </a>
+                     </h1>
+                     <p>
+                         <a class="logout-button" href="{% url 'logout user' %}">
+                             Logout
+                             <i class="fa-solid fa-right-from-bracket"></i>
+                         </a>
+                     </p>
+                 </div>
+            {% endif %}
+        </nav>
+    </header>
+
+    {% block content %}
     {% endblock %}
 </body>
 </html>

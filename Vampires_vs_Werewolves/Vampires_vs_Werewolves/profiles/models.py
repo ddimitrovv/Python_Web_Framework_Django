@@ -65,6 +65,10 @@ class CustomUser(PermissionsMixin, AbstractBaseUser):
 
 
 class UserProfile(models.Model):
+    class Gender(models.TextChoices):
+        Female = 'Female',
+        Male = 'Male'
+
     name = models.CharField(
         max_length=40,
         unique=True
@@ -73,6 +77,9 @@ class UserProfile(models.Model):
     mp = models.IntegerField(default=100)
     level = models.IntegerField(default=1)
     gold = models.IntegerField(default=100)
+    gender = models.CharField(
+        choices=Gender.choices,
+    )
     user = models.OneToOneField(
         CustomUser,
         on_delete=models.CASCADE,

@@ -1,0 +1,23 @@
+{% extends 'common/index.html' %}
+{% load static %}
+{% block content %}
+
+        <section>
+            <div>
+                {% if profile.gender == 'Female' %}
+                    <img class="profile-picture" src="{% static 'pictures/vampire-7749188_1280.webp' %}">
+                {% else %}
+                    <img class="profile-picture" src="{% static 'pictures/interesting-fact-about-vampires.jpg' %}">
+                {% endif %}
+            </div>
+            <div class="profile-details">
+                <ul role="list">
+                    <li>HP: {{ profile.hp }}</li>
+                    <li>MP: {{ profile.mp }}</li>
+                    <li>Level: {{ profile.level }}</li>
+                    <li>Gold: {{ profile.gold }}</li>
+                </ul>
+            </div>
+        </section>
+
+{% endblock %}

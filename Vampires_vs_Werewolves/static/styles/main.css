@@ -26,6 +26,11 @@ body {
     color: red;
 }
 
+.hello-user a {
+    text-decoration: none;
+    color: red;
+}
+
 .logout-button {
     color: red;
     text-decoration: none;
@@ -40,4 +45,29 @@ body {
 
 .user-options p {
     margin-right: 2%;
+}
+
+.fa-right-from-bracket {
+    color: red;
+}
+
+.profile-picture {
+    width: 200px;
+    height: 280px;
+    position: absolute;
+    object-fit: cover;
+    border: 4px solid black;
+    left: 2%;
+}
+
+.profile-details {
+    position: absolute;
+    left: 20%;
+    color: red;
+    font-size: 30px;
+}
+
+.profile-details ul {
+    display: flex;
+    flex-direction: column;
 }

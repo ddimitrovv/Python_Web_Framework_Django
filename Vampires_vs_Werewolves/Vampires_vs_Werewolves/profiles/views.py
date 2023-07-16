@@ -1,33 +1,20 @@
-from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import render
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, TemplateView
-
-from Vampires_vs_Werewolves.profiles.forms import UserRegisterForm
-from Vampires_vs_Werewolves.profiles.models import CustomUser
+from django.views.generic import DetailView
+from Vampires_vs_Werewolves.profiles.models import CustomUser, UserProfile
 
 
-class RegisterUserView(CreateView):
+class DetailsUserView(LoginRequiredMixin, DetailView):
     model = CustomUser
-    form_class = UserRegisterForm
-    template_name = 'common/register.html'
-    success_url = reverse_lazy('home')
+    template_name = 'profiles/details-profile.html'
+    context_object_name = 'user'
+    login_url = '/profile/login/'
 
-    def form_valid(self, form):
-        result = super().form_valid(form)
-        login(self.request, self.object)
-        return result
+    def get_object(self, queryset=None):
+        return self.request.user or None
 
-
-class LoginUserView(LoginView):
-    template_name = 'common/login.html'
-    redirect_authenticated_user = True
-
-    def get_success_url(self):
-        return reverse_lazy('home')
-
-
-class LogoutUserView(LogoutView, LoginRequiredMixin):
-    next_page = '/'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.request.user.pk
+        current_user = UserProfile.objects.filter(user_id=pk).get()
+        context['profile'] = current_user
+        return context
