@@ -73,3 +73,7 @@ class UserProfile(models.Model):
     mp = models.IntegerField(default=100)
     level = models.IntegerField(default=1)
     gold = models.IntegerField(default=100)
+    user = models.OneToOneField(
+        CustomUser,
+        on_delete=models.CASCADE,
+    )
