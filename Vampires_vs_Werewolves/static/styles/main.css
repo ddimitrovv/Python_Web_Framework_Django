@@ -20,3 +20,24 @@ body {
 .home-buttons p{
     margin-bottom: 14px;
 }
+
+.hello-user {
+    margin-left: 2%;
+    color: red;
+}
+
+.logout-button {
+    color: red;
+    text-decoration: none;
+    font-size: 22px;
+}
+
+.user-options {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.user-options p {
+    margin-right: 2%;
+}

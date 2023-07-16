@@ -9,10 +9,18 @@
 </head>
 <body>
     {% block content %}
-    <div class="home-buttons">
-        <p><a href="{% url 'register user' %}">Register</a></p>
-        <p><a href="">Login</a></p>
-    </div>
+
+     {% if not user.is_authenticated %}
+        <div class="home-buttons">
+            <p><a href="{% url 'register user' %}">Register</a></p>
+            <p><a href="{% url 'login user' %}">Login</a></p>
+        </div>
+    {% else %}
+         <div class="user-options">
+             <h1 class="hello-user">Hello, {{ user }}</h1>
+             <p><a class="logout-button" href="{% url 'logout user' %}">Logout</a></p>
+         </div>
+    {% endif %}
     {% endblock %}
 </body>
 </html>
