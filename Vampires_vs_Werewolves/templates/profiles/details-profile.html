@@ -4,10 +4,18 @@
 
         <section>
             <div>
-                {% if profile.gender == 'Female' %}
-                    <img class="profile-picture" src="{% static 'pictures/vampire-7749188_1280.webp' %}">
+                {% if user.hero_type == 'Vampire' %}
+                    {% if profile.gender == 'Female' %}
+                        <img class="profile-picture" src="{% static 'pictures/vampire-7749188_1280.webp' %}">
+                    {% else %}
+                        <img class="profile-picture" src="{% static 'pictures/interesting-fact-about-vampires.jpg' %}">
+                    {% endif %}
                 {% else %}
-                    <img class="profile-picture" src="{% static 'pictures/interesting-fact-about-vampires.jpg' %}">
+                    {% if profile.gender == 'Female' %}
+                        <img class="profile-picture" src="{% static 'pictures/d73fdd1b-01ec-4824-8c77-4ed1bb904c7c.webp' %}">
+                    {% else %}
+                        <img class="profile-picture" src="{% static 'pictures/Warewolf.webp' %}">
+                    {% endif %}
                 {% endif %}
             </div>
             <div class="profile-details">

@@ -21,12 +21,7 @@
                  <div class="user-options">
                      <h1 class="hello-user">
                          <a href="{% url 'details user' %}">
-                             Hello,
-                            {% if profile.name %}
-                                {{ profile.name }}
-                            {% else %}
-                                {{ user }}
-                            {% endif %}
+                             {{ user }}
                          </a>
                      </h1>
                      <p>
