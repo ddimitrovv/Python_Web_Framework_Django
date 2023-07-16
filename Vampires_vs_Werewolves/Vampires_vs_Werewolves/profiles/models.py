@@ -62,3 +62,14 @@ class CustomUser(PermissionsMixin, AbstractBaseUser):
 
     def __str__(self):
         return self.username
+
+
+class UserProfile(models.Model):
+    name = models.CharField(
+        max_length=40,
+        unique=True
+    )
+    hp = models.IntegerField(default=100)
+    mp = models.IntegerField(default=100)
+    level = models.IntegerField(default=1)
+    gold = models.IntegerField(default=100)
