@@ -80,3 +80,7 @@ class UserProfile(models.Model):
         CustomUser,
         on_delete=models.CASCADE,
     )
+    power = models.PositiveIntegerField(default=10)
+    defence = models.PositiveIntegerField(default=10)
+    speed = models.PositiveIntegerField(default=10)
+
