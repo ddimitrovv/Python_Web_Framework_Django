@@ -114,6 +114,17 @@ body::before {
     color: red;
 }
 
+.choose-opponent {
+    position: absolute;
+    right: 20%;
+}
+
+.choose-opponent a {
+    color: red;
+    text-decoration: none;
+    font-size: 30px;
+}
+
 
 /*colors :
 light-skin: #f3efec

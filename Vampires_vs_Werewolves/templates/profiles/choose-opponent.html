@@ -1,0 +1,11 @@
+{% extends 'common/index.html' %}
+{% block content %}
+
+{{ user_profile.user }}
+    <ul>
+        {% for opponent in opponents %}
+            <li>{{ opponent.user }} {{ opponent.power }} {{ opponent.defence }} {{ opponent.speed }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

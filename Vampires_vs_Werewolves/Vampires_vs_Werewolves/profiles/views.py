@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, UpdateView, TemplateView
 from Vampires_vs_Werewolves.profiles.models import CustomUser, UserProfile
 
 
@@ -65,3 +65,44 @@ class UpgradeHeroSpeed(UpdateView, LoginRequiredMixin):
             profile.speed += 1
             profile.save()
         return redirect('details user')
+
+
+class FightView(TemplateView):
+    template_name = 'profiles/choose-opponent.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # username = self.request.user
+        # user = CustomUser.objects.get(username=username)  # Get the user based on the username
+        # user_profile = user.userprofile
+        #
+        # # Get users by hero type
+        # hero_type_ = 'Vampire' if user.hero_type == 'Werewolf' else 'Vampire'
+        # users = CustomUser.objects.filter(hero_type=hero_type_)
+        #
+        # # Filter profiles by level within the specified range
+        # opponents = UserProfile.objects.filter(user__in=users,
+        #                                        level__range=(user_profile.level - 5,
+        #                                                      user_profile.level + 5)).order_by('?')[:10]
+        #
+        # context['user_profile'] = user_profile
+        # context['opponents'] = opponents
+        #
+        # return context
+        context = super().get_context_data(**kwargs)
+
+        user = self.request.user  # Get the currently authenticated user
+        user_profile = user.userprofile
+
+        # Get users by hero type
+        hero_type_ = 'Vampire' if user.hero_type == 'Werewolf' else 'Werewolf'
+        users = CustomUser.objects.filter(hero_type=hero_type_)
+
+        # Filter profiles by level within the specified range
+        opponents = UserProfile.objects.filter(user__in=users, level__range=(user_profile.level - 5, user_profile.level + 5)).order_by('?')[:10]
+
+        context['user_profile'] = user_profile
+        context['opponents'] = opponents
+
+        return context
