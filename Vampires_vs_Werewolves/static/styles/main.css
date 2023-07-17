@@ -3,6 +3,7 @@ body {
     background-size: cover;
     position: relative;
     text-shadow: 1px 1px 2px #390000;
+    height: 100vh;
 }
 
 body::before {
@@ -117,6 +118,9 @@ body::before {
 .choose-opponent {
     position: absolute;
     right: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .choose-opponent a {
@@ -139,6 +143,23 @@ body::before {
 .opponents a {
     text-decoration: none;
     color: #f3efec;
+}
+
+.choose-opponent img {
+    height: 32px;
+    width: 32px;
+}
+
+.change-genre {
+    position: absolute;
+    top: 50%;
+    left: 4%;
+}
+
+.change-genre a {
+    text-decoration: none;
+    color: red;
+    font-size: 32px;
 }
 
 /*colors :

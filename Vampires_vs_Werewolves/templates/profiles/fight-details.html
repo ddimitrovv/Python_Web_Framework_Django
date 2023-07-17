@@ -2,15 +2,15 @@
 {% block content %}
 
     <table class="opponents">
-        {% for opponent in opponents %}
-            <tr>
-            <td>{{ opponent.user }}</td>
+        <tr>
+            <td>Opponent: {{ opponent.user }}</td>
             <td>Power: {{ opponent.power }}</td>
             <td>Defence: {{ opponent.defence }}</td>
             <td>Speed: {{ opponent.speed }}</td>
-            <td><a href="{% url 'fight' opponent.pk %}">Attack</a></td>
         </tr>
-        {% endfor %}
+        <tr>
+            <td>Winner: {{ winner.user }}</td>
+        </tr>
     </table>
 
 {% endblock %}
