@@ -2,6 +2,7 @@ body {
     background: url("../pictures/maxresdefault.jpg") no-repeat;
     background-size: cover;
     position: relative;
+    text-shadow: 1px 1px 2px #390000;
 }
 
 body::before {
@@ -11,8 +12,8 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.2); /* Adjust the transparency with the last value */
-    backdrop-filter: blur(5px); /* Adjust the blur radius as desired */
+    background-color: rgba(255, 255, 255, 0.1); /* Adjust the transparency with the last value */
+    backdrop-filter: blur(1px); /* Adjust the blur radius as desired */
     z-index: -1;
 }
 
@@ -112,3 +113,9 @@ body::before {
 .profile-upgrade .fa-solid.fa-square-plus {
     color: red;
 }
+
+
+/*colors :
+light-skin: #f3efec
+lipstick: #390000
+*/

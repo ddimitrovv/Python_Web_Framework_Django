@@ -3,6 +3,22 @@ from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.db import models
 
 
+def get_level_from_hp(hp):
+    level_hp_mapping = {
+        # HP between 0 and 100 is level 1
+        (101, 200): 2,
+        (201, 300): 3,
+        (301, 400): 4,
+        (401, 500): 5,
+        (501, 600): 6,
+    }
+    for hp_range, level in level_hp_mapping.items():
+        if hp_range[0] <= hp <= hp_range[1]:
+            return level
+    # Handle the case where the HP does not fall within any defined range
+    return 0  # Or any default level you want to assign
+
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, username, password=None, is_staff=False, is_superuser=False):
         if not username:
@@ -118,9 +134,13 @@ class UserProfile(models.Model):
         # Determine the winner based on the total damage inflicted
         if self_total_damage > opponent_total_damage:
             self.gold += int(0.3 * opponent.gold)  # Winner receives 30% of the loser's gold
+            self.hp += self.level * 5  # Increase winner's HP
+            self.level = get_level_from_hp(self.hp)  # Set winner level
             opponent.gold -= int(0.3 * opponent.gold)
         elif opponent_total_damage > self_total_damage:
             opponent.gold += int(0.3 * self.gold)  # Winner receives 30% of the loser's gold
+            opponent.hp += opponent.level  # Increase opponent HP
+            opponent.level = get_level_from_hp(opponent.hp)  # Set opponent level
 
         # Save the updated hero and opponent
         self.save()

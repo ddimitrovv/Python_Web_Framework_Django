@@ -32,7 +32,7 @@
                         <td>Power:</td>
                         <td>{{ profile.power }}</td>
                         <td>
-                            <a href="" class="upgrade-link" data-attribute="power" data-cost="10">
+                            <a href="{% url 'upgrade power' %}" class="upgrade-link" data-attribute="power" data-cost="10">
                                 <i class="fa-solid fa-square-plus"></i>
                             </a>
                         </td>
@@ -41,7 +41,7 @@
                         <td>Defence:</td>
                         <td>{{ profile.defence }}</td>
                         <td>
-                            <a href="" class="upgrade-link" data-attribute="defense" data-cost="10">
+                            <a href="{% url 'upgrade defence' %}" class="upgrade-link" data-attribute="defense" data-cost="10">
                                 <i class="fa-solid fa-square-plus"></i>
                             </a>
                         </td>
@@ -50,7 +50,7 @@
                         <td>Speed:</td>
                         <td>{{ profile.speed }}</td>
                         <td>
-                            <a href="" class="upgrade-link" data-attribute="speed" data-cost="10">
+                            <a href="{% url 'upgrade speed' %}" class="upgrade-link" data-attribute="speed" data-cost="10">
                                 <i class="fa-solid fa-square-plus"></i>
                             </a>
                         </td>

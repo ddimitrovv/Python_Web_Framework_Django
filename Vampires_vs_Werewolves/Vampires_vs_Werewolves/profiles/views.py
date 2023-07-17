@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView
+from django.shortcuts import redirect
+from django.views.generic import DetailView, UpdateView
 from Vampires_vs_Werewolves.profiles.models import CustomUser, UserProfile
 
 
@@ -19,3 +20,48 @@ class DetailsUserView(LoginRequiredMixin, DetailView):
         current_user = UserProfile.objects.filter(user_id=pk).get()
         context['profile'] = current_user
         return context
+
+
+class UpgradeHeroPower(UpdateView, LoginRequiredMixin):
+    def get_object(self, queryset=None):
+        return self.request.user or None
+
+    def get(self, request, *args, **kwargs):
+        username = self.get_object()
+        user = CustomUser.objects.filter(username=username).get()
+        profile = UserProfile.objects.filter(user_id=user.pk).get()
+        if profile.gold >= (profile.power + 1) * 1.5:
+            profile.gold -= (profile.power + 1) * 1.5
+            profile.power += 1
+            profile.save()
+        return redirect('details user')
+
+
+class UpgradeHeroDefence(UpdateView, LoginRequiredMixin):
+    def get_object(self, queryset=None):
+        return self.request.user or None
+
+    def get(self, request, *args, **kwargs):
+        username = self.get_object()
+        user = CustomUser.objects.filter(username=username).get()
+        profile = UserProfile.objects.filter(user_id=user.pk).get()
+        if profile.gold >= (profile.defence + 1) * 1.5:
+            profile.gold -= (profile.defence + 1) * 1.5
+            profile.defence += 1
+            profile.save()
+        return redirect('details user')
+
+
+class UpgradeHeroSpeed(UpdateView, LoginRequiredMixin):
+    def get_object(self, queryset=None):
+        return self.request.user or None
+
+    def get(self, request, *args, **kwargs):
+        username = self.get_object()
+        user = CustomUser.objects.filter(username=username).get()
+        profile = UserProfile.objects.filter(user_id=user.pk).get()
+        if profile.gold >= (profile.speed + 1) * 1.5:
+            profile.gold -= (profile.speed + 1) * 1.5
+            profile.speed += 1
+            profile.save()
+        return redirect('details user')
