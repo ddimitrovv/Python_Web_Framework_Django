@@ -81,6 +81,47 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE,
     )
     power = models.PositiveIntegerField(default=10)
-    defence = models.PositiveIntegerField(default=10)
+    defense = models.PositiveIntegerField(default=10)
     speed = models.PositiveIntegerField(default=10)
 
+    def fight(self, opponent):
+        self_hp = self.hp
+        opponent_hp = opponent.hp
+
+        self_total_damage = 0
+        opponent_total_damage = 0
+
+        # Fight for 3 rounds
+        for _ in range(3):
+            # Recalculate damage for each round based on power, defense, and speed
+            self_damage = max(0, self.power - (opponent.defense // 2) + (self.speed // 10))
+            opponent_damage = max(0, opponent.power - (self.defense // 2) + (opponent.speed // 10))
+
+            # Update total damage inflicted by each player
+            self_total_damage += self_damage
+            opponent_total_damage += opponent_damage
+
+            # Reduce opponent's HP
+            opponent_hp -= self_damage
+
+            # Check if opponent is defeated
+            if opponent_hp <= 0:
+                break
+
+            # Reduce self user's HP
+            self_hp -= opponent_damage
+
+            # Check if self user is defeated
+            if self_hp <= 0:
+                break
+
+        # Determine the winner based on the total damage inflicted
+        if self_total_damage > opponent_total_damage:
+            self.gold += int(0.3 * opponent.gold)  # Winner receives 30% of the loser's gold
+            opponent.gold -= int(0.3 * opponent.gold)
+        elif opponent_total_damage > self_total_damage:
+            opponent.gold += int(0.3 * self.gold)  # Winner receives 30% of the loser's gold
+
+        # Save the updated hero and opponent
+        self.save()
+        opponent.save()
