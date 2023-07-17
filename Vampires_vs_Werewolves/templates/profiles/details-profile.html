@@ -27,11 +27,35 @@
                 </ul>
             </div>
             <div class="profile-upgrade">
-                <ul role="list">
-                    <li>Power: {{ profile.power }}</li>
-                    <li>Defence: {{ profile.defence }}</li>
-                    <li>Speed: {{ profile.speed }}</li>
-                </ul>
+                <table>
+                    <tr>
+                        <td>Power:</td>
+                        <td>{{ profile.power }}</td>
+                        <td>
+                            <a href="" class="upgrade-link" data-attribute="power" data-cost="10">
+                                <i class="fa-solid fa-square-plus"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Defence:</td>
+                        <td>{{ profile.defence }}</td>
+                        <td>
+                            <a href="" class="upgrade-link" data-attribute="defense" data-cost="10">
+                                <i class="fa-solid fa-square-plus"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Speed:</td>
+                        <td>{{ profile.speed }}</td>
+                        <td>
+                            <a href="" class="upgrade-link" data-attribute="speed" data-cost="10">
+                                <i class="fa-solid fa-square-plus"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </section>
 

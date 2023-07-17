@@ -97,8 +97,18 @@ body::before {
     flex-direction: column;
 }
 
-.details-section {
-  position: relative;
-  background-color: rgba(255, 255, 255, 0.5); /* Adjust the transparency with the last value */
-  backdrop-filter: blur(10px); /* Adjust the blur radius as desired */
+.profile-upgrade table {
+    width: 100%;
+    border-collapse: collapse;
+    /*border: 1px solid #ccc;*/
+}
+
+.profile-upgrade th,
+.profile-upgrade td {
+    padding: 10px;
+    text-align: left;
+}
+
+.profile-upgrade .fa-solid.fa-square-plus {
+    color: red;
 }

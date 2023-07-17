@@ -81,7 +81,7 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE,
     )
     power = models.PositiveIntegerField(default=10)
-    defense = models.PositiveIntegerField(default=10)
+    defence = models.PositiveIntegerField(default=10)
     speed = models.PositiveIntegerField(default=10)
 
     def fight(self, opponent):
@@ -94,8 +94,8 @@ class UserProfile(models.Model):
         # Fight for 3 rounds
         for _ in range(3):
             # Recalculate damage for each round based on power, defense, and speed
-            self_damage = max(0, self.power - (opponent.defense // 2) + (self.speed // 10))
-            opponent_damage = max(0, opponent.power - (self.defense // 2) + (opponent.speed // 10))
+            self_damage = max(0, self.power - (opponent.defence // 2) + (self.speed // 10))
+            opponent_damage = max(0, opponent.power - (self.defence // 2) + (opponent.speed // 10))
 
             # Update total damage inflicted by each player
             self_total_damage += self_damage
