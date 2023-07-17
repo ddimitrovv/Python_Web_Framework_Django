@@ -1,11 +1,16 @@
 {% extends 'common/index.html' %}
 {% block content %}
 
-{{ user_profile.user }}
-    <ul>
+    <table class="opponents">
         {% for opponent in opponents %}
-            <li>{{ opponent.user }} {{ opponent.power }} {{ opponent.defence }} {{ opponent.speed }}</li>
+            <tr>
+            <td>{{ opponent.user }}</td>
+            <td>Power: {{ opponent.power }}</td>
+            <td>Defence: {{ opponent.defence }}</td>
+            <td>Speed: {{ opponent.speed }}</td>
+            <td><a href="">Attack</a></td>
+        </tr>
         {% endfor %}
-    </ul>
+    </table>
 
 {% endblock %}

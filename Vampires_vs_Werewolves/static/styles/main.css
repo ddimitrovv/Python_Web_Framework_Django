@@ -125,6 +125,21 @@ body::before {
     font-size: 30px;
 }
 
+.opponents {
+    position: absolute;
+    left: 25%;
+    color: red;
+    font-size: 32px;
+}
+
+.opponents td {
+    padding-right: 14px;
+}
+
+.opponents a {
+    text-decoration: none;
+    color: #f3efec;
+}
 
 /*colors :
 light-skin: #f3efec

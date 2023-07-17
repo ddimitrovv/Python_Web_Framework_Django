@@ -67,29 +67,11 @@ class UpgradeHeroSpeed(UpdateView, LoginRequiredMixin):
         return redirect('details user')
 
 
-class FightView(TemplateView):
+class ChooseOpponentView(TemplateView, LoginRequiredMixin):
     template_name = 'profiles/choose-opponent.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        # username = self.request.user
-        # user = CustomUser.objects.get(username=username)  # Get the user based on the username
-        # user_profile = user.userprofile
-        #
-        # # Get users by hero type
-        # hero_type_ = 'Vampire' if user.hero_type == 'Werewolf' else 'Vampire'
-        # users = CustomUser.objects.filter(hero_type=hero_type_)
-        #
-        # # Filter profiles by level within the specified range
-        # opponents = UserProfile.objects.filter(user__in=users,
-        #                                        level__range=(user_profile.level - 5,
-        #                                                      user_profile.level + 5)).order_by('?')[:10]
-        #
-        # context['user_profile'] = user_profile
-        # context['opponents'] = opponents
-        #
-        # return context
         context = super().get_context_data(**kwargs)
 
         user = self.request.user  # Get the currently authenticated user
