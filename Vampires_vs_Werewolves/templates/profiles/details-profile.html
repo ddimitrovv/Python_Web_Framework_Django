@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-        <section>
+        <section class="details-section">
             <div>
                 {% if user.hero_type == 'Vampire' %}
                     {% if profile.gender == 'Female' %}
@@ -24,6 +24,13 @@
                     <li>MP: {{ profile.mp }}</li>
                     <li>Level: {{ profile.level }}</li>
                     <li>Gold: {{ profile.gold }}</li>
+                </ul>
+            </div>
+            <div class="profile-upgrade">
+                <ul role="list">
+                    <li>Power: {{ profile.power }}</li>
+                    <li>Defence: {{ profile.defence }}</li>
+                    <li>Speed: {{ profile.speed }}</li>
                 </ul>
             </div>
         </section>
