@@ -1,11 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect, render
-from django.views import View
 from django.views.generic import DetailView, UpdateView, TemplateView
 
 from Vampires_vs_Werewolves.profiles.forms import UserProfileEditForm
 from Vampires_vs_Werewolves.profiles.models import CustomUser, UserProfile
-from custom.custom_functions import get_user_object, get_user_profile
+from custom.custom_functions import get_user_profile
 
 
 class DetailsUserView(LoginRequiredMixin, DetailView):
@@ -36,8 +35,8 @@ class UpgradeHeroPower(UpdateView, LoginRequiredMixin):
 
     def get(self, request, *args, **kwargs):
         profile = get_user_profile(request)
-        if profile.gold >= (profile.power + 1) * 1.5:
-            profile.gold -= (profile.power + 1) * 1.5
+        if profile.gold >= int((profile.power + 1) * 1.5):
+            profile.gold -= int((profile.power + 1) * 1.5)
             profile.power += 1
             profile.save()
         return redirect('details user')
@@ -47,8 +46,8 @@ class UpgradeHeroDefence(UpdateView, LoginRequiredMixin):
 
     def get(self, request, *args, **kwargs):
         profile = get_user_profile(request)
-        if profile.gold >= (profile.defence + 1) * 1.5:
-            profile.gold -= (profile.defence + 1) * 1.5
+        if profile.gold >= int((profile.defence + 1) * 1.5):
+            profile.gold -= int((profile.defence + 1) * 1.5)
             profile.defence += 1
             profile.save()
         return redirect('details user')
@@ -58,8 +57,8 @@ class UpgradeHeroSpeed(UpdateView, LoginRequiredMixin):
 
     def get(self, request, *args, **kwargs):
         profile = get_user_profile(request)
-        if profile.gold >= (profile.speed + 1) * 1.5:
-            profile.gold -= (profile.speed + 1) * 1.5
+        if profile.gold >= int((profile.speed + 1) * 1.5):
+            profile.gold -= int((profile.speed + 1) * 1.5)
             profile.speed += 1
             profile.save()
         return redirect('details user')
@@ -70,7 +69,6 @@ class ChooseOpponentView(TemplateView, LoginRequiredMixin):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context = super().get_context_data(**kwargs)
 
         user = self.request.user  # Get the currently authenticated user
         user_profile = user.userprofile
@@ -80,9 +78,13 @@ class ChooseOpponentView(TemplateView, LoginRequiredMixin):
         users = CustomUser.objects.filter(hero_type=hero_type_)
 
         # Filter profiles by level within the specified range
-        opponents = UserProfile.objects.filter(user__in=users,
-                                               level__range=(user_profile.level - 5, user_profile.level + 5)).order_by(
-            '?')[:10]
+        opponents = UserProfile.objects.filter(
+            user__in=users,
+            level__range=(
+               user_profile.level - 5,
+               user_profile.level + 5
+            )
+        ).order_by('?')[:10]
 
         context['user_profile'] = user_profile
         context['opponents'] = opponents
@@ -94,10 +96,10 @@ class UserProfileEditView(UpdateView):
     model = UserProfile
     form_class = UserProfileEditForm()
     template_name = 'profiles/details-profile.html'
-    success_url = '/profile/details/'  # URL to redirect after successful edit
+    success_url = '/profile/details/'
 
     def get_object(self, queryset=None):
-        return self.request.user.userprofile  # Get the user's profile to be edited
+        return self.request.user.userprofile
 
     def form_valid(self, form):
         response = super().form_valid(form)

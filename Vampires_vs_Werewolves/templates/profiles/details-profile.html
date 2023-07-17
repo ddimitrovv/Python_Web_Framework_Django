@@ -1,5 +1,6 @@
 {% extends 'common/index.html' %}
 {% load static %}
+{% load custom_filter %}
 {% block content %}
 
         <section class="details-section">
@@ -42,6 +43,9 @@
                                 <i class="fa-solid fa-square-plus"></i>
                             </a>
                         </td>
+                        <td>
+                            Cost: {{ profile.power|calculate_cost }}
+                        </td>
                     </tr>
                     <tr>
                         <td>Defence:</td>
@@ -51,6 +55,9 @@
                                 <i class="fa-solid fa-square-plus"></i>
                             </a>
                         </td>
+                        <td>
+                            Cost: {{ profile.defence|calculate_cost }}
+                        </td>
                     </tr>
                     <tr>
                         <td>Speed:</td>
@@ -59,6 +66,9 @@
                             <a href="{% url 'upgrade speed' %}" class="upgrade-link" data-attribute="speed" data-cost="10">
                                 <i class="fa-solid fa-square-plus"></i>
                             </a>
+                        </td>
+                        <td>
+                            Cost: {{ profile.speed|calculate_cost }}
                         </td>
                     </tr>
                 </table>
