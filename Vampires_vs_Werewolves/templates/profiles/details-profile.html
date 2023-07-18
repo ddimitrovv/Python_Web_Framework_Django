@@ -3,93 +3,94 @@
 {% load custom_filter %}
 {% block content %}
 
-        <section class="details-section">
-            <div>
-                <div>
-                    {% if user.hero_type == 'Vampire' %}
+    <section class="details-section">
+        <div class="hero-card">
+            <div class="profile-picture">
+                {% if user.hero_type == 'Vampire' %}
                     {% if profile.gender == 'Female' %}
                         <img class="profile-picture" src="{% static 'pictures/vampire-7749188_1280.webp' %}">
                     {% else %}
                         <img class="profile-picture" src="{% static 'pictures/interesting-fact-about-vampires.jpg' %}">
                     {% endif %}
-                    {% else %}
+                {% else %}
                     {% if profile.gender == 'Female' %}
                         <img class="profile-picture" src="{% static 'pictures/d73fdd1b-01ec-4824-8c77-4ed1bb904c7c.webp' %}">
                     {% else %}
                         <img class="profile-picture" src="{% static 'pictures/Warewolf.webp' %}">
                     {% endif %}
                 {% endif %}
-                </div>
-                {% if current_user == user %}
-                    <form method="post" class="change-genre">
-                        <button type="submit">Male/Female</button>
-                        {% csrf_token %}
-                    </form>
-                {% else %}
+                {% if current_user != user %}
                     <div class="username">{{ user }}</div>
                 {% endif %}
             </div>
-            <div class="profile-details">
-                <ul role="list">
-                    <li>XP: {{ profile.xp }}</li>
-                    <li>Level: {{ profile.level }}</li>
-                    {% if current_user == user %}
-                        <li>Health: {{ profile.health }}</li>
-                        <li>Gold: {{ profile.gold }}</li>
-                    {% endif %}
-                </ul>
-            </div>
-            <div class="profile-upgrade">
-                <table>
-                    <tr>
-                        <td>Power:</td>
-                        <td>{{ profile.power }}</td>
-                        {% if current_user == user %}
-                            <td>
-                                <a href="{% url 'upgrade power' %}" class="upgrade-link" data-attribute="power" data-cost="10">
-                                    <i class="fa-solid fa-square-plus"></i>
-                                </a>
-                            </td>
-                            <td>
-                                Cost: {{ profile.power|calculate_cost }}
-                            </td>
-                        {% endif %}
-                    </tr>
-                    <tr>
-                        <td>Defence:</td>
-                        <td>{{ profile.defence }}</td>
-                        {% if current_user == user %}
-                            <td>
-                                <a href="{% url 'upgrade defence' %}" class="upgrade-link" data-attribute="defense" data-cost="10">
-                                    <i class="fa-solid fa-square-plus"></i>
-                                </a>
-                            </td>
-                            <td>
-                                Cost: {{ profile.defence|calculate_cost }}
-                            </td>
-                        {% endif %}
-                    </tr>
-                    <tr>
-                        <td>Speed:</td>
-                        <td>{{ profile.speed }}</td>
-                        {% if current_user == user %}
-                            <td>
-                                <a href="{% url 'upgrade speed' %}" class="upgrade-link" data-attribute="speed" data-cost="10">
-                                    <i class="fa-solid fa-square-plus"></i>
-                                </a>
-                            </td>
-                            <td>
-                                Cost: {{ profile.speed|calculate_cost }}
-                            </td>
-                        {% endif %}
-                    </tr>
-                </table>
-            </div>
             {% if current_user == user %}
-                <div class="choose-opponent">
-                    <a href="{% url 'choose opponent' %}">Fight</a>
-                </div>
+                <form method="post" class="change-genre">
+                    <button type="submit">Male/Female</button>
+                    {% csrf_token %}
+                </form>
             {% endif %}
-        </section>
+        </div>
+        <div class="profile-details">
+            <ul role="list">
+                <li>XP: {{ profile.xp }}</li>
+                <li>Level: {{ profile.level }}</li>
+                {% if current_user == user %}
+                    <li>Health: {{ profile.health }}</li>
+                    <li>Gold: {{ profile.gold }}</li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="profile-upgrade">
+            <table>
+                <tr>
+                    <td>Power:</td>
+                    <td>{{ profile.power }}</td>
+                    {% if current_user == user %}
+                        <td>
+                            <a href="{% url 'upgrade power' %}" class="upgrade-link" data-attribute="power" data-cost="10">
+                                <i class="fa-solid fa-square-plus"></i>
+                            </a>
+                        </td>
+                        <td class="cost">
+                            Cost: {{ profile.power|calculate_cost }}
+                        </td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>Defence:</td>
+                    <td>{{ profile.defence }}</td>
+                    {% if current_user == user %}
+                        <td>
+                            <a href="{% url 'upgrade defence' %}" class="upgrade-link" data-attribute="defense" data-cost="10">
+                                <i class="fa-solid fa-square-plus"></i>
+                            </a>
+                        </td>
+                        <td class="cost">
+                            Cost: {{ profile.defence|calculate_cost }}
+                        </td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td>Speed:</td>
+                    <td>{{ profile.speed }}</td>
+                    {% if current_user == user %}
+                        <td>
+                            <a href="{% url 'upgrade speed' %}" class="upgrade-link" data-attribute="speed" data-cost="10">
+                                <i class="fa-solid fa-square-plus"></i>
+                            </a>
+                        </td>
+                        <td class="cost">
+                            Cost: {{ profile.speed|calculate_cost }}
+                        </td>
+                    {% endif %}
+                </tr>
+            </table>
+        </div>
+{#            {% if current_user == user %}#}
+{#                <div class="fight-button">#}
+{#                    <a href="{% url 'choose opponent' %}">Fight</a>#}
+{#                </div>#}
+{#            {% endif %}#}
+    </section>
 
 {% endblock %}

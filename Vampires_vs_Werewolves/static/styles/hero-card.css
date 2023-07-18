@@ -1,21 +1,15 @@
-.heroes-card-wrapper {
+.hero-card-wrapper {
     width: 100%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    margin-top: 4rem;
 }
 
-.heroes-card {
-    width: 300px;
-    height: 420px;
+.hero-card {
+    width: 280px;
+    height: 400px;
     border: 2px solid black;
-    background-color: #390000;
-    /*background-color: #000;*/
-    background-image: radial-gradient(rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.8)),
-                    linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
-    background-blend-mode: screen;
-    background-attachment: fixed;
+    background: black;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -29,9 +23,11 @@
     border-radius: 40px 0 30px 0;
 }
 
-.profile-picture-opponent {
+.profile-picture {
+    position: relative;
     width: 100%;
-    height: 50%;
+    height: 100%;
+    object-fit: cover;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -46,7 +42,7 @@
     border-radius: 0 0 40px 0;
 }
 
-.heroes-card ul {
+.hero-card ul {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -57,23 +53,19 @@
     margin-top: 20px;
 }
 
-.heroes-card ul li {
+.hero-card ul li {
     margin-bottom: 5px;
+        text-shadow: 2px 2px 4px #f3efec;
 }
 
-/*.heroes-card button {*/
-/*    border: none;*/
-/*    border-radius: 15px 0 15px 0;*/
-/*}*/
-
-.heroes-card button {
-    color: white;
-    background-color: black;
-    border-radius: 20px 0 20px 0;
-}
-
-.heroes-card a {
+.hero-card a {
     text-decoration: none;
     color: red;
     font-weight: bolder;
+        text-shadow: 2px 2px 4px #f3efec;
+}
+
+.hero-card button {
+    color: white;
+    background-color: black;
 }

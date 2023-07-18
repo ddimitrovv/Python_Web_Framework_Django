@@ -1,0 +1,18 @@
+.details-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 40px;
+}
+
+.username {
+    display: inline-block;
+    position: absolute;
+    top: 1px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.cost {
+    font-size: 20px;
+}

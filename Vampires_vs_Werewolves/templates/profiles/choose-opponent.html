@@ -7,13 +7,13 @@
         <div class="heroes-card">
             <div class="profile-picture-opponent">
                 {% if opponent.user.hero_type == 'Vampire' %}
-                    {% if opponent.user.gender == 'Female' %}
+                    {% if opponent.gender == 'Female' %}
                         <img src="{% static 'pictures/vampire-7749188_1280.webp' %}">
                     {% else %}
                         <img src="{% static 'pictures/interesting-fact-about-vampires.jpg' %}">
                     {% endif %}
-                {% else %}
-                    {% if opponent.user.gender == 'Female' %}
+                {% elif opponent.user.hero_type == 'Werewolf' %}
+                    {% if opponent.gender == 'Female' %}
                         <img src="{% static 'pictures/d73fdd1b-01ec-4824-8c77-4ed1bb904c7c.webp' %}">
                     {% else %}
                         <img src="{% static 'pictures/Warewolf.webp' %}">

@@ -24,6 +24,11 @@
                              {{ current_user }}
                          </a>
                      </h1>
+                      {% if current_user == user %}
+                           <div class="fight-button">
+                               <a href="{% url 'choose opponent' %}">Fight</a>
+                           </div>
+                      {% endif %}
                      <p>
                          <a class="logout-button" href="{% url 'logout user' %}">
                              Logout

@@ -1,3 +1,10 @@
+@import url(https://fonts.googleapis.com/css2?family=Aladin);
+
+html {
+    font-family: "Aladin", sans-serif;
+    text-shadow: 2px 2px 4px #f3efec;
+}
+
 body {
     background: url("../pictures/maxresdefault.jpg") no-repeat;
     background-size: cover;
@@ -17,6 +24,22 @@ body::before {
     backdrop-filter: blur(1px); /* Adjust the blur radius as desired */
     z-index: -1;
 }
+
+nav {
+  position: relative;
+    height: 3rem;
+}
+
+nav::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right, #f3efec, black, #f3efec);
+}
+
 
 .home-buttons {
     position: absolute;
@@ -46,6 +69,15 @@ body::before {
     color: red;
 }
 
+.fight-button a {
+    text-decoration: none;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 5px 20px;
+    text-shadow: 2px 2px 5px #f3efec;
+}
+
 .logout-button {
     color: red;
     text-decoration: none;
@@ -66,17 +98,8 @@ body::before {
     color: red;
 }
 
-.profile-picture {
-    width: 200px;
-    height: 280px;
-    position: absolute;
-    object-fit: cover;
-    border: 4px solid black;
-    left: 2%;
-}
-
 .profile-details {
-    position: absolute;
+    /*position: absolute;*/
     left: 20%;
     color: red;
     font-size: 30px;
@@ -88,7 +111,7 @@ body::before {
 }
 
 .profile-upgrade {
-    position: absolute;
+    /*position: absolute;*/
     left: 45%;
     color: red;
     font-size: 30px;
@@ -102,7 +125,6 @@ body::before {
 .profile-upgrade table {
     width: 100%;
     border-collapse: collapse;
-    /*border: 1px solid #ccc;*/
 }
 
 .profile-upgrade th,
@@ -113,53 +135,6 @@ body::before {
 
 .profile-upgrade .fa-solid.fa-square-plus {
     color: red;
-}
-
-/*.choose-opponent {*/
-/*    position: absolute;*/
-/*    right: 20%;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*}*/
-
-/*.choose-opponent a {*/
-/*    color: red;*/
-/*    text-decoration: none;*/
-/*    font-size: 30px;*/
-/*}*/
-
-/*.opponents {*/
-/*    position: absolute;*/
-/*    left: 25%;*/
-/*    color: red;*/
-/*    font-size: 32px;*/
-/*}*/
-
-/*.opponents td {*/
-/*    padding-right: 14px;*/
-/*}*/
-
-/*.opponents a {*/
-/*    text-decoration: none;*/
-/*    color: #f3efec;*/
-/*}*/
-
-/*.choose-opponent img {*/
-/*    height: 32px;*/
-/*    width: 32px;*/
-/*}*/
-
-.change-genre {
-    position: absolute;
-    top: 50%;
-    left: 4%;
-}
-
-.change-genre a {
-    text-decoration: none;
-    color: red;
-    font-size: 32px;
 }
 
 .username {
