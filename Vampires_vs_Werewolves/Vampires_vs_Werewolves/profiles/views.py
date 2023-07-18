@@ -19,7 +19,6 @@ class DetailsUserView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         pk = self.request.user.pk
-        print(pk)
         current_user = UserProfile.objects.filter(user_id=pk).get()
         context['profile'] = current_user
         return context

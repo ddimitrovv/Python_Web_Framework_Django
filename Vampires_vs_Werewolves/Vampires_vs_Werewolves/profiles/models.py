@@ -1,6 +1,10 @@
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.db import models
+from django.templatetags.tz import utc
+from django.utils import timezone
+from django.utils.datetime_safe import datetime
+from django.utils.timezone import make_aware
 
 
 def get_level_from_hp(hp):
@@ -85,8 +89,8 @@ class UserProfile(models.Model):
         Female = 'Female',
         Male = 'Male'
 
-    hp = models.IntegerField(default=100)
-    mp = models.IntegerField(default=100)
+    xp = models.IntegerField(default=100)
+    health = models.IntegerField(default=100)
     level = models.IntegerField(default=1)
     gold = models.IntegerField(default=100)
     gender = models.CharField(
@@ -101,8 +105,8 @@ class UserProfile(models.Model):
     speed = models.PositiveIntegerField(default=10)
 
     def fight(self, opponent):
-        self_hp = self.hp
-        opponent_hp = opponent.hp
+        self_hp = self.xp
+        opponent_hp = opponent.xp
 
         self_total_damage = 0
         opponent_total_damage = 0
@@ -136,15 +140,19 @@ class UserProfile(models.Model):
         # Determine the winner based on the total damage inflicted
         if self_total_damage > opponent_total_damage:
             self.gold += int(0.3 * opponent.gold)  # Winner receives 30% of the loser's gold
-            self.hp += self.level * 5  # Increase winner's HP
-            self.level = get_level_from_hp(self.hp)  # Set winner level
+            self.xp += self.level * 5  # Increase winner's HP
+            self.level = get_level_from_hp(self.xp)  # Set winner level
             opponent.gold -= int(0.3 * opponent.gold) if int(0.3 * opponent.gold) >= 0 else 0
+            self.health -= opponent_total_damage if self.health - opponent_total_damage >= 0 else 0
+            opponent.health -= self_total_damage if opponent.health - self_total_damage >= 0 else 0
             winner = self
         elif opponent_total_damage > self_total_damage:
             opponent.gold += int(0.3 * self.gold)  # Winner receives 30% of the loser's gold
             self.gold -= int(0.3 * self.gold) if int(0.3 * self.gold) >= 0 else 0
-            opponent.hp += opponent.level  # Increase opponent HP
-            opponent.level = get_level_from_hp(opponent.hp)  # Set opponent level
+            opponent.xp += opponent.level  # Increase opponent HP
+            opponent.level = get_level_from_hp(opponent.xp)  # Set opponent level
+            opponent.health -= self_total_damage if opponent.health - self_total_damage >= 0 else 0
+            self.health -= opponent_total_damage if self.health - opponent_total_damage >= 0 else 0
             winner = opponent
 
         # Save the updated hero and opponent
