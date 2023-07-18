@@ -10,7 +10,12 @@ from Vampires_vs_Werewolves.profiles.models import CustomUser
 
 class HomeView(TemplateView):
     template_name = 'common/index.html'
-    context_object_name = 'user'
+    context_object_name = 'current_user'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['current_user'] = self.request.user
+        return context
 
 
 class RegisterUserView(CreateView):

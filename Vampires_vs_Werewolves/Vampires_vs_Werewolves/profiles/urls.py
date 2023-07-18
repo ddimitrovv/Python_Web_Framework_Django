@@ -4,7 +4,7 @@ from Vampires_vs_Werewolves.profiles.views import DetailsUserView, UpgradeHeroPo
     UpgradeHeroSpeed, ChooseOpponentView, fight_view
 
 urlpatterns = (
-    path('details/', DetailsUserView.as_view(), name='details user'),
+    path('details/<str:username>/', DetailsUserView.as_view(), name='details user'),
     path('power/', UpgradeHeroPower.as_view(), name='upgrade power'),
     path('defence/', UpgradeHeroDefence.as_view(), name='upgrade defence'),
     path('speed/', UpgradeHeroSpeed.as_view(), name='upgrade speed'),

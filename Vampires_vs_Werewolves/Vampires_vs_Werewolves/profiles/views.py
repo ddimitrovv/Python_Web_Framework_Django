@@ -1,10 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import DetailView, UpdateView, TemplateView
 
 from Vampires_vs_Werewolves.profiles.forms import UserProfileEditForm
 from Vampires_vs_Werewolves.profiles.models import CustomUser, UserProfile
-from custom.custom_functions import get_user_profile
+from custom.custom_functions import get_user_profile, get_user_object
 
 
 class DetailsUserView(LoginRequiredMixin, DetailView):
@@ -14,20 +14,21 @@ class DetailsUserView(LoginRequiredMixin, DetailView):
     login_url = '/profile/login/'
 
     def get_object(self, queryset=None):
-        return self.request.user or None
+        username = self.kwargs.get('username')
+        return get_object_or_404(self.model, username=username)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        pk = self.request.user.pk
-        current_user = UserProfile.objects.filter(user_id=pk).get()
-        context['profile'] = current_user
+        user = self.object.userprofile
+        context['profile'] = user
+        context['current_user'] = self.request.user
         return context
 
     def post(self, request, *args, **kwargs):
         user_profile = UserProfile.objects.get(user=request.user)
         user_profile.gender = 'Female' if user_profile.gender == 'Male' else 'Male'
         user_profile.save()
-        return redirect('details user')
+        return redirect('details user', self.request.user.username)
 
 
 class UpgradeHeroPower(UpdateView, LoginRequiredMixin):
@@ -38,7 +39,7 @@ class UpgradeHeroPower(UpdateView, LoginRequiredMixin):
             profile.gold -= int((profile.power + 1) * 1.5)
             profile.power += 1
             profile.save()
-        return redirect('details user')
+        return redirect('details user', self.request.user.username)
 
 
 class UpgradeHeroDefence(UpdateView, LoginRequiredMixin):
@@ -49,7 +50,7 @@ class UpgradeHeroDefence(UpdateView, LoginRequiredMixin):
             profile.gold -= int((profile.defence + 1) * 1.5)
             profile.defence += 1
             profile.save()
-        return redirect('details user')
+        return redirect('details user', self.request.user.username)
 
 
 class UpgradeHeroSpeed(UpdateView, LoginRequiredMixin):
@@ -60,7 +61,7 @@ class UpgradeHeroSpeed(UpdateView, LoginRequiredMixin):
             profile.gold -= int((profile.speed + 1) * 1.5)
             profile.speed += 1
             profile.save()
-        return redirect('details user')
+        return redirect('details user', self.request.user.username)
 
 
 class ChooseOpponentView(TemplateView, LoginRequiredMixin):
@@ -84,7 +85,7 @@ class ChooseOpponentView(TemplateView, LoginRequiredMixin):
                user_profile.level + 5
             )
         ).order_by('?')[:10]
-
+        context['current_user'] = self.request.user
         context['user_profile'] = user_profile
         context['opponents'] = opponents
 
@@ -117,6 +118,7 @@ def fight_view(request, pk):
     winner = user_profile.fight(opponent)
 
     context = {
+        'current_user': get_user_object(request),
         'opponent': opponent,
         'winner': winner
     }

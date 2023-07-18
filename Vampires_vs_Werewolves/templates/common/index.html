@@ -12,7 +12,7 @@
 
     <header>
         <nav>
-             {% if not user.is_authenticated %}
+             {% if not current_user.is_authenticated %}
                 <div class="home-buttons">
                     <p><a href="{% url 'register user' %}">Register</a></p>
                     <p><a href="{% url 'login user' %}">Login</a></p>
@@ -20,8 +20,8 @@
              {% else %}
                  <div class="user-options">
                      <h1 class="hello-user">
-                         <a href="{% url 'details user' %}">
-                             {{ user }}
+                         <a href="{% url 'details user' current_user.username %}">
+                             {{ current_user }}
                          </a>
                      </h1>
                      <p>

@@ -162,6 +162,13 @@ body::before {
     font-size: 32px;
 }
 
+.username {
+    position: absolute;
+    left: 4%;
+    top: 50%;
+    color: red;
+    font-size: 26px;
+}
 /*colors :
 light-skin: #f3efec
 lipstick: #390000
