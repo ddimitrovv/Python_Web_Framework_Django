@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import DetailView, UpdateView, TemplateView
 
@@ -85,9 +86,14 @@ class ChooseOpponentView(TemplateView, LoginRequiredMixin):
                user_profile.level + 5
             )
         ).order_by('?')[:10]
+
+        paginator = Paginator(opponents, 2)
+        page_number = self.request.GET.get('page')
+        opponents_page = paginator.get_page(page_number)
+
         context['current_user'] = self.request.user
         context['user_profile'] = user_profile
-        context['opponents'] = opponents
+        context['opponents'] = opponents_page
 
         return context
 

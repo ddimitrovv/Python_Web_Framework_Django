@@ -35,7 +35,7 @@ class LoginUserView(LoginView):
     redirect_authenticated_user = True
 
     def get_success_url(self):
-        return reverse_lazy('details user')
+        return reverse_lazy('details user', kwargs={'username': self.request.user.username})
 
 
 class LogoutUserView(LogoutView, LoginRequiredMixin):

@@ -1,0 +1,42 @@
+.heroes-card-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.heroes-card {
+    width: 300px;
+    height: 420px;
+    border: 2px solid black;
+    background: #390000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /*align-items: center;*/
+    color: red;
+    overflow: hidden;
+}
+
+.profile-picture-opponent {
+    width: 100%;
+    /*height: 100%;*/
+    /*object-fit: cover;*/
+}
+
+.heroes-card ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: red;
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.heroes-card a {
+    text-decoration: none;
+    color: red;
+    font-weight: bolder;
+}

@@ -115,40 +115,40 @@ body::before {
     color: red;
 }
 
-.choose-opponent {
-    position: absolute;
-    right: 20%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+/*.choose-opponent {*/
+/*    position: absolute;*/
+/*    right: 20%;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*}*/
 
-.choose-opponent a {
-    color: red;
-    text-decoration: none;
-    font-size: 30px;
-}
+/*.choose-opponent a {*/
+/*    color: red;*/
+/*    text-decoration: none;*/
+/*    font-size: 30px;*/
+/*}*/
 
-.opponents {
-    position: absolute;
-    left: 25%;
-    color: red;
-    font-size: 32px;
-}
+/*.opponents {*/
+/*    position: absolute;*/
+/*    left: 25%;*/
+/*    color: red;*/
+/*    font-size: 32px;*/
+/*}*/
 
-.opponents td {
-    padding-right: 14px;
-}
+/*.opponents td {*/
+/*    padding-right: 14px;*/
+/*}*/
 
-.opponents a {
-    text-decoration: none;
-    color: #f3efec;
-}
+/*.opponents a {*/
+/*    text-decoration: none;*/
+/*    color: #f3efec;*/
+/*}*/
 
-.choose-opponent img {
-    height: 32px;
-    width: 32px;
-}
+/*.choose-opponent img {*/
+/*    height: 32px;*/
+/*    width: 32px;*/
+/*}*/
 
 .change-genre {
     position: absolute;
