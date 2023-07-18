@@ -4,7 +4,7 @@
     <table class="opponents">
         {% for opponent in opponents %}
             <tr>
-            <td>{{ opponent.user }}</td>
+            <td><a href="{% url 'details user' opponent.user.username %}">{{ opponent.user }}</a></td>
             <td>Power: {{ opponent.power }}</td>
             <td>Defence: {{ opponent.defence }}</td>
             <td>Speed: {{ opponent.speed }}</td>
