@@ -1,0 +1,29 @@
+{% extends 'common/index.html' %}
+{% block content %}
+
+{#    <section id="registerPage">#}
+{#        <form method="POST">#}
+{#            <fieldset>#}
+{#                <legend>Send Message</legend>#}
+{#                <!-- Form for SendMessage -->#}
+{#                {{ form }}#}
+{#                {% csrf_token %}#}
+{#                <!-- Button to Send Message -->#}
+{#                <button type="submit" class="register">Send</button>#}
+{#            </fieldset>#}
+{#        </form>#}
+{#    </section>#}
+
+    <div class="all-messages">
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message">
+                    <p class="sender">Sender: {{ message.sender }}</p>
+                    <p class="recipient">Recipient:{{ message.recipient }}</p>
+                    <p class="content">Message: {{ message.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

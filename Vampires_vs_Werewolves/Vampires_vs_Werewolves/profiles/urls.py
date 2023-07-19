@@ -1,6 +1,5 @@
 from django.urls import path
 
-from Vampires_vs_Werewolves.custom_messages.views import AllMessagesView
 from Vampires_vs_Werewolves.profiles.views import DetailsUserView, UpgradeHeroPower, UpgradeHeroDefence, \
     UpgradeHeroSpeed, ChooseOpponentView, fight_view
 
@@ -11,5 +10,4 @@ urlpatterns = (
     path('speed/', UpgradeHeroSpeed.as_view(), name='upgrade speed'),
     path('choose-opponent/', ChooseOpponentView.as_view(), name='choose opponent'),
     path('fight/<int:pk>/', fight_view, name='fight'),
-    path('all-messages/', AllMessagesView.as_view(), name='all messages'),
 )

@@ -18,6 +18,7 @@ body {
     background: url("../pictures/maxresdefault.jpg") no-repeat;
     background-size: cover;
     position: relative;
+    overflow: hidden;
     text-shadow: 1px 1px 2px #390000;
     height: 100vh;
 }

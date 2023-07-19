@@ -28,7 +28,7 @@ INSTALLED_APPS = [
 
     'Vampires_vs_Werewolves.profiles',
     'Vampires_vs_Werewolves.common',
-    'Vampires_vs_Werewolves.custom_messages',
+    'Vampires_vs_Werewolves.user_messages',
 ]
 
 MIDDLEWARE = [

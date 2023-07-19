@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class MessagesConfig(AppConfig):
+class UserMessagesConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'Vampires_vs_Werewolves.custom_messages'
+    name = 'Vampires_vs_Werewolves.user_messages'

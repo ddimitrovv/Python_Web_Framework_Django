@@ -126,7 +126,8 @@ def fight_view(request, pk):
     context = {
         'current_user': get_user_object(request),
         'opponent': opponent,
-        'winner': winner
+        'winner': winner,
+        'user': user_profile
     }
 
     return render(request, 'profiles/fight-details.html', context)
