@@ -87,7 +87,7 @@ class ChooseOpponentView(TemplateView, LoginRequiredMixin):
             )
         ).order_by('?')[:10]
 
-        paginator = Paginator(opponents, 2)
+        paginator = Paginator(opponents, 3)
         page_number = self.request.GET.get('page')
         opponents_page = paginator.get_page(page_number)
 

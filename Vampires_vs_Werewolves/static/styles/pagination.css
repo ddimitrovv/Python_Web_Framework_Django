@@ -1,0 +1,21 @@
+.pagination {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 1.5rem;
+}
+
+.pagination div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-basis: 33.33%;
+    flex-grow: 1;
+}
+
+.pagination a,
+.pagination span {
+    text-decoration: none;
+    color: #f3efec;
+    font-size: 24px;
+}

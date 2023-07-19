@@ -1,7 +1,16 @@
 @import url(https://fonts.googleapis.com/css2?family=Aladin);
+@font-face {
+  font-family: 'Cloister Black';
+  src: url('/static/fonts/CloisterBlack.ttf') format('truetype');
+}
+
+/*
+Aladin, cursive
+Cloister Black, sans-serif
+*/
 
 html {
-    font-family: "Aladin", sans-serif;
+    font-family: "Aladin", cursive;
     text-shadow: 2px 2px 4px #f3efec;
 }
 

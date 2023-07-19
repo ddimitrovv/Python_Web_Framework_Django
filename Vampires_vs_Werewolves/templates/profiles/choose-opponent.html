@@ -32,18 +32,30 @@
     </div>
 
 
-<!-- Display pagination links -->
-<div class="pagination">
-    {% if opponents.has_previous %}
-        <a href="?page={{ opponents.previous_page_number }}">Previous</a>
-    {% endif %}
+    <!-- Display pagination links -->
+    <div class="pagination">
+        <div>
+            {% if opponents.has_previous %}
+                <a href="?page={{ opponents.previous_page_number }}">Previous</a>
+            {% else %}
+                <a></a>
+        {% endif %}
+        </div>
 
-    <span class="current-page">{{ opponents.number }}</span>
+        <div>
+            {% if opponents.paginator.num_pages > 1 %}
+                <span class="current-page">{{ opponents.number }}/{{ opponents.paginator.num_pages }}</span>
+            {% endif %}
+        </div>
 
-    {% if opponents.has_next %}
-        <a href="?page={{ opponents.next_page_number }}">Next</a>
-    {% endif %}
-</div>
+        <div>
+            {% if opponents.has_next %}
+                <a href="?page={{ opponents.next_page_number }}">Next</a>
+            {% else %}
+                <a></a>
+            {% endif %}
+        </div>
+    </div>
 
 
 {% endblock %}
