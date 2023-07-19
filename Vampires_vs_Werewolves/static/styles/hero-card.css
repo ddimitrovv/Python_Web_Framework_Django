@@ -6,8 +6,8 @@
 }
 
 .hero-card {
-    width: 280px;
-    height: 400px;
+    width: 17.5rem;
+    height: 25rem;
     border: 2px solid black;
     background: black;
     display: flex;
@@ -17,10 +17,10 @@
     color: red;
     overflow: hidden;
     box-shadow:
-        0 0 10px 5px rgba(0, 0, 0, 0.5),
-        0 0 20px 10px rgba(128, 128, 128, 0.3),
-        0 0 30px 15px rgba(192, 192, 192, 0.2);
-    border-radius: 40px 0 30px 0;
+        0 0 0.625rem 0.3125rem rgba(0, 0, 0, 0.5),
+        0 0 1.25rem 0.625rem rgba(128, 128, 128, 0.3),
+        0 0 1.875rem 0.9375rem rgba(192, 192, 192, 0.2);
+    border-radius: 2.5rem 0 1.875rem 0;
 }
 
 .profile-picture {
