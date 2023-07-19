@@ -89,6 +89,24 @@ nav::after {
     text-shadow: 2px 2px 5px #f3efec;
 }
 
+.message-button a {
+    text-decoration: none;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 5px 20px;
+    text-shadow: 2px 2px 5px #f3efec;
+}
+
+.house-button a {
+    text-decoration: none;
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 5px 20px;
+    text-shadow: 2px 2px 5px #f3efec;
+}
+
 .logout-button {
     color: red;
     text-decoration: none;

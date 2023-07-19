@@ -158,4 +158,4 @@ class UserProfile(models.Model):
         # Save the updated hero and opponent
         self.save()
         opponent.save()
-        return winner
+        return winner or None
