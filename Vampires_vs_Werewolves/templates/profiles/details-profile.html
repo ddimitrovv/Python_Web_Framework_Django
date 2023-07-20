@@ -28,6 +28,14 @@
                     <button type="submit">Male/Female</button>
                     {% csrf_token %}
                 </form>
+            {% else %}
+                 <form>
+                    <button>
+                        <a href="{% url 'create message' user.username %}"
+                           style="color: white; text-shadow: none">Send message
+                        </a>
+                    </button>
+                 </form>
             {% endif %}
         </div>
         <div class="profile-details">

@@ -1,0 +1,17 @@
+{% extends 'common/index.html' %}
+{% block content %}
+
+        <section id="registerPage">
+            <form method="POST">
+                <fieldset>
+                    <legend>Send Message</legend>
+                    <!-- Form for SendMessage -->
+                    {{ form }}
+                    {% csrf_token %}
+                    <!-- Button to Send Message -->
+                    <button type="submit" class="register">Send</button>
+                </fieldset>
+            </form>
+        </section>
+
+{% endblock %}

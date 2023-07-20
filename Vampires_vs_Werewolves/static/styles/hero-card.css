@@ -55,14 +55,14 @@
 
 .hero-card ul li {
     margin-bottom: 5px;
-        text-shadow: 2px 2px 4px #f3efec;
+    text-shadow: 2px 2px 4px #f3efec;
 }
 
 .hero-card a {
     text-decoration: none;
     color: red;
     font-weight: bolder;
-        text-shadow: 2px 2px 4px #f3efec;
+    text-shadow: 2px 2px 4px #f3efec;
 }
 
 .hero-card button {
