@@ -3,26 +3,14 @@
 
     <div class="messages-wrapper">
 
-{#        <section id="registerPage">#}
-{#            <form method="POST">#}
-{#                <fieldset>#}
-{#                    <legend>Send Message</legend>#}
-{#                    <!-- Form for SendMessage -->#}
-{#                    {{ form }}#}
-{#                    {% csrf_token %}#}
-{#                    <!-- Button to Send Message -->#}
-{#                    <button type="submit" class="register">Send</button>#}
-{#                </fieldset>#}
-{#            </form>#}
-{#        </section>#}
-
         <div class="all-messages">
             <div class="messages">
-                {% for message in messages %}
+                {% for user_name in messages_by_user %}
                     <div class="message {% if message.sender == current_user %} received {% endif %}">
-                        <p class="sender">From: {{ message.sender }}</p>
-                        <p class="recipient">To: {{ message.recipient }}</p>
-                        <p class="content">Message: {{ message.content }}</p>
+{#                        <p class="sender">From: {{ message.sender }}</p>#}
+{#                        <p class="recipient">To: {{ message.recipient }}</p>#}
+{#                        <p class="content">Message: {{ message.content }}</p>#}
+                          <span><a href="#">{{ user_name }}</a> </span>
                     </div>
                 {% endfor %}
             </div>

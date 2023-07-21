@@ -23,7 +23,7 @@ class MessageView(LoginRequiredMixin, TemplateView):
         #     Q(sender=user) | Q(recipient=user)
         # ).order_by('-timestamp')
         context['current_user'] = self.request.user
-        context['form'] = SendMessageForm()
+        # context['form'] = SendMessageForm()
         paginator = Paginator(messages, 4)
         page_number = self.request.GET.get('page')
         messages_page = paginator.get_page(page_number)
@@ -48,4 +48,5 @@ class CreateMessageView(LoginRequiredMixin, CreateView):
         context = super().get_context_data(**kwargs)
         user = self.request.user
         context['current_user'] = user
+        context['recipient_username'] = self.kwargs.get('username')
         return context

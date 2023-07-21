@@ -4,7 +4,7 @@
         <section id="registerPage">
             <form method="POST">
                 <fieldset>
-                    <legend>Send Message</legend>
+                    <legend>Send Message To: <p>{{ recipient_username }}</p></legend>
                     <!-- Form for SendMessage -->
                     {{ form }}
                     {% csrf_token %}

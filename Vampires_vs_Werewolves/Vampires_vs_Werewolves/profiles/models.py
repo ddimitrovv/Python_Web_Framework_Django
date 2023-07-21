@@ -6,21 +6,16 @@ from django.utils import timezone
 from django.utils.datetime_safe import datetime
 from django.utils.timezone import make_aware
 
+from Vampires_vs_Werewolves.common.models import Sword, Shield, Boots
 
-def get_level_from_hp(hp):
-    level_hp_mapping = {
-        # HP between 100 and 200 is level 1
-        (101, 200): 1,
-        (201, 300): 2,
-        (301, 400): 3,
-        (401, 500): 4,
-        (501, 600): 5,
-    }
-    for hp_range, level in level_hp_mapping.items():
-        if hp_range[0] <= hp <= hp_range[1]:
-            return level
-    # Handle the case where the HP does not fall within any defined range
-    return 0  # Or any default level you want to assign
+
+def get_level_from_hp(hp, base_hp=100, multiplier=2.5):
+    level = 1
+    while hp >= base_hp:
+        hp -= base_hp
+        base_hp *= multiplier
+        level += 1
+    return level
 
 
 class CustomUserManager(BaseUserManager):
@@ -86,8 +81,8 @@ class CustomUser(PermissionsMixin, AbstractBaseUser):
 
 class UserProfile(models.Model):
     class Gender(models.TextChoices):
-        Female = 'Female',
-        Male = 'Male'
+        FEMALE = 'Female', 'Female'
+        MALE = 'Male', 'Male'
 
     xp = models.IntegerField(default=100)
     health = models.IntegerField(default=100)
@@ -95,6 +90,7 @@ class UserProfile(models.Model):
     gold = models.IntegerField(default=100)
     gender = models.CharField(
         choices=Gender.choices,
+        max_length=10
     )
     user = models.OneToOneField(
         CustomUser,
@@ -103,6 +99,26 @@ class UserProfile(models.Model):
     power = models.PositiveIntegerField(default=10)
     defence = models.PositiveIntegerField(default=10)
     speed = models.PositiveIntegerField(default=10)
+    wins = models.PositiveIntegerField(default=0)
+    losses = models.PositiveIntegerField(default=0)
+    sword = models.ForeignKey(
+        Sword,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+    )
+    shield = models.ForeignKey(
+        Shield,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+    )
+    boots = models.ForeignKey(
+        Boots,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+    )
 
     def fight(self, opponent):
         self_hp = self.xp
@@ -146,6 +162,8 @@ class UserProfile(models.Model):
             self.health -= opponent_total_damage if self.health - opponent_total_damage >= 0 else 0
             opponent.health -= self_total_damage if opponent.health - self_total_damage >= 0 else 0
             winner = self
+            self.wins += 1  # Increment wins for the winner
+            opponent.losses += 1  # Increment losses for the loser
         elif opponent_total_damage > self_total_damage:
             opponent.gold += int(0.3 * self.gold)  # Winner receives 30% of the loser's gold
             self.gold -= int(0.3 * self.gold) if int(0.3 * self.gold) >= 0 else 0
@@ -154,6 +172,8 @@ class UserProfile(models.Model):
             opponent.health -= self_total_damage if opponent.health - self_total_damage >= 0 else 0
             self.health -= opponent_total_damage if self.health - opponent_total_damage >= 0 else 0
             winner = opponent
+            opponent.wins += 1  # Increment wins for the winner
+            self.losses += 1  # Increment losses for the loser
 
         # Save the updated hero and opponent
         self.save()

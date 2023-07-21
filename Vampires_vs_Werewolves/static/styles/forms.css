@@ -10,7 +10,7 @@ fieldset {
 
 fieldset legend{
   font-weight: 700;
-  font-size: 2em;
+  font-size: 1.8em;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   padding: 0.5em;
@@ -22,6 +22,10 @@ fieldset legend{
   display: block;
   width: 100%;
   margin: 0 auto;
+}
+
+fieldset legend p {
+  text-transform: none;
 }
 
 input, input + label > i, textarea, select {
