@@ -39,12 +39,13 @@
             {% endif %}
         </div>
         <div class="profile-details">
-            <ul role="list">
+            <ul class="user-details" role="list">
+{#                <li><span class="profile-name">{{ current_user }}</span> </li>#}
                 <li>XP: {{ profile.xp }}</li>
                 <li>Level: {{ profile.level }}</li>
                 {% if current_user == user %}
                     <li>Health: {{ profile.health }}</li>
-                    <li>Gold: {{ profile.gold }}</li>
+                    <li class="hero-gold">Gold: {{ profile.gold }}</li>
                 {% endif %}
                 <li>Wins: {{ profile.wins }}</li>
                 <li>Loses: {{ profile.losses }}</li>
@@ -96,11 +97,12 @@
                 </tr>
             </table>
         </div>
-{#            {% if current_user == user %}#}
-{#                <div class="fight-button">#}
-{#                    <a href="{% url 'choose opponent' %}">Fight</a>#}
-{#                </div>#}
-{#            {% endif %}#}
+            {% if current_user == user %}
+                <div class="fight-button">
+                    <a href="{% url 'choose opponent' %}">Fight</a>
+                </div>
+            {% endif %}
     </section>
+    <script src="{% static 'js/priceButtonColor.js' %}"></script>
 
 {% endblock %}
