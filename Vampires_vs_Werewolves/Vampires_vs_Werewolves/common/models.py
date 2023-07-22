@@ -6,6 +6,7 @@ class Sword(models.Model):
     damage = models.PositiveIntegerField(default=20)
     required_level = models.PositiveIntegerField(default=1)
     image = models.ImageField(null=True)
+    price = models.PositiveIntegerField(default=70)
 
     def __str__(self):
         return self.name
@@ -16,6 +17,7 @@ class Shield(models.Model):
     defense = models.PositiveIntegerField(default=20)
     required_level = models.PositiveIntegerField(default=1)
     image = models.ImageField(null=True)
+    price = models.PositiveIntegerField(default=70)
 
     def __str__(self):
         return self.name
@@ -26,6 +28,7 @@ class Boots(models.Model):
     speed_bonus = models.PositiveIntegerField(default=20)
     required_level = models.PositiveIntegerField(default=1)
     image = models.ImageField(null=True)
+    price = models.PositiveIntegerField(default=70)
 
     def __str__(self):
         return self.name

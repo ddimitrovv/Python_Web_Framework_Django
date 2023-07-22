@@ -8,7 +8,7 @@ window.addEventListener('DOMContentLoaded', () => {
         if (heroGold < cost) {
             element.previousElementSibling.
                 querySelector('.profile-upgrade .fa-solid.fa-square-plus').
-                style.color = '#f3efec'; // change the color from red to gray when not enough money
+                style.color = '#f3efec'; // Change the color from red to gray when not enough money
             element.previousElementSibling.children[0].
                 style.pointerEvents = 'none'; // Prevent clicking on the link when not enough money
         }
