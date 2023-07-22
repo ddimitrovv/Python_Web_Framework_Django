@@ -1,8 +1,11 @@
+from itertools import groupby
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import TemplateView, CreateView
 
 from Vampires_vs_Werewolves.profiles.models import UserProfile, CustomUser
@@ -15,20 +18,39 @@ class MessageView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = self.request.user
+        current_user = self.request.user
+
+        # Get all messages sent or received by the current user
         messages = CustomMessage.objects.filter(
-            Q(sender=user) | Q(recipient=user)
+            Q(sender=current_user) | Q(recipient=current_user)
         ).order_by('-timestamp')
-        # context['messages'] = CustomMessage.objects.filter(
-        #     Q(sender=user) | Q(recipient=user)
-        # ).order_by('-timestamp')
-        context['current_user'] = self.request.user
-        # context['form'] = SendMessageForm()
-        paginator = Paginator(messages, 4)
-        page_number = self.request.GET.get('page')
-        messages_page = paginator.get_page(page_number)
-        context['messages'] = messages_page
+
+        # Group messages by sender's username different from the current user
+        grouped_messages = {}
+        for username, group in groupby(messages, key=lambda
+            m: m.sender.username if m.sender != current_user else m.recipient.username):
+            grouped_messages[username] = list(group)
+
+        context['current_user'] = current_user
+        context['grouped_messages'] = grouped_messages
         return context
+
+
+class UserMessagesView(LoginRequiredMixin, View):
+    template_name = 'user_messages/user-messages.html'
+
+    def get(self, request, username):
+        current_user = self.request.user
+        other_user_messages = CustomMessage.objects.filter(
+            (Q(sender=current_user) & Q(recipient__username=username)) |
+            (Q(sender__username=username) & Q(recipient=current_user))
+        ).order_by('-timestamp')
+        context = {
+            'current_user': current_user,
+            'other_user': username,
+            'messages': other_user_messages,
+        }
+        return render(request, self.template_name, context)
 
 
 class CreateMessageView(LoginRequiredMixin, CreateView):

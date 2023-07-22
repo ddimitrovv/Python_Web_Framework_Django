@@ -54,6 +54,24 @@
 {#    </div>#}
 
     {% block content %}
+        {% if current_user.is_authenticated %}
+
+            <div class="main-options">
+                <div class="market-wrapper">
+                    <img class="market-image" src="{% static 'pictures/market.jpg' %}">
+                    <a href="#">Marketplace</a>
+                </div>
+                <div class="market-wrapper">
+                    <img class="market-image" src="{% static 'pictures/messages.jpg' %}">
+                    <a href="{% url 'messages' %}">Messages</a>
+                </div>
+{#                <div class="market-wrapper">#}
+{#                    <img class="market-image" src="{% static 'pictures/messages.jpg' %}">#}
+{#                    <a href="{% url 'messages' %}">Messages</a>#}
+{#                </div>#}
+            </div>
+
+        {% endif %}
     {% endblock %}
 </body>
 </html>

@@ -1,0 +1,27 @@
+{% extends 'common/index.html' %}
+{% block content %}
+
+    <div class="messages-wrapper">
+
+        <div class="all-messages">
+            <span><a href="{% url 'messages' %}">Messages</a></span>
+            <div class="messages scrollable">
+                {% for message in messages %}
+                    <div class="message {% if message.sender == current_user %} received {% else %} sent {% endif %}">
+                        <p>
+                            {% if message.sender == current_user %}
+                                To: {{ message.recipient }}
+                            {% else %}
+                                From: {{ message.sender }}
+                            {% endif %}
+                        </p>
+                        <p class="message-content">{{ message.content }}</p>
+                        <time>{{ message.timestamp }}</time>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
