@@ -2,18 +2,24 @@
 {% load static %}
 {% block content %}
 
-    <div class="items">
-        <div class="item">
-            <img class="item-image" src="{% static 'pictures/sword.jpg' %}">
-            <a href="#">Swords</a>
+    <div class="main-options-inner">
+        <div class="market-wrapper-inner">
+            <a href="{% url 'item list' 'swords' %}">
+                <img class="market-image-inner" src="{% static 'pictures/sword.jpg' %}">
+            </a>
+            <a href="{% url 'item list' 'swords' %}">Swords</a>
         </div>
-        <div class="item">
-            <img class="item-image" src="{% static 'pictures/shield.jpg' %}">
-            <a href="#">Shields</a>
+        <div class="market-wrapper-inner">
+            <a href="{% url 'item list' 'shields' %}">
+                <img class="market-image-inner" src="{% static 'pictures/shield.jpg' %}">
+            </a>
+            <a href="{% url 'item list' 'shields' %}">Shields</a>
         </div>
-        <div class="item">
-            <img class="item-image" src="{% static 'pictures/boots.jpg' %}">
-            <a href="#">Boots</a>
+        <div class="market-wrapper-inner">
+            <a href="{% url 'item list' 'boots' %}">
+                <img class="market-image-inner" src="{% static 'pictures/boots.jpg' %}">
+            </a>
+            <a href="{% url 'item list' 'boots' %}">Boots</a>
         </div>
     </div>
 

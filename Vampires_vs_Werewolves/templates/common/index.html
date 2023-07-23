@@ -28,17 +28,6 @@
                         Home
                     </a>
                 </h1>
-{#                <div class="message-button">#}
-{#                    <a href="{% url 'messages' %}">Messages</a>#}
-{#                </div>#}
-{#                {% if current_user == user %}#}
-{#                    <div class="fight-button">#}
-{#                       <a href="{% url 'choose opponent' %}">Fight</a>#}
-{#                    </div>#}
-{#                {% endif %}#}
-{#                <div class="house-button">#}
-{#                    <a href="#">House</a>#}
-{#                </div>#}
                 <p>
                     <a class="logout-button" href="{% url 'logout user' %}">
                          Logout
@@ -49,26 +38,35 @@
         </nav>
     </header>
     {% endif %}
-{#    <div class="menu">#}
-{#        <p><a href="#">Shop</a></p>#}
-{#    </div>#}
 
     {% block content %}
         {% if current_user.is_authenticated %}
 
             <div class="main-options">
                 <div class="market-wrapper">
-                    <img class="market-image" src="{% static 'pictures/market.jpg' %}">
-                    <a href="#">Marketplace</a>
+                    <a href="{% url 'marketplace' %}">
+                        <img class="market-image" src="{% static 'pictures/market.jpg' %}">
+                    </a>
+                    <a href="{% url 'marketplace' %}">Marketplace</a>
                 </div>
                 <div class="market-wrapper">
-                    <img class="market-image" src="{% static 'pictures/messages.jpg' %}">
+                    <a href="{% url 'messages' %}">
+                        <img class="market-image" src="{% static 'pictures/messages.jpg' %}">
+                    </a>
                     <a href="{% url 'messages' %}">Messages</a>
                 </div>
-{#                <div class="market-wrapper">#}
-{#                    <img class="market-image" src="{% static 'pictures/messages.jpg' %}">#}
-{#                    <a href="{% url 'messages' %}">Messages</a>#}
-{#                </div>#}
+                <div class="market-wrapper">
+                    <a href="{% url 'choose opponent' %}">
+                        <img class="market-image" src="{% static 'pictures/fight.jpg' %}">
+                    </a>
+                    <a href="{% url 'choose opponent' %}">Fight</a>
+                </div>
+                <div class="market-wrapper">
+                    <a href="{% url 'work' %}">
+                        <img class="market-image" src="{% static 'pictures/work.jpg' %}">
+                    </a>
+                    <a href="#">Work</a>
+                </div>
             </div>
 
         {% endif %}

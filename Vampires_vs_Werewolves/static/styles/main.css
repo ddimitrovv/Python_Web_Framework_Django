@@ -15,11 +15,12 @@ html {
 }
 
 body {
-    background: url("../pictures/maxresdefault.jpg") no-repeat;
+    background: url("../pictures/gabriel-lorenzo-vampire0001.jpg") no-repeat;
     background-size: cover;
     position: relative;
     overflow: hidden;
     text-shadow: 1px 1px 2px #390000;
+    letter-spacing: 0.1em;
     height: 100vh;
 }
 
@@ -55,9 +56,9 @@ nav::after {
 
 .home-buttons {
     position: absolute;
-    top: 20%;
+    top: 40%;
     left: 50%;
-    transform: translate(-20%, -50%);
+    transform: translate(-40%, -50%);
     text-align: center;
 }
 
@@ -126,59 +127,6 @@ nav::after {
     font-size: 22px;
 }
 
-.user-options {
-    display: flex;
-    align-content: center;
-    justify-content: space-between;
-}
-
-.user-options p {
-    margin-right: 2%;
-}
-
-.fa-right-from-bracket {
-    color: red;
-}
-
-.profile-details {
-    /*position: absolute;*/
-    left: 20%;
-    color: red;
-    font-size: 30px;
-}
-
-.profile-details ul {
-    display: flex;
-    flex-direction: column;
-}
-
-.profile-upgrade {
-    /*position: absolute;*/
-    left: 45%;
-    color: red;
-    font-size: 30px;
-}
-
-.profile-upgrade ul {
-    display: flex;
-    flex-direction: column;
-}
-
-.profile-upgrade table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.profile-upgrade th,
-.profile-upgrade td {
-    padding: 10px;
-    text-align: left;
-}
-
-.profile-upgrade .fa-solid.fa-square-plus {
-    color: red;
-}
-
 .username {
     position: absolute;
     left: 4%;
@@ -198,12 +146,55 @@ lipstick: #390000
 
 .main-options {
     display: flex;
-    height: 80%;
+    flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
 }
 
 .market-wrapper {
+    width: calc(33.33% - 20px);
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.market-image {
+    width: 20rem;
+    height: 12rem;
+    border: 6px solid black;
+    object-fit: fill;
+}
+
+.market-wrapper a {
+    text-decoration: none;
+    color: #f3efec;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px black;
+}
+
+/* marketplace */
+
+
+.market-image-inner {
+    width: 20rem;
+    height: 14rem;
+    /*margin-top: 10%;*/
+    /*margin-left: 15%;*/
+    border: 6px solid black;
+    object-fit: fill;
+}
+
+.main-options-inner {
+    display: flex;
+    height: 80%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.market-wrapper-inner {
     width: 30%;
     height: 50%;
     /*margin-top: 3rem;*/
@@ -213,21 +204,20 @@ lipstick: #390000
     max-width: 20rem;
     justify-content: center;
     align-items: center;
-    flex-basis: 33.33%;
-    flex-grow: 1;
+    /*flex-basis: 33.33%;*/
+    /*flex-grow: 1;*/
 }
 
-.market-image {
-    width: 20rem;
-    height: 14rem;
-    /*margin-top: 10%;*/
-    /*margin-left: 15%;*/
-    border: 6px solid black;
-}
-
-.market-wrapper a {
+.market-wrapper-inner a {
     text-decoration: none;
     color: #f3efec;
     font-size: 2.5rem;
     text-shadow: 2px 2px 4px black;
+}
+
+.go-back {
+    text-decoration: none;
+    color: red;
+    font-size: 1.2rem;
+    margin-left: 1rem;
 }

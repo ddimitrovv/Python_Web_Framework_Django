@@ -1,0 +1,19 @@
+{% extends 'common/index.html' %}
+{% block content %}
+
+    <section id="registerPage">
+        <form method="POST">
+            <fieldset>
+                <legend>Choose hours</legend>
+                <!-- Form for Registration -->
+                {{ form }}
+                {% csrf_token %}
+                <!-- Button to Create Profile -->
+                <button type="submit" class="register">Start work</button>
+                <a class="go-back" href="{% url 'home' %}">Back</a>
+                <h3>While you are working you can not fight!</h3>
+            </fieldset>
+        </form>
+    </section>
+
+{% endblock %}

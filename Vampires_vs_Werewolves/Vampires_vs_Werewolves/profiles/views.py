@@ -1,8 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render, get_object_or_404
+from django.views import View
 from django.views.generic import DetailView, UpdateView, TemplateView
 
+from Vampires_vs_Werewolves.common.models import Work
 from Vampires_vs_Werewolves.profiles.forms import UserProfileEditForm
 from Vampires_vs_Werewolves.profiles.models import CustomUser, UserProfile
 from custom.custom_functions import get_user_profile, get_user_object
@@ -65,14 +67,17 @@ class UpgradeHeroSpeed(UpdateView, LoginRequiredMixin):
         return redirect('details user', self.request.user.username)
 
 
-class ChooseOpponentView(TemplateView, LoginRequiredMixin):
+class ChooseOpponentView(LoginRequiredMixin, View):
     template_name = 'profiles/choose-opponent.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        user = self.request.user  # Get the currently authenticated user
+    def get(self, request):
+        user = request.user  # Get the currently authenticated user
         user_profile = user.userprofile
+
+        # Check if the user is currently working
+        if user_profile.is_working:
+            active_work = Work.objects.filter(user=user, end_time__isnull=True).first()
+            return redirect('work status', active_work.pk)  # Redirect to the work page
 
         # Get users by hero type
         hero_type_ = 'Vampire' if user.hero_type == 'Werewolf' else 'Werewolf'
@@ -85,17 +90,19 @@ class ChooseOpponentView(TemplateView, LoginRequiredMixin):
                user_profile.level - 5,
                user_profile.level + 5
             )
-        ).order_by('?')[:10]
+        ).order_by('?')
 
         paginator = Paginator(opponents, 3)
-        page_number = self.request.GET.get('page')
+        page_number = request.GET.get('page')
         opponents_page = paginator.get_page(page_number)
 
-        context['current_user'] = self.request.user
-        context['user_profile'] = user_profile
-        context['opponents'] = opponents_page
+        context = {
+            'current_user': user,
+            'user_profile': user_profile,
+            'opponents': opponents_page,
+        }
 
-        return context
+        return render(request, self.template_name, context)
 
 
 class UserProfileEditView(UpdateView):

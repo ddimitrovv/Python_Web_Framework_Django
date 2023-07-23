@@ -28,6 +28,11 @@ fieldset legend p {
   text-transform: none;
 }
 
+fieldset h3 {
+  color: red;
+  margin-top: 1rem;
+}
+
 input, input + label > i, textarea, select {
   border-radius: 3px;
   box-shadow: none;
@@ -53,7 +58,7 @@ input[type=text]::-webkit-input-placeholder, input[type=number]::-webkit-input-p
   transition: all 0.2s ease;
 }
 option{
-color: red
+  color: red
 }
 
 input[type=text]:hover, textarea, select, input[type=url]:hover {
@@ -62,7 +67,7 @@ input[type=text]:hover, textarea, select, input[type=url]:hover {
 
 input[type=text]:focus, input[type=number]:focus, textarea:focus, input[type=url]:focus {
   outline: none;
-  border-color: #39a086;
+  border-color: red;
 }
 
 textarea {

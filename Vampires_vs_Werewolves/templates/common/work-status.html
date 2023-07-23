@@ -1,0 +1,21 @@
+{% extends 'common/index.html' %}
+{% block content %}
+
+    <div class="work-status-wrapper">
+        <h2>Work Status</h2>
+        {% if remaining_hours > 0 %}
+            <p>Remaining hours: {{ remaining_hours }}</p>
+            <p>Total hours: {{ work.hours_worked }}</p>
+            <p>Money earned: {{ money_earned }}</p>
+            <p>Keep working to earn more money!</p>
+            <a href="{% url 'collect money' work_id=work.id %}">Collect Money</a>
+        {% else %}
+            <p>Work is done!</p>
+            <p>Hours worked: {{ work.hours_worked }}</p>
+            <p>Money earned: {{ money_earned }}</p>
+            <a href="{% url 'collect money' work_id=work.id %}">Collect Money</a>
+        <!-- Add logic here to update the user's balance with the earned money -->
+        {% endif %}
+    </div>
+
+{% endblock %}

@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+from django.conf import settings
 
 
 class Sword(models.Model):
@@ -32,3 +34,11 @@ class Boots(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Work(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    start_time = models.DateTimeField(default=timezone.now)
+    end_time = models.DateTimeField(null=True, blank=True)
+    hours_worked = models.PositiveIntegerField(default=0)
+    hourly_wage = models.PositiveIntegerField(default=10)

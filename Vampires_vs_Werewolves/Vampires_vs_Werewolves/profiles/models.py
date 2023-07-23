@@ -119,6 +119,8 @@ class UserProfile(models.Model):
         blank=True,
         on_delete=models.SET_NULL
     )
+    hourly_wage = models.PositiveIntegerField(default=10)
+    is_working = models.BooleanField(default=False)
 
     def fight(self, opponent):
         self_hp = self.xp
@@ -179,3 +181,8 @@ class UserProfile(models.Model):
         self.save()
         opponent.save()
         return winner or None
+
+    def save(self, *args, **kwargs):
+        # Calculate hourly_wage based on hero's level
+        self.hourly_wage = self.level * 10
+        super(UserProfile, self).save(*args, **kwargs)

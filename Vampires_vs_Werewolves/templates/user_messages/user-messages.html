@@ -4,15 +4,19 @@
     <div class="messages-wrapper">
 
         <div class="all-messages">
-            <span><a href="{% url 'messages' %}">Messages</a></span>
+            <span><a href="{% url 'messages' %}">Back to Messages</a></span>
             <div class="messages scrollable">
                 {% for message in messages %}
                     <div class="message {% if message.sender == current_user %} received {% else %} sent {% endif %}">
                         <p>
                             {% if message.sender == current_user %}
-                                To: {{ message.recipient }}
+                                To: <a href="{% url 'details user' message.recipient.username %}">
+                                        {{ message.recipient }}
+                                    </a>
                             {% else %}
-                                From: {{ message.sender }}
+                                From: <a href="{% url 'details user' message.sender.username %}">
+                                        {{ message.sender }}
+                                    </a>
                             {% endif %}
                         </p>
                         <p class="message-content">{{ message.content }}</p>

@@ -1,0 +1,44 @@
+{% extends 'common/index.html' %}
+{% block content %}
+    <p><a class="go-back" href="{% url 'marketplace' %}">Back</a></p>
+    <div class="items-wrapper">
+        <div class="items">
+            {% for item in items %}
+                <div class="item-details">
+                    <div class="items-inner-wrapper">
+                        <h2>{{ item.name }}</h2>
+                        <img src="{{ item.image.url }}" alt="item image">
+                        <p>Required level: {{ item.required_level }}</p>
+                        <p>Price: {{ item.price }}</p>
+                    </div>
+                <a href="#">Buy<i class="fa-solid fa-cart-shopping"></i></a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="pagination">
+        <div>
+            {% if items.has_previous %}
+                <a href="?page={{ items.previous_page_number }}">Previous</a>
+            {% else %}
+                <a></a>
+        {% endif %}
+        </div>
+
+        <div>
+            {% if items.paginator.num_pages > 1 %}
+                <span class="current-page">{{ items.number }}/{{ items.paginator.num_pages }}</span>
+            {% endif %}
+        </div>
+
+        <div>
+            {% if items.has_next %}
+                <a href="?page={{ items.next_page_number }}">Next</a>
+            {% else %}
+                <a></a>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
