@@ -102,3 +102,37 @@ td:first-child {
     /*background-color: #280a10;*/
     /*border: 5px solid black;*/
 }
+
+.user-items {
+    display: flex;
+    flex-direction: column;
+    color: red;
+    font-size: 1.5rem;
+    width: 100%;
+    gap: 1rem;
+}
+
+.item {
+    display: flex;
+    /*flex-direction: column;*/
+    flex-basis: 33.33%;
+    flex-grow: 1;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item p {
+    flex-basis: 33.33%;
+    flex-grow: 1;
+}
+
+.item img {
+    max-width: 140px;
+    max-height: 90px;
+}
+
+.item-button {
+    color: red;
+    background-color: black;
+    padding: 0 1rem;
+}

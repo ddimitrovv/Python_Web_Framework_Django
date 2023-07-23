@@ -15,7 +15,7 @@ from django.utils import timezone
 
 from Vampires_vs_Werewolves.common.models import Sword, Shield, Boots
 from Vampires_vs_Werewolves.profiles.forms import UserRegisterForm
-from Vampires_vs_Werewolves.profiles.models import CustomUser
+from Vampires_vs_Werewolves.profiles.models import CustomUser, UserProfile
 
 
 class HomeView(TemplateView):
@@ -86,6 +86,47 @@ class MarketplaceItemView(LoginRequiredMixin, TemplateView):
         context['current_user'] = self.request.user
         context['items'] = items_page
         return context
+
+
+class BuyItemView(LoginRequiredMixin, View):
+    def post(self, request, item_type, item_id):
+        user_profile = get_object_or_404(UserProfile, user=request.user)
+
+        # Check if the user is already equipped with an item of the same type
+        if item_type == 'sword' and user_profile.sword:
+            return redirect('marketplace')
+        elif item_type == 'shield' and user_profile.shield:
+            return redirect('marketplace')
+        elif item_type == 'boots' and user_profile.boots:
+            return redirect('marketplace')
+
+        item_model = None
+        if item_type == 'sword':
+            item_model = Sword
+        elif item_type == 'shield':
+            item_model = Shield
+        elif item_type == 'boots':
+            item_model = Boots
+
+        if item_model is None:
+            return redirect('marketplace')
+
+        item = get_object_or_404(item_model, pk=item_id)
+
+        # Check if the user has enough gold to buy the item
+        if user_profile.gold >= item.price and user_profile.level >= item.required_level:
+            user_profile.gold -= item.price
+
+            if item_type == 'sword':
+                user_profile.sword = item
+            elif item_type == 'shield':
+                user_profile.shield = item
+            elif item_type == 'boots':
+                user_profile.boots = item
+
+            user_profile.save()
+
+        return redirect('details user', user_profile.user.username)
 
 
 class WorkView(View):

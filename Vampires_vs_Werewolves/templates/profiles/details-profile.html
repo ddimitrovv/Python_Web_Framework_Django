@@ -106,7 +106,38 @@
 {#            {% endif %}#}
             </div>
             <div class="user-items">
-
+                {% if current_user == user %}
+                    <div class="item sword">
+                        {% if user.userprofile.sword %}
+                            <p>{{ user.userprofile.sword }}</p>
+{#                            <img src="{{ user.userprofile.boots.image.url }}" alt="item image">#}
+                            <p>Required level: {{ user.userprofile.sword.required_level }}</p>
+                            <p>Power: {{ user.userprofile.sword.damage }}</p>
+                            <p>Sell price: </p>
+                            <button class="item-button">Sell</button>
+                        {% endif %}
+                    </div>
+                    <div class="item shield">
+                        {% if user.userprofile.shield %}
+                            <p>{{ user.userprofile.shield }}</p>
+{#                            <img src="{{ user.userprofile.boots.image.url }}" alt="item image">#}
+                            <p>Required level: {{ user.userprofile.shield.required_level }}</p>
+                            <p>Defence: {{ user.userprofile.shield.defense }}</p>
+                            <p>Sell price: </p>
+                            <button class="item-button">Sell</button>
+                        {% endif %}
+                    </div>
+                    <div class="item boots">
+                        {% if user.userprofile.boots %}
+                            <p>{{ user.userprofile.boots }}</p>
+{#                            <img src="{{ user.userprofile.boots.image.url }}" alt="item image">#}
+                            <p>Required level: {{ user.userprofile.boots.required_level }}</p>
+                            <p>Speed: {{ user.userprofile.boots.speed_bonus }}</p>
+                            <p>Sell price: </p>
+                            <button class="item-button">Sell</button>
+                        {% endif %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </section>
