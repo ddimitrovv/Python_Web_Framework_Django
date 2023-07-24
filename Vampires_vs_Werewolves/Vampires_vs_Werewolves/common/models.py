@@ -9,6 +9,12 @@ class Sword(models.Model):
     required_level = models.PositiveIntegerField(default=1)
     image = models.ImageField(null=True)
     price = models.PositiveIntegerField(default=70)
+    sell_price = models.PositiveIntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        # Calculate sell price
+        self.sell_price = int(self.price * 0.6)
+        super(Sword, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -20,6 +26,12 @@ class Shield(models.Model):
     required_level = models.PositiveIntegerField(default=1)
     image = models.ImageField(null=True)
     price = models.PositiveIntegerField(default=70)
+    sell_price = models.PositiveIntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        # Calculate sell price
+        self.sell_price = int(self.price * 0.6)
+        super(Shield, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -31,6 +43,12 @@ class Boots(models.Model):
     required_level = models.PositiveIntegerField(default=1)
     image = models.ImageField(null=True)
     price = models.PositiveIntegerField(default=70)
+    sell_price = models.PositiveIntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        # Calculate sell price
+        self.sell_price = int(self.price * 0.6)
+        super(Boots, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name

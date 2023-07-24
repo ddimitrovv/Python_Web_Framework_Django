@@ -114,17 +114,19 @@ class BuyItemView(LoginRequiredMixin, View):
         item = get_object_or_404(item_model, pk=item_id)
 
         # Check if the user has enough gold to buy the item
-        if user_profile.gold >= item.price and user_profile.level >= item.required_level:
-            user_profile.gold -= item.price
+        if user_profile.gold < item.price or user_profile.level < item.required_level:
+            return redirect('marketplace')
 
-            if item_type == 'sword':
-                user_profile.sword = item
-            elif item_type == 'shield':
-                user_profile.shield = item
-            elif item_type == 'boots':
-                user_profile.boots = item
+        user_profile.gold -= item.price
 
-            user_profile.save()
+        if item_type == 'sword':
+            user_profile.sword = item
+        elif item_type == 'shield':
+            user_profile.shield = item
+        elif item_type == 'boots':
+            user_profile.boots = item
+
+        user_profile.save()
 
         return redirect('details user', user_profile.user.username)
 
