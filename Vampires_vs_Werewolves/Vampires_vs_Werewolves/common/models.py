@@ -22,7 +22,7 @@ class Sword(models.Model):
 
 class Shield(models.Model):
     name = models.CharField(max_length=100)
-    defense = models.PositiveIntegerField(default=20)
+    defence = models.PositiveIntegerField(default=20)
     required_level = models.PositiveIntegerField(default=1)
     image = models.ImageField(null=True)
     price = models.PositiveIntegerField(default=70)

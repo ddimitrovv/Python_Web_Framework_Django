@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: space-evenly;
     height: 70%;
+    margin-top: 0;
 }
 
 .items-inner-wrapper {
@@ -54,4 +55,13 @@
 .item-details i,
 .items-inner-wrapper h2 {
     color: red;
+}
+
+.go-back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 0;
+    font-size: 1.5rem;
 }

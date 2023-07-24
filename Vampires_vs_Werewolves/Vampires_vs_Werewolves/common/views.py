@@ -77,7 +77,7 @@ class MarketplaceItemView(LoginRequiredMixin, TemplateView):
         if item_model is None:
             raise Http404("Item type does not exist")
 
-        items = item_model.objects.all()
+        items = item_model.objects.all().order_by('required_level')
 
         paginator = Paginator(items, 3)
         page_number = self.request.GET.get('page')
@@ -121,11 +121,50 @@ class BuyItemView(LoginRequiredMixin, View):
 
         if item_type == 'sword':
             user_profile.sword = item
+            user_profile.power += item.damage
         elif item_type == 'shield':
             user_profile.shield = item
+            user_profile.defence += item.defence
         elif item_type == 'boots':
             user_profile.boots = item
+            user_profile.speed += item.speed_bonus
 
+        user_profile.save()
+
+        return redirect('details user', user_profile.user.username)
+
+
+class SellItemView(LoginRequiredMixin, View):
+    item_model_mapping = {
+        'sword': Sword,
+        'shield': Shield,
+        'boots': Boots,
+    }
+
+    def post(self, request, item_type, item_id):
+        user_profile = get_object_or_404(UserProfile, user=request.user)
+        item_model = self.item_model_mapping.get(item_type)
+
+        if not item_model:
+            return redirect('details user', user_profile.user.username)
+
+        item = get_object_or_404(item_model, pk=item_id)
+        item_attribute_name = item_type
+
+        if not hasattr(user_profile, item_attribute_name):
+            return redirect('details user', user_profile.user.username)
+
+        old_item = getattr(user_profile, item_attribute_name)
+        user_profile.gold += old_item.sell_price
+
+        if item_type == 'sword':
+            user_profile.power -= old_item.damage
+        elif item_type == 'shield':
+            user_profile.defence -= old_item.defence
+        elif item_type == 'boots':
+            user_profile.speed -= old_item.speed_bonus
+
+        setattr(user_profile, item_attribute_name, None)
         user_profile.save()
 
         return redirect('details user', user_profile.user.username)

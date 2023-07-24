@@ -1,6 +1,6 @@
 {% extends 'common/index.html' %}
 {% load static %}
-{% load custom_filter %}
+{% load custom_filter lowercase_filter %}
 {% block content %}
 
     <section class="details-section">
@@ -113,8 +113,12 @@
 {#                            <img src="{{ user.userprofile.boots.image.url }}" alt="item image">#}
                             <p>Required level: {{ user.userprofile.sword.required_level }}</p>
                             <p>Power: {{ user.userprofile.sword.damage }}</p>
-                            <p>Sell price: </p>
-                            <button class="item-button">Sell</button>
+                            <p>Sell price: {{ user.userprofile.sword.sell_price }}</p>
+                            <form method="post"
+                                  action="{% url 'sell item' item_type=user.userprofile.sword|model_name_lower item_id=user.userprofile.sword.pk %}">
+                                {% csrf_token %}
+                                <button class="item-button" type="submit">Sell</button>
+                            </form>
                         {% endif %}
                     </div>
                     <div class="item shield">
@@ -122,9 +126,13 @@
                             <p>{{ user.userprofile.shield }}</p>
 {#                            <img src="{{ user.userprofile.boots.image.url }}" alt="item image">#}
                             <p>Required level: {{ user.userprofile.shield.required_level }}</p>
-                            <p>Defence: {{ user.userprofile.shield.defense }}</p>
-                            <p>Sell price: </p>
-                            <button class="item-button">Sell</button>
+                            <p>Defence: {{ user.userprofile.shield.defence }}</p>
+                            <p>Sell price: {{ user.userprofile.shield.sell_price }}</p>
+                            <form method="post"
+                                  action="{% url 'sell item' item_type=user.userprofile.shield|model_name_lower item_id=user.userprofile.shield.pk %}">
+                                {% csrf_token %}
+                                <button class="item-button" type="submit">Sell</button>
+                            </form>
                         {% endif %}
                     </div>
                     <div class="item boots">
@@ -133,8 +141,12 @@
 {#                            <img src="{{ user.userprofile.boots.image.url }}" alt="item image">#}
                             <p>Required level: {{ user.userprofile.boots.required_level }}</p>
                             <p>Speed: {{ user.userprofile.boots.speed_bonus }}</p>
-                            <p>Sell price: </p>
-                            <button class="item-button">Sell</button>
+                            <p>Sell price: {{ user.userprofile.boots.sell_price }}</p>
+                            <form method="post"
+                                  action="{% url 'sell item' item_type=user.userprofile.boots|model_name_lower item_id=user.userprofile.boots.pk %}">
+                                {% csrf_token %}
+                                <button class="item-button" type="submit">Sell</button>
+                            </form>
                         {% endif %}
                     </div>
                 {% endif %}

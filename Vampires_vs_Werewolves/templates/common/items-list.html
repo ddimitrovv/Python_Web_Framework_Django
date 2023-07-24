@@ -1,7 +1,7 @@
 {% extends 'common/index.html' %}
 {% load lowercase_filter %}
 {% block content %}
-    <p><a class="go-back" href="{% url 'marketplace' %}">Back</a></p>
+    <p><a class="go-back" href="{% url 'marketplace' %}">Back to Marketplace</a></p>
     <div class="items-wrapper">
         <div class="items">
             {% for item in items %}
@@ -14,7 +14,7 @@
                     </div>
                     <form method="post" action="{% url 'buy item' item_type=item|model_name_lower item_id=item.pk %}">
                         {% csrf_token %}
-                        <button type="submit">Buy<i class="fa-solid fa-cart-shopping"></i></button>
+                        <button class="item-button" type="submit">Buy<i class="fa-solid fa-cart-shopping"></i></button>
                     </form>
 {#                <a href="#">Buy<i class="fa-solid fa-cart-shopping"></i></a>#}
                 </div>

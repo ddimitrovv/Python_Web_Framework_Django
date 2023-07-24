@@ -123,8 +123,8 @@ class UserProfile(models.Model):
     is_working = models.BooleanField(default=False)
 
     def fight(self, opponent):
-        self_hp = self.xp
-        opponent_hp = opponent.xp
+        self_health = self.health
+        opponent_health = opponent.health
 
         self_total_damage = 0
         opponent_total_damage = 0
@@ -142,17 +142,17 @@ class UserProfile(models.Model):
             opponent_total_damage += opponent_damage
 
             # Reduce opponent's HP
-            opponent_hp -= self_damage
+            opponent_health -= self_damage
 
             # Check if opponent is defeated
-            if opponent_hp <= 0:
+            if opponent_health <= 0:
                 break
 
             # Reduce self user's HP
-            self_hp -= opponent_damage
+            self_health -= opponent_damage
 
             # Check if self user is defeated
-            if self_hp <= 0:
+            if self_health <= 0:
                 break
 
         # Determine the winner based on the total damage inflicted
