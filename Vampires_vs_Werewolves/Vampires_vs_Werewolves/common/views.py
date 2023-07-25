@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
@@ -58,6 +60,7 @@ class MarketplaceView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['current_user'] = self.request.user
+        context['user_profile'] = get_object_or_404(UserProfile, user_id=self.request.user.pk)
         return context
 
 
@@ -84,6 +87,7 @@ class MarketplaceItemView(LoginRequiredMixin, TemplateView):
         items_page = paginator.get_page(page_number)
 
         context['current_user'] = self.request.user
+        context['user_profile'] = get_object_or_404(UserProfile, user_id=self.request.user.pk)
         context['items'] = items_page
         return context
 
@@ -121,13 +125,10 @@ class BuyItemView(LoginRequiredMixin, View):
 
         if item_type == 'sword':
             user_profile.sword = item
-            user_profile.power += item.damage
         elif item_type == 'shield':
             user_profile.shield = item
-            user_profile.defence += item.defence
         elif item_type == 'boots':
             user_profile.boots = item
-            user_profile.speed += item.speed_bonus
 
         user_profile.save()
 

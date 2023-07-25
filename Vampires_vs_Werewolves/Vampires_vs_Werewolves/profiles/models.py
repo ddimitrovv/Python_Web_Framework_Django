@@ -97,8 +97,11 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE,
     )
     power = models.PositiveIntegerField(default=10)
+    total_power = models.PositiveIntegerField(default=0)
     defence = models.PositiveIntegerField(default=10)
+    total_defence = models.PositiveIntegerField(default=0)
     speed = models.PositiveIntegerField(default=10)
+    total_speed = models.PositiveIntegerField(default=0)
     wins = models.PositiveIntegerField(default=0)
     losses = models.PositiveIntegerField(default=0)
     sword = models.ForeignKey(
@@ -134,8 +137,8 @@ class UserProfile(models.Model):
         # Fight for 3 rounds
         for _ in range(3):
             # Recalculate damage for each round based on power, defense, and speed
-            self_damage = max(0, self.power - (opponent.defence // 2) + (self.speed // 10))
-            opponent_damage = max(0, opponent.power - (self.defence // 2) + (opponent.speed // 10))
+            self_damage = max(0, self.total_power - (opponent.total_defence // 2) + (self.total_speed // 10))
+            opponent_damage = max(0, opponent.total_power - (self.total_defence // 2) + (opponent.total_speed // 10))
 
             # Update total damage inflicted by each player
             self_total_damage += self_damage
@@ -185,4 +188,10 @@ class UserProfile(models.Model):
     def save(self, *args, **kwargs):
         # Calculate hourly_wage based on hero's level
         self.hourly_wage = self.level * 10
+        if self.sword:
+            self.total_power = self.power + self.sword.damage
+        if self.shield:
+            self.total_defence = self.defence + self.shield.defence
+        if self.sword:
+            self.total_speed += self.speed + self.boots.speed_bonus
         super(UserProfile, self).save(*args, **kwargs)
