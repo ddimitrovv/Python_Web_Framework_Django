@@ -1,14 +1,13 @@
 from itertools import groupby
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator
 from django.db.models import Q
-from django.shortcuts import redirect, get_object_or_404, render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, CreateView
 
-from Vampires_vs_Werewolves.profiles.models import UserProfile, CustomUser
+from Vampires_vs_Werewolves.profiles.models import CustomUser
 from Vampires_vs_Werewolves.user_messages.forms import SendMessageForm
 from Vampires_vs_Werewolves.user_messages.models import CustomMessage
 
@@ -27,8 +26,10 @@ class MessageView(LoginRequiredMixin, TemplateView):
 
         # Group messages by sender's username different from the current user
         grouped_messages = {}
-        for username, group in groupby(messages, key=lambda
-            m: m.sender.username if m.sender != current_user else m.recipient.username):
+        for username, group in groupby(
+                messages,
+                key=lambda m: m.sender.username if m.sender != current_user else m.recipient.username
+        ):
             grouped_messages[username] = list(group)
 
         context['current_user'] = current_user
