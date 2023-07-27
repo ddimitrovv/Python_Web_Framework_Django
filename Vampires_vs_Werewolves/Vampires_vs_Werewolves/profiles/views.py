@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
-from django.views.generic import DetailView, UpdateView, TemplateView
+from django.views.generic import DetailView, UpdateView
 
 from Vampires_vs_Werewolves.common.models import Work
 from Vampires_vs_Werewolves.profiles.forms import UserProfileEditForm
@@ -138,4 +138,3 @@ def fight_view(request, pk):
     }
 
     return render(request, 'profiles/fight-details.html', context)
-

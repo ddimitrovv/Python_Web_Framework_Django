@@ -1,5 +1,3 @@
-from datetime import timedelta
-
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
@@ -142,14 +140,14 @@ class SellItemView(LoginRequiredMixin, View):
         'boots': Boots,
     }
 
-    def post(self, request, item_type, item_id):
+    def post(self, request, item_type):
         user_profile = get_object_or_404(UserProfile, user=request.user)
         item_model = self.item_model_mapping.get(item_type)
 
         if not item_model:
             return redirect('details user', user_profile.user.username)
 
-        item = get_object_or_404(item_model, pk=item_id)
+        # item = get_object_or_404(item_model, pk=item_id)
         item_attribute_name = item_type
 
         if not hasattr(user_profile, item_attribute_name):
@@ -204,7 +202,6 @@ class WorkView(View):
             work = Work.objects.create(
                 user=user,
                 start_time=start_time,
-                hours_worked=hours_worked,
                 hourly_wage=hourly_wage)
 
             user.userprofile.is_working = True
@@ -257,6 +254,7 @@ class CollectMoneyView(View):
 
         # Set the end time to the current time
         work.end_time = current_time
+        work.hours_worked = hours_worked
         work.save()
 
         # Update the user's gold with the earned money
@@ -264,5 +262,5 @@ class CollectMoneyView(View):
         user_profile.gold += earned_money
         user_profile.is_working = False
         user_profile.save()
-
+        print(work.end_time - work.start_time)
         return redirect('home')

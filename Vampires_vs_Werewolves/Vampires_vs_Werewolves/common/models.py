@@ -38,6 +38,10 @@ class Shield(models.Model):
 
 
 class Boots(models.Model):
+    class Meta:
+        verbose_name = 'Boots'
+        verbose_name_plural = 'Boots'
+
     name = models.CharField(max_length=100)
     speed_bonus = models.PositiveIntegerField(default=20)
     required_level = models.PositiveIntegerField(default=1)
@@ -60,3 +64,6 @@ class Work(models.Model):
     end_time = models.DateTimeField(null=True, blank=True)
     hours_worked = models.PositiveIntegerField(default=0)
     hourly_wage = models.PositiveIntegerField(default=10)
+
+    def __str__(self):
+        return f'{self.__class__.__name__} - {self.user}'

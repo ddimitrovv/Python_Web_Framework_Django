@@ -8,15 +8,15 @@
             <div class="profile-picture-opponent">
                 {% if opponent.user.hero_type == 'Vampire' %}
                     {% if opponent.gender == 'Female' %}
-                        <img src="{% static 'pictures/vampire-7749188_1280.webp' %}">
+                        <img src="{% static 'pictures/vampire-7749188_1280.webp' %}" alt="female vampire">
                     {% else %}
-                        <img src="{% static 'pictures/interesting-fact-about-vampires.jpg' %}">
+                        <img src="{% static 'pictures/interesting-fact-about-vampires.jpg' %}" alt="male vampire">
                     {% endif %}
                 {% elif opponent.user.hero_type == 'Werewolf' %}
                     {% if opponent.gender == 'Female' %}
-                        <img src="{% static 'pictures/d73fdd1b-01ec-4824-8c77-4ed1bb904c7c.webp' %}">
+                        <img src="{% static 'pictures/d73fdd1b-01ec-4824-8c77-4ed1bb904c7c.webp' %}" alt="female werewolf">
                     {% else %}
-                        <img src="{% static 'pictures/360_F_544748945_dXYsmas0Z1c4oFjEBUVUHDsCWHTnDvUN.jpg' %}">
+                        <img src="{% static 'pictures/360_F_544748945_dXYsmas0Z1c4oFjEBUVUHDsCWHTnDvUN.jpg' %}" alt="male werewolf">
                     {% endif %}
                 {% endif %}
             </div>

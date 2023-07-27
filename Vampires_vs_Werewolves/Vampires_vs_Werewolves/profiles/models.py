@@ -1,10 +1,6 @@
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.db import models
-from django.templatetags.tz import utc
-from django.utils import timezone
-from django.utils.datetime_safe import datetime
-from django.utils.timezone import make_aware
 
 from Vampires_vs_Werewolves.common.models import Sword, Shield, Boots
 
@@ -40,6 +36,9 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(PermissionsMixin, AbstractBaseUser):
+    class Meta:
+        verbose_name = 'Users'
+        verbose_name_plural = 'Users'
 
     class HeroTypes(models.TextChoices):
         Vampire = 'Vampire',
@@ -90,7 +89,9 @@ class UserProfile(models.Model):
     gold = models.IntegerField(default=100)
     gender = models.CharField(
         choices=Gender.choices,
-        max_length=10
+        max_length=10,
+        blank=True,
+        null=True,
     )
     user = models.OneToOneField(
         CustomUser,
@@ -126,72 +127,72 @@ class UserProfile(models.Model):
     is_working = models.BooleanField(default=False)
 
     def fight(self, opponent):
-        self_health = self.health
-        opponent_health = opponent.health
+        # self_health = self.health
+        # opponent_health = opponent.health
 
         self_total_damage = 0
         opponent_total_damage = 0
 
-        winner = ''
+        winner = None
+        loser = None
 
         # Fight for 3 rounds
         for _ in range(3):
             # Recalculate damage for each round based on power, defense, and speed
-            self_damage = max(0, self.total_power - (opponent.total_defence // 2) + (self.total_speed // 10))
-            opponent_damage = max(0, opponent.total_power - (self.total_defence // 2) + (opponent.total_speed // 10))
+            self_damage = \
+                max(0, self.total_power - (opponent.total_defence // 2) + (self.total_speed // 5)) // 10
+            opponent_damage = \
+                max(0, opponent.total_power - (self.total_defence // 2) + (opponent.total_speed // 5)) // 10
 
             # Update total damage inflicted by each player
             self_total_damage += self_damage
             opponent_total_damage += opponent_damage
 
             # Reduce opponent's HP
-            opponent_health -= self_damage
+            opponent.health -= self_damage
 
             # Check if opponent is defeated
-            if opponent_health <= 0:
+            if opponent.health <= 0:
+                winner = self
+                loser = opponent
                 break
 
             # Reduce self user's HP
-            self_health -= opponent_damage
+            self.health -= opponent_damage
 
             # Check if self user is defeated
-            if self_health <= 0:
+            if self.health <= 0:
+                winner = opponent
+                loser = self
                 break
 
-        # Determine the winner based on the total damage inflicted
-        if self_total_damage > opponent_total_damage:
-            self.gold += int(0.3 * opponent.gold)  # Winner receives 30% of the loser's gold
-            self.xp += self.level * 5  # Increase winner's HP
-            self.level = get_level_from_hp(self.xp)  # Set winner level
-            opponent.gold -= int(0.3 * opponent.gold) if int(0.3 * opponent.gold) >= 0 else 0
-            self.health -= opponent_total_damage if self.health - opponent_total_damage >= 0 else 0
-            opponent.health -= self_total_damage if opponent.health - self_total_damage >= 0 else 0
-            winner = self
-            self.wins += 1  # Increment wins for the winner
-            opponent.losses += 1  # Increment losses for the loser
-        elif opponent_total_damage > self_total_damage:
-            opponent.gold += int(0.3 * self.gold)  # Winner receives 30% of the loser's gold
-            self.gold -= int(0.3 * self.gold) if int(0.3 * self.gold) >= 0 else 0
-            opponent.xp += opponent.level  # Increase opponent HP
-            opponent.level = get_level_from_hp(opponent.xp)  # Set opponent level
-            opponent.health -= self_total_damage if opponent.health - self_total_damage >= 0 else 0
-            self.health -= opponent_total_damage if self.health - opponent_total_damage >= 0 else 0
-            winner = opponent
-            opponent.wins += 1  # Increment wins for the winner
-            self.losses += 1  # Increment losses for the loser
+        if not winner and not loser:
+            winner = self if self_total_damage > opponent_total_damage else opponent
+            loser = self if self_total_damage < opponent_total_damage else opponent
 
-        # Save the updated hero and opponent
-        self.save()
-        opponent.save()
-        return winner or None
+        if winner and loser:
+            winner.gold += int(0.3 * loser.gold)  # Winner receives 30% of the loser's gold
+            winner.xp += winner.level * 5  # Increase winner's HP
+            self.level = get_level_from_hp(winner.xp)  # Set winner level
+            loser.gold -= int(0.3 * loser.gold) if int(0.3 * loser.gold) >= 0 else 0
+            winner.health = max(0, winner.health)
+            loser.health = max(0, loser.health)
+            winner.wins += 1  # Increment wins for the winner
+            loser.losses += 1  # Increment losses for the loser
+
+            # Save the updated hero and opponent
+            winner.save()
+            loser.save()
+
+        return winner
 
     def save(self, *args, **kwargs):
         # Calculate hourly_wage based on hero's level
         self.hourly_wage = self.level * 10
-        if self.sword:
-            self.total_power = self.power + self.sword.damage
-        if self.shield:
-            self.total_defence = self.defence + self.shield.defence
-        if self.sword:
-            self.total_speed += self.speed + self.boots.speed_bonus
+        self.total_power = self.power + self.sword.damage if self.sword else self.power
+        self.total_defence = self.defence + self.shield.defence if self.shield else self.defence
+        self.total_speed += self.speed + self.boots.speed_bonus if self.boots else self.speed
         super(UserProfile, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return f'Username: {CustomUser.objects.get(id=self.pk).username}'
