@@ -1,7 +1,7 @@
 {% extends 'common/index.html' %}
 {% load lowercase_filter %}
 {% block content %}
-    <p><a class="go-back" href="{% url 'marketplace' %}">Back to Marketplace</a></p>
+    <p class="go-back-wrapper"><a class="go-back" href="{% url 'marketplace' %}">Back to Marketplace</a></p>
     <div class="items-wrapper">
         <div class="items">
             {% for item in items %}

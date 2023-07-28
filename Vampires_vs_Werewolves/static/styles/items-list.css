@@ -46,8 +46,8 @@
     font-size: 2em;
 }
 
-.item-details p {
-    font-size: 1.5em;
+.item-details a {
+    width: fit-content;
 }
 
 .item-details a,
@@ -57,11 +57,15 @@
     color: red;
 }
 
-.go-back {
+.go-back-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 1rem;
     margin-bottom: 0;
-    font-size: 1.5rem;
+    font-size: 1.5em;
+}
+
+.items button:hover {
+    cursor: pointer;
 }

@@ -136,3 +136,7 @@ td:first-child {
     background-color: black;
     padding: 0 1rem;
 }
+
+.item-button:hover {
+    cursor: pointer;
+}
