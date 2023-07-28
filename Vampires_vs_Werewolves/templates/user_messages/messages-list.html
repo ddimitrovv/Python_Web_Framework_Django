@@ -5,10 +5,13 @@
 
         <div class="all-messages">
             <div class="messages">
-                {% for user_name in grouped_messages %}
+                {% for user_name, user_data in grouped_messages.items %}
                     <div class="message">
-                         <p>Messages with:</p>
-                         <span><a href="{% url 'user messages' user_name %}">{{ user_name }}</a></span>
+                        <p>Messages with:</p>
+                        <span><a href="{% url 'user messages' user_name %}">{{ user_name }}</a></span>
+                        {% if user_data.has_unread_messages %}
+                            <span class="unread">Unread message!</span>
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>

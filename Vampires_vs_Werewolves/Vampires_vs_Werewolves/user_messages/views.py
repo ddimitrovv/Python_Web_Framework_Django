@@ -22,7 +22,7 @@ class MessageView(LoginRequiredMixin, TemplateView):
         # Get all messages sent or received by the current user
         messages = CustomMessage.objects.filter(
             Q(sender=current_user) | Q(recipient=current_user)
-        ).order_by('-timestamp')
+        ).order_by('timestamp')
 
         # Group messages by sender's username different from the current user
         grouped_messages = {}
@@ -30,7 +30,15 @@ class MessageView(LoginRequiredMixin, TemplateView):
                 messages,
                 key=lambda m: m.sender.username if m.sender != current_user else m.recipient.username
         ):
-            grouped_messages[username] = list(group)
+            user_messages = list(group)
+            has_unread_messages = any(
+                not message.read and message.recipient_id == current_user.pk for message in user_messages
+            )
+            user_data = {
+                'messages': user_messages,
+                'has_unread_messages': has_unread_messages,
+            }
+            grouped_messages[username] = user_data
 
         context['current_user'] = current_user
         context['grouped_messages'] = grouped_messages
@@ -46,11 +54,18 @@ class UserMessagesView(LoginRequiredMixin, View):
             (Q(sender=current_user) & Q(recipient__username=username)) |
             (Q(sender__username=username) & Q(recipient=current_user))
         ).order_by('-timestamp')
+
         context = {
             'current_user': current_user,
             'other_user': username,
             'messages': other_user_messages,
         }
+
+        for message in other_user_messages:
+            if message.recipient == current_user:
+                message.read = True
+                message.save()
+
         return render(request, self.template_name, context)
 
 
