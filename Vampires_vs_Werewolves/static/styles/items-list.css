@@ -46,6 +46,14 @@
     font-size: 2em;
 }
 
+.item-details p {
+    font-size: 1.5em;
+}
+
+.go-back {
+    font-size: 1.4em;
+}
+
 .item-details a {
     width: fit-content;
 }
