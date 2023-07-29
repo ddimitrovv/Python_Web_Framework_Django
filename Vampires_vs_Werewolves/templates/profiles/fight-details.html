@@ -25,10 +25,17 @@
                     <li>Power: {{ user.power }}</li>
                     <li>Defence: {{ user.defence }}</li>
                     <li>Speed: {{ user.speed }}</li>
-                    {% if winner == user %}
-                        <li>Winner</li>
-                    {% endif %}
                 </ul>
+            </div>
+            <div class="fight-result">
+                <span>Winner</span>
+                <span>
+                    {% if user == winner %}
+                        {{ user.user }}
+                    {% else %}
+                        {{ opponent.user }}
+                    {% endif %}
+                </span>
             </div>
             <div class="heroes-card">
                 <div class="profile-picture-opponent">
@@ -51,9 +58,6 @@
                     <li>Power: {{ opponent.power }}</li>
                     <li>Defence: {{ opponent.defence }}</li>
                     <li>Speed: {{ opponent.speed }}</li>
-                    {% if winner == opponent %}
-                        <li>Winner</li>
-                    {% endif %}
                 </ul>
             </div>
         </div>

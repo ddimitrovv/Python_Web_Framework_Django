@@ -73,3 +73,13 @@
     color: red;
     font-weight: bolder;
 }
+
+.fight-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: red;
+    text-shadow: 2px 2px 4px black;
+}
