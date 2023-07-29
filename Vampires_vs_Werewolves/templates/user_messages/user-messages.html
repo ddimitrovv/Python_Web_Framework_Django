@@ -6,6 +6,15 @@
         <div class="all-messages">
             <span><a href="{% url 'messages' %}">Back to Messages</a></span>
             <div class="messages scrollable">
+                <div class="message received">
+                    <form method="POST">
+                        <!-- Form for SendMessage -->
+                        {{ form }}
+                        {% csrf_token %}
+                        <!-- Button to Send Message -->
+                        <button type="submit" class="register">Reply</button>
+                    </form>
+                </div>
                 {% for message in messages %}
                     <div class="message {% if message.sender == current_user %} received {% else %} sent {% endif %}">
                         <p>
@@ -27,5 +36,13 @@
         </div>
 
     </div>
+
+    <script>
+        window.addEventListener("load", function() {
+          var container = document.getElementById("scrollable");
+          container.scrollTop = container.scrollHeight;
+        });
+
+    </script>
 
 {% endblock %}

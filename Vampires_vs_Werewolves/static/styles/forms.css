@@ -74,6 +74,7 @@ textarea {
   height: 100px;
   font-family: "Lato", serif;
   color: white;
+  resize: none;
 }
 
 .add-album, .edit-album, .delete-album, .delete-profile {

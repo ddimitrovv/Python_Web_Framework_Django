@@ -1,14 +1,12 @@
-from itertools import groupby
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, CreateView
 
 from Vampires_vs_Werewolves.profiles.models import CustomUser
-from Vampires_vs_Werewolves.user_messages.forms import SendMessageForm
+from Vampires_vs_Werewolves.user_messages.forms import SendMessageForm, SendMessageFormChat
 from Vampires_vs_Werewolves.user_messages.models import CustomMessage
 
 
@@ -19,20 +17,28 @@ class MessageView(LoginRequiredMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         current_user = self.request.user
 
-        # Get all messages sent or received by the current user
+        # Get all messages sent or received by the current user, ordered by -timestamp
         messages = CustomMessage.objects.filter(
             Q(sender=current_user) | Q(recipient=current_user)
-        ).order_by('timestamp')
+        ).order_by('-timestamp')
 
-        # Group messages by sender's username different from the current user
+        # Group messages by other user
         grouped_messages = {}
-        for username, group in groupby(
-                messages,
-                key=lambda m: m.sender.username if m.sender != current_user else m.recipient.username
-        ):
-            user_messages = list(group)
+        for message in messages:
+            if message.sender != current_user:
+                username = message.sender.username
+            else:
+                username = message.recipient.username
+
+            if username not in grouped_messages:
+                grouped_messages[username] = []
+
+            grouped_messages[username].append(message)
+
+        # Check if there are any unread messages for the current user in each group
+        for username, user_messages in grouped_messages.items():
             has_unread_messages = any(
-                not message.read and message.recipient_id == current_user.pk for message in user_messages
+                not message.read and message.recipient == current_user for message in user_messages
             )
             user_data = {
                 'messages': user_messages,
@@ -56,6 +62,7 @@ class UserMessagesView(LoginRequiredMixin, View):
         ).order_by('-timestamp')
 
         context = {
+            'form': SendMessageFormChat(),
             'current_user': current_user,
             'other_user': username,
             'messages': other_user_messages,
@@ -65,6 +72,39 @@ class UserMessagesView(LoginRequiredMixin, View):
             if message.recipient == current_user:
                 message.read = True
                 message.save()
+
+        return render(request, self.template_name, context)
+
+    def post(self, request, username):
+        current_user = self.request.user
+        form = SendMessageForm(request.POST)
+
+        if form.is_valid():
+            recipient = get_object_or_404(CustomUser, username=username)
+            message_content = form.cleaned_data.get('content')
+
+            # Create a new message
+            CustomMessage.objects.create(
+                sender=current_user,
+                recipient=recipient,
+                content=message_content,
+            )
+
+            # Redirect to the user messages view with the updated message list
+            return redirect('user messages', username=username)
+
+        # If the form is not valid, render the user messages view with the form and messages
+        other_user_messages = CustomMessage.objects.filter(
+            (Q(sender=current_user) & Q(recipient__username=username)) |
+            (Q(sender__username=username) & Q(recipient=current_user))
+        ).order_by('-timestamp')
+
+        context = {
+            'form': form,
+            'current_user': current_user,
+            'other_user': username,
+            'messages': other_user_messages,
+        }
 
         return render(request, self.template_name, context)
 
