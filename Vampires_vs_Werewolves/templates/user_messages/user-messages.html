@@ -6,7 +6,7 @@
         <div class="all-messages">
             <span><a href="{% url 'messages' %}">Back to Messages</a></span>
             <div class="messages scrollable">
-                <div class="message received">
+                <div class="message sent">
                     <form method="POST">
                         <!-- Form for SendMessage -->
                         {{ form }}
@@ -16,7 +16,7 @@
                     </form>
                 </div>
                 {% for message in messages %}
-                    <div class="message {% if message.sender == current_user %} received {% else %} sent {% endif %}">
+                    <div class="message {% if message.sender == current_user %} sent {% else %} received {% endif %}">
                         <p>
                             {% if message.sender == current_user %}
                                 To: <a href="{% url 'details user' message.recipient.username %}">
