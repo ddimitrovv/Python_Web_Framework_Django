@@ -8,15 +8,15 @@
             <div class="profile-picture">
                 {% if user.hero_type == 'Vampire' %}
                     {% if profile.gender == 'Female' %}
-                        <img class="profile-picture" src="{% static 'pictures/vampire-7749188_1280.webp' %}" alt="female vampire">
+                        <img class="profile-picture" src="{% static 'pictures/female-vampire.webp' %}" alt="female vampire">
                     {% else %}
-                        <img class="profile-picture" src="{% static 'pictures/interesting-fact-about-vampires.jpg' %}" alt="male vampire">
+                        <img class="profile-picture" src="{% static 'pictures/male-vampire.jpg' %}" alt="male vampire">
                     {% endif %}
                 {% else %}
                     {% if profile.gender == 'Female' %}
-                        <img class="profile-picture" src="{% static 'pictures/d73fdd1b-01ec-4824-8c77-4ed1bb904c7c.webp' %}" alt=" female werewolf">
+                        <img class="profile-picture" src="{% static 'pictures/female-werewolf.webp' %}" alt=" female werewolf">
                     {% else %}
-                        <img class="profile-picture" src="{% static 'pictures/360_F_544748945_dXYsmas0Z1c4oFjEBUVUHDsCWHTnDvUN.jpg' %}" alt="male werewolf">
+                        <img class="profile-picture" src="{% static 'pictures/male-werewolf.jpg' %}" alt="male werewolf">
                     {% endif %}
                 {% endif %}
                 {% if current_user != user %}

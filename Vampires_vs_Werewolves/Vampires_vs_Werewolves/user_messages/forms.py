@@ -18,7 +18,7 @@ class SendMessageFormChat(forms.ModelForm):
 
         widgets = {
             'content': forms.Textarea(
-                attrs={'placeholder': 'Write your reply...'}
+                attrs={'placeholder': 'Write your message...'}
             ),
         }
         labels = {

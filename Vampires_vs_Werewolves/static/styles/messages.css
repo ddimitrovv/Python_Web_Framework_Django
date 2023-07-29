@@ -47,14 +47,36 @@
     margin-left: auto;
 }
 
+.message.received p {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.fa-circle-check {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 0.6em;
+}
+
 .message.sent {
     border-radius: 20px 20px 20px 0;
     max-width: 70%;
     margin-right: auto;
 }
 
-.message.received form {
-    padding-top: 1rem;
+.fa-paper-plane,
+.fa-envelope {
+    margin-left: 8px;
+}
+
+.message.sent.form {
+    border: none;
+    width: 40rem;
+	background-color: transparent;
+	color: #f3efec;
+    margin: 0 0 5px 0;
+    padding: 0;
 }
 
 .message p {
@@ -92,4 +114,14 @@
     top: 1rem;
     left: 1rem;
     color: #f3efec;
+}
+
+.message-username a {
+    font-size: 1.4rem;
+    color: red;
+    text-shadow: none;
+}
+
+.message.sent.form textarea {
+    margin: 0 0 5px 0;
 }

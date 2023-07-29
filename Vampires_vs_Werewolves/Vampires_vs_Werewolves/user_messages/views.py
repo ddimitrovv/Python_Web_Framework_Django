@@ -56,6 +56,7 @@ class UserMessagesView(LoginRequiredMixin, View):
 
     def get(self, request, username):
         current_user = self.request.user
+        other_user = get_object_or_404(CustomUser, username=username)
         other_user_messages = CustomMessage.objects.filter(
             (Q(sender=current_user) & Q(recipient__username=username)) |
             (Q(sender__username=username) & Q(recipient=current_user))
@@ -64,7 +65,7 @@ class UserMessagesView(LoginRequiredMixin, View):
         context = {
             'form': SendMessageFormChat(),
             'current_user': current_user,
-            'other_user': username,
+            'other_user': other_user,
             'messages': other_user_messages,
         }
 

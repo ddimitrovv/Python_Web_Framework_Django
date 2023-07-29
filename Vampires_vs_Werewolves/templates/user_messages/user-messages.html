@@ -1,4 +1,5 @@
 {% extends 'common/index.html' %}
+{% load static %}
 {% block content %}
 
     <div class="messages-wrapper">
@@ -6,26 +7,34 @@
         <div class="all-messages">
             <span><a href="{% url 'messages' %}">Back to Messages</a></span>
             <div class="messages scrollable">
-                <div class="message sent">
-                    <form method="POST">
+
+                    <form class="message sent form" method="POST">
                         <!-- Form for SendMessage -->
                         {{ form }}
                         {% csrf_token %}
                         <!-- Button to Send Message -->
-                        <button type="submit" class="register">Reply</button>
+                        <button type="submit" class="item-button">
+                            Send
+{#                            <i class="fa-solid fa-paper-plane"></i>#}
+                            <i class="fa-solid fa-envelope"></i>
+                        </button>
                     </form>
-                </div>
                 {% for message in messages %}
                     <div class="message {% if message.sender == current_user %} sent {% else %} received {% endif %}">
                         <p>
                             {% if message.sender == current_user %}
-                                To: <a href="{% url 'details user' message.recipient.username %}">
-                                        {{ message.recipient }}
-                                    </a>
+{#                                To: <a href="{% url 'details user' message.recipient.username %}">#}
+{#                                        {{ message.recipient }}#}
+{#                                    </a>#}
+                                     {% if message.sender == current_user and message.read %}
+                                         <i class="fa-solid fa-circle-check"></i>
+                                     {% else %}
+                                         <i class="fa-regular fa-circle-check"></i>
+                                     {% endif %}
                             {% else %}
-                                From: <a href="{% url 'details user' message.sender.username %}">
-                                        {{ message.sender }}
-                                    </a>
+{#                                From: <a href="{% url 'details user' message.sender.username %}">#}
+{#                                        {{ message.sender }}#}
+{#                                    </a>#}
                             {% endif %}
                         </p>
                         <p class="message-content">{{ message.content }}</p>
@@ -34,15 +43,29 @@
                 {% endfor %}
             </div>
         </div>
-
+            <div class="hero-card">
+            <div class="profile-picture">
+                {% if other_user.hero_type == 'Vampire' %}
+                    {% if other_user.userprofile.gender == 'Female' %}
+                        <img class="profile-picture" src="{% static 'pictures/female-vampire.webp' %}" alt="female vampire">
+                    {% else %}
+                        <img class="profile-picture" src="{% static 'pictures/male-vampire.jpg' %}" alt="male vampire">
+                    {% endif %}
+                {% else %}
+                    {% if other_user.userprofile.gender == 'Female' %}
+                        <img class="profile-picture" src="{% static 'pictures/female-werewolf.webp' %}" alt=" female werewolf">
+                    {% else %}
+                        <img class="profile-picture" src="{% static 'pictures/male-werewolf.jpg' %}" alt="male werewolf">
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="message-username">
+                <a href="{% url 'details user' other_user %}">
+                    {{ other_user }}
+                </a>
+            </div>
+        </div>
     </div>
-
-    <script>
-        window.addEventListener("load", function() {
-          var container = document.getElementById("scrollable");
-          container.scrollTop = container.scrollHeight;
-        });
-
-    </script>
+    <script>{% static 'js/scroll-top.js' %}</script>
 
 {% endblock %}
