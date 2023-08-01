@@ -13,8 +13,8 @@ click-didyoumean==0.3.0
 click-plugins==1.1.1
 click-repl==0.3.0
 crashtest==0.4.1
-cryptography==37.0.4
-distlib==0.3.6
+cryptography==41.0.2
+distlib==0.3.7
 Django==4.2.3
 dulwich==0.21.5
 filelock==3.12.2
@@ -33,9 +33,9 @@ msgpack==1.0.5
 packaging==23.1
 pexpect==4.8.0
 Pillow==10.0.0
-pipenv==2023.7.11
+pipenv==2023.7.23
 pkginfo==1.9.6
-platformdirs==3.9.1
+platformdirs==3.10.0
 poetry==1.5.1
 poetry-core==1.6.1
 poetry-plugin-export==1.4.0
@@ -60,7 +60,7 @@ typing_extensions==4.7.1
 tzdata==2023.3
 urllib3==1.26.16
 vine==5.0.0
-virtualenv==20.24.0
+virtualenv==20.24.2
 virtualenv-clone==0.5.7
 wcwidth==0.2.6
 webencodings==0.5.1
