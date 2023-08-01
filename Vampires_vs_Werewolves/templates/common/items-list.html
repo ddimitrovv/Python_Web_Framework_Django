@@ -10,12 +10,12 @@
                     <div class="items-inner-wrapper">
                         <h2>{{ item.name }}</h2>
                         <img src="{{ item.image.url }}" alt="item image">
-                        <p>Required level: {{ item.required_level }}</p>
-                        <p class="item-price">Price: {{ item.price }}</p>
+                        <p class="required-level" id="{{ user_profile.level }}">Required level: {{ item.required_level }}</p>
+                        <p class="item-price" id="{{ user_profile.gold }}">Price: {{ item.price }}</p>
                     </div>
                     <form method="post" action="{% url 'buy item' item_type=item|model_name_lower item_id=item.pk %}">
                         {% csrf_token %}
-                        <button class="item-button" id="{{ user_profile.gold }}" type="submit">Buy<i class="fa-solid fa-cart-shopping"></i></button>
+                        <button class="item-button" type="submit">Buy<i class="fa-solid fa-cart-shopping"></i></button>
                     </form>
 {#                <a href="#">Buy<i class="fa-solid fa-cart-shopping"></i></a>#}
                 </div>
