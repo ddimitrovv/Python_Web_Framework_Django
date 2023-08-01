@@ -202,7 +202,9 @@ class WorkView(View):
             work = Work.objects.create(
                 user=user,
                 start_time=start_time,
-                hourly_wage=hourly_wage)
+                hourly_wage=hourly_wage,
+                hours_worked=hours_worked,
+            )
 
             user.userprofile.is_working = True
             user.userprofile.save()
@@ -262,5 +264,4 @@ class CollectMoneyView(View):
         user_profile.gold += earned_money
         user_profile.is_working = False
         user_profile.save()
-        print(work.end_time - work.start_time)
         return redirect('home')
