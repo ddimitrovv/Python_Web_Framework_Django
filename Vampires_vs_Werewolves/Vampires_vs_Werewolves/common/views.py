@@ -226,12 +226,18 @@ class WorkStatusView(View):
         current_time = timezone.now()
         time_difference = current_time - work.start_time
         remaining_hours = work.hours_worked - int(time_difference.total_seconds() // 3600)
-        money_earned = work.hourly_wage * (work.hours_worked - remaining_hours)
+        # Calculate the amount of money earned based on the hours worked
+        hourly_wage = work.user.userprofile.hourly_wage
+        start_time = work.start_time
+        hours_worked = (current_time - start_time).seconds // 3600
+        earned_money = hourly_wage * hours_worked \
+            if hours_worked <= work.hours_worked \
+            else hourly_wage * work.hours_worked
 
         context = {
             'work': work,
             'remaining_hours': remaining_hours,
-            'money_earned': money_earned,
+            'money_earned': earned_money,
             'current_user': self.request.user
         }
 
@@ -252,7 +258,9 @@ class CollectMoneyView(View):
         start_time = work.start_time
         current_time = timezone.now()
         hours_worked = (current_time - start_time).seconds // 3600
-        earned_money = hourly_wage * hours_worked
+        earned_money = hourly_wage * hours_worked \
+            if hours_worked <= work.hours_worked \
+            else hourly_wage * work.hours_worked
 
         # Set the end time to the current time
         work.end_time = current_time
