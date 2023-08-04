@@ -54,12 +54,21 @@ nav::after {
 }
 
 
+/*.home-buttons {*/
+/*    position: absolute;*/
+/*    top: 40%;*/
+/*    left: 50%;*/
+/*    transform: translate(-40%, -50%);*/
+/*    text-align: center;*/
+/*}*/
+
 .home-buttons {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-40%, -50%);
     text-align: center;
+    display: flex;
+    justify-content: flex-end;
+    gap: 2%;
+    margin-top: 2%;
+    margin-right: 5%;
 }
 
 .home-buttons a {
@@ -128,9 +137,6 @@ nav::after {
 }
 
 .username {
-    /*position: absolute;*/
-    /*left: 4%;*/
-    /*top: 50%;*/
     color: red;
     font-size: 26px;
 }
@@ -221,4 +227,12 @@ lipstick: #390000
     color: red;
     font-size: 1.2rem;
     margin-left: 1rem;
+}
+
+#registerPage form {
+    margin-top: 5%;
+}
+
+.register {
+    margin-top: 10%;
 }

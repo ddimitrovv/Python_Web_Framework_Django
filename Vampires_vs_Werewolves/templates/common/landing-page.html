@@ -1,0 +1,38 @@
+{% load static %}
+{% block landing %}
+     <div class="carousel-container">
+        <div class="carousel">
+            <div class="slide">
+                <div class="description">
+                    <h1>Welcome to the epic battle of "Vampire Vs Werewolves"!</h1>
+                    <p>Choose your side and join the eternal struggle between these immortal creatures. In this thrilling multiplayer game, you'll take on the role of a vampire or a werewolf and embark on an unforgettable adventure in a dark and mysterious world.</p>
+                    <p>Unleash your supernatural powers and test your strategic skills as you fight for dominance. As a vampire, harness the night's power to mesmerize your enemies and drain their life force. If you're a werewolf, embrace the fury of the full moon, transforming into a formidable beast with unmatched strength and speed.</p>
+                    <p>Explore an immersive land teeming with ancient ruins, eerie forests, and haunting castles. Discover hidden treasures and rare artifacts that will enhance your abilities and aid you in your quest for supremacy.</p>
+                    <p>The fate of these two mythical races lies in your hands. Will you bring eternal night as a vampire or howl under the moon as a werewolf? The battle for supremacy awaits!</p>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="description">
+                    <h2>Rules:</h2>
+                    <ul role="list">
+                        <li>Choose Your Side: At the beginning of the game, players must choose to play as either a vampire or a werewolf. Each side has unique abilities and strengths, so choose wisely.</li>
+                        <li>Quests and Objectives: Complete thrilling quests and missions to gain experience points and unlock new powers. Work together with your faction to achieve common goals and dominate the land.</li>
+{#                        <li>Night and Day Cycle: The game operates on a dynamic night and day cycle. Vampires are stronger at night, while werewolves gain power during the full moon. Plan your strategies accordingly to exploit your faction's strengths.</li>#}
+                        <li>Player vs. Player (PvP) Battles: Engage in intense real-time PvP battles against players from opposing factions. Show off your combat skills and prove your faction's superiority.</li>
+{#                        <li>Collect Artifacts: Discover ancient artifacts and magical items scattered throughout the land. These artifacts will enhance your abilities and provide an advantage in battles.</li>#}
+{#                        <li>Clan System: Join or create a clan with fellow players to strengthen your faction's influence. Participate in clan wars and climb the ranks to become the most powerful clan in the game.</li>#}
+                        <li>Explore the Land: Venture into dark forests, treacherous mountains, and haunted ruins. Unravel the mysteries of the land and uncover its secrets.</li>
+{#                        <li>Teamwork and Alliances: Forge alliances with players from your faction to create a formidable force. Coordinate attacks and defend your territory together.</li>#}
+{#                        <li>Immortal Struggle: In this everlasting battle between vampires and werewolves, there are no winners or losers—only eternal rivals seeking supremacy.</li>#}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="carousel-buttons">
+        <button id="prevBtn">Previous</button>
+        <button id="nextBtn">Next</button>
+    </div>
+    <script src="{% static 'js/landing-page.js' %}"></script>
+
+{% endblock %}
