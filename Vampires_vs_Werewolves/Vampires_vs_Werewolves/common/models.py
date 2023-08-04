@@ -69,21 +69,21 @@ class Work(models.Model):
         return f'{self.__class__.__name__} - {self.user}'
 
 
-class UserHiding(models.Model):
-    user = models.OneToOneField('profiles.UserProfile', on_delete=models.CASCADE)
-    hidden_at = models.DateTimeField(default=timezone.now)
-    next_available_hiding_time = models.DateTimeField(default=timezone.now)
-
-    def can_hide(self):
-        # Check if the user can hide their profile based on the next available hiding time
-        return timezone.now() >= self.next_available_hiding_time
-
-    def hide_profile(self):
-        # Hide the profile and update the hidden_at and next_available_hiding_time fields
-        if self.can_hide():
-            now = timezone.now()
-            self.hidden_at = now
-            self.next_available_hiding_time = now + timezone.timedelta(hours=12)
-            self.save()
-            return True
-        return False
+# class UserHiding(models.Model):
+#     user = models.OneToOneField('profiles.UserProfile', on_delete=models.CASCADE)
+#     hidden_at = models.DateTimeField(default=timezone.now)
+#     next_available_hiding_time = models.DateTimeField(default=timezone.now)
+#
+#     def can_hide(self):
+#         # Check if the user can hide their profile based on the next available hiding time
+#         return timezone.now() >= self.next_available_hiding_time
+#
+#     def hide_profile(self):
+#         # Hide the profile and update the hidden_at and next_available_hiding_time fields
+#         if self.can_hide():
+#             now = timezone.now()
+#             self.hidden_at = now
+#             self.next_available_hiding_time = now + timezone.timedelta(hours=12)
+#             self.save()
+#             return True
+#         return False

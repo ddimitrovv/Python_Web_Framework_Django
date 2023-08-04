@@ -5,6 +5,10 @@
 
     <section class="details-section">
         <div class="hero-card">
+            {% if current_user != user %}
+                <div class="username">{{ user }}</div>
+            {% endif %}
+            <div class="hero-level">Level: {{ profile.level }}</div>
             <div class="profile-picture">
                 {% if user.hero_type == 'Vampire' %}
                     {% if profile.gender == 'Female' %}
@@ -19,9 +23,9 @@
                         <img class="profile-picture" src="{% static 'pictures/male-werewolf.jpg' %}" alt="male werewolf">
                     {% endif %}
                 {% endif %}
-                {% if current_user != user %}
-                    <div class="username">{{ user }}</div>
-                {% endif %}
+{#                {% if current_user != user %}#}
+{#                    <div class="username">{{ user }}</div>#}
+{#                {% endif %}#}
             </div>
             {% if current_user == user %}
                 <form method="post" class="change-genre">
@@ -42,10 +46,10 @@
             <div class="profile-details">
             <ul class="user-details" role="list">
 {#                <li><span class="profile-name">{{ current_user }}</span> </li>#}
-                <li>XP: {{ profile.xp }}</li>
-                <li>Level: {{ profile.level }}</li>
+                <li>XP: {{ profile.xp }} / {{ profile.max_xp_for_level }}</li>
+{#                <li>Level: {{ profile.level }}</li>#}
                 {% if current_user == user %}
-                    <li>Health: {{ profile.health }}</li>
+                    <li>Health: {{ profile.health }} / {{ profile.max_health_for_level }}</li>
                     <li class="hero-gold">Gold: {{ profile.gold }}</li>
                 {% endif %}
                 <li>Wins: {{ profile.wins }}</li>

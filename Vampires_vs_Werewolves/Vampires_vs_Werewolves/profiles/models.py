@@ -14,6 +14,28 @@ def get_level_from_hp(hp, base_hp=100, multiplier=2.5):
     return level
 
 
+def get_max_hp_for_current_level(hero):
+    level = hero.level
+    max_hp = 0
+    multiplier = 2.5
+    base_hp = 100
+    counter = 1
+    while counter <= level:
+        max_hp = base_hp * multiplier
+        base_hp = max_hp
+        counter += 1
+    return int(max_hp)
+
+
+def get_max_health_for_current_level(hero):
+    return int(get_health_from_level(hero.level))
+
+
+def get_health_from_level(level, base_hp=100, multiplier=2.5):
+    health = level * base_hp * multiplier
+    return health
+
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, username, password=None, is_staff=False, is_superuser=False):
         if not username:
@@ -85,6 +107,8 @@ class UserProfile(models.Model):
 
     xp = models.IntegerField(default=100)
     health = models.IntegerField(default=100)
+    max_health_for_level = models.IntegerField(default=0)
+    max_xp_for_level = models.IntegerField(default=0)
     level = models.IntegerField(default=1)
     gold = models.IntegerField(default=100)
     gender = models.CharField(
@@ -125,6 +149,7 @@ class UserProfile(models.Model):
     )
     hourly_wage = models.PositiveIntegerField(default=10)
     is_working = models.BooleanField(default=False)
+    is_healing = models.BooleanField(default=False)
 
     def fight(self, opponent):
         # self_health = self.health
@@ -173,7 +198,8 @@ class UserProfile(models.Model):
         if winner and loser:
             winner.gold += int(0.3 * loser.gold)  # Winner receives 30% of the loser's gold
             winner.xp += winner.level * 5  # Increase winner's HP
-            self.level = get_level_from_hp(winner.xp)  # Set winner level
+            winner.level = get_level_from_hp(winner.xp)  # Set winner level
+            winner.health = get_health_from_level(winner.level)
             loser.gold -= int(0.3 * loser.gold) if int(0.3 * loser.gold) >= 0 else 0
             winner.health = max(0, winner.health)
             loser.health = max(0, loser.health)
@@ -191,8 +217,15 @@ class UserProfile(models.Model):
         self.hourly_wage = self.level * 10
         self.total_power = self.power + self.sword.damage if self.sword else self.power
         self.total_defence = self.defence + self.shield.defence if self.shield else self.defence
-        self.total_speed += self.speed + self.boots.speed_bonus if self.boots else self.speed
+        self.total_speed = self.speed + self.boots.speed_bonus if self.boots else self.speed
+        self.max_health_for_level = get_max_health_for_current_level(self)
+        self.max_xp_for_level = get_max_hp_for_current_level(self)
+
         super(UserProfile, self).save(*args, **kwargs)
 
+        # if self.health < self.max_health_for_level:
+        #     # If health is below max_health, start healing asynchronously
+        #     'profiles.start_healing'.delay(self.id)
+
     def __str__(self):
-        return f'Username: {CustomUser.objects.get(id=self.pk).username}'
+        return f'Username: {CustomUser.objects.get(id=self.pk)}'

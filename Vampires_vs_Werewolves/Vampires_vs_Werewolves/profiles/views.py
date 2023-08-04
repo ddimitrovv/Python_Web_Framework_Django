@@ -8,7 +8,7 @@ from Vampires_vs_Werewolves.common.models import Work
 from Vampires_vs_Werewolves.profiles.forms import UserProfileEditForm
 from Vampires_vs_Werewolves.profiles.models import CustomUser, UserProfile
 from custom.custom_functions import get_user_profile, get_user_object
-
+from Vampires_vs_Werewolves.profiles.tasks import start_healing
 
 class DetailsUserView(LoginRequiredMixin, DetailView):
     model = CustomUser
@@ -125,10 +125,31 @@ class UserProfileEditView(UpdateView):
         return context
 
 
+# def fight_view(request, pk):
+#     user_profile = get_user_profile(request)
+#     opponent = UserProfile.objects.get(user_id=pk)
+#     winner = user_profile.fight(opponent)
+#
+#     context = {
+#         'current_user': get_user_object(request),
+#         'opponent': opponent,
+#         'winner': winner,
+#         'user': user_profile
+#     }
+#
+#     return render(request, 'profiles/fight-details.html', context)
 def fight_view(request, pk):
     user_profile = get_user_profile(request)
-    opponent = UserProfile.objects.get(user_id=pk)
+    opponent = get_object_or_404(UserProfile, user_id=pk)
+
     winner = user_profile.fight(opponent)
+
+    # Check if health is below max_health, and start healing asynchronously
+    if user_profile.health < user_profile.max_health_for_level and not user_profile.is_healing:
+        start_healing.delay(user_profile.id)
+
+    if opponent.health < opponent.max_health_for_level and not opponent.is_healing:
+        start_healing.delay(opponent.id)
 
     context = {
         'current_user': get_user_object(request),
