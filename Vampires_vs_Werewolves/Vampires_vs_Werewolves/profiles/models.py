@@ -5,7 +5,7 @@ from django.db import models
 from Vampires_vs_Werewolves.common.models import Sword, Shield, Boots
 
 
-def get_level_from_hp(hp, base_hp=100, multiplier=2.5):
+def get_level_from_hp(hp, base_hp=250, multiplier=2.5):
     level = 1
     while hp >= base_hp:
         hp -= base_hp
@@ -152,8 +152,7 @@ class UserProfile(models.Model):
     is_healing = models.BooleanField(default=False)
 
     def fight(self, opponent):
-        # self_health = self.health
-        # opponent_health = opponent.health
+        min_damage = 3
 
         self_total_damage = 0
         opponent_total_damage = 0
@@ -161,13 +160,14 @@ class UserProfile(models.Model):
         winner = None
         loser = None
 
+        # Calculate the damage for each round based on power, defense, and speed
+        self_damage = \
+            max(min_damage, (self.total_power - (opponent.total_defence // 2) + (self.total_speed // 5)) // 2)
+        opponent_damage = \
+            max(min_damage, (opponent.total_power - (self.total_defence // 2) + (opponent.total_speed // 5)) // 2)
+
         # Fight for 3 rounds
         for _ in range(3):
-            # Recalculate damage for each round based on power, defense, and speed
-            self_damage = \
-                max(0, self.total_power - (opponent.total_defence // 2) + (self.total_speed // 5)) // 10
-            opponent_damage = \
-                max(0, opponent.total_power - (self.total_defence // 2) + (opponent.total_speed // 5)) // 10
 
             # Update total damage inflicted by each player
             self_total_damage += self_damage
@@ -199,7 +199,6 @@ class UserProfile(models.Model):
             winner.gold += int(0.3 * loser.gold)  # Winner receives 30% of the loser's gold
             winner.xp += winner.level * 5  # Increase winner's HP
             winner.level = get_level_from_hp(winner.xp)  # Set winner level
-            winner.health = get_health_from_level(winner.level)
             loser.gold -= int(0.3 * loser.gold) if int(0.3 * loser.gold) >= 0 else 0
             winner.health = max(0, winner.health)
             loser.health = max(0, loser.health)

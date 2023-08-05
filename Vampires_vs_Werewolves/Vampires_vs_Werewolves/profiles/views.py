@@ -139,6 +139,7 @@ class UserProfileEditView(UpdateView):
 #
 #     return render(request, 'profiles/fight-details.html', context)
 def fight_view(request, pk):
+    user = request.user
     user_profile = get_user_profile(request)
     opponent = get_object_or_404(UserProfile, user_id=pk)
 
@@ -146,7 +147,7 @@ def fight_view(request, pk):
 
     # Check if health is below max_health, and start healing asynchronously
     if user_profile.health < user_profile.max_health_for_level and not user_profile.is_healing:
-        start_healing.delay(user_profile.id)
+        start_healing.delay(user.id)
 
     if opponent.health < opponent.max_health_for_level and not opponent.is_healing:
         start_healing.delay(opponent.id)
@@ -159,3 +160,4 @@ def fight_view(request, pk):
     }
 
     return render(request, 'profiles/fight-details.html', context)
+
