@@ -19,13 +19,13 @@
 }
 
 .work-status-wrapper a {
-    color: #f3efec;
+    color: var(--light-skin);
     border: 2px solid black;
     padding: 4px 12px;
     background-color: black;
     text-decoration: none;
     border-radius: 8px;
-    box-shadow: 0 0 4px #f3efec;
+    box-shadow: 0 0 4px var(--light-skin);
     margin-top: 1.5rem;
     font-size: 1.25rem;
 }

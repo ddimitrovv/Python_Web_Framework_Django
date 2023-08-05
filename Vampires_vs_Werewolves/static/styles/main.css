@@ -4,6 +4,11 @@
   src: url('/static/fonts/CloisterBlack.ttf') format('truetype');
 }
 
+:root {
+  --light-skin: #f3efec;
+  --lipstick: #390000;
+}
+
 /*
 "Aladin", cursive
 "Cloister Black", sans-serif
@@ -11,7 +16,7 @@
 
 html {
     font-family: "Aladin", cursive;
-    text-shadow: 2px 2px 4px #f3efec;
+    text-shadow: 2px 2px 4px var(--light-skin);
 }
 
 body {
@@ -19,7 +24,7 @@ body {
     background-size: cover;
     position: relative;
     overflow: hidden;
-    text-shadow: 1px 1px 2px #390000;
+    text-shadow: 1px 1px 2px var(--lipstick);
     letter-spacing: 0.1em;
     height: 100vh;
 }
@@ -50,7 +55,7 @@ nav::after {
   left: 0;
   width: 100%;
   height: 0.25rem;
-  background: linear-gradient(to right, #f3efec, black, #f3efec);
+  background: linear-gradient(to right, var(--light-skin), black, var(--light-skin));
 }
 
 
@@ -109,7 +114,7 @@ nav::after {
     font-size: 30px;
     font-weight: bold;
     margin: 5px 20px;
-    text-shadow: 2px 2px 5px #f3efec;
+    text-shadow: 2px 2px 5px var(--light-skin);
 }
 
 .message-button a {
@@ -118,7 +123,7 @@ nav::after {
     font-size: 30px;
     font-weight: bold;
     margin: 5px 20px;
-    text-shadow: 2px 2px 5px #f3efec;
+    text-shadow: 2px 2px 5px var(--light-skin);
 }
 
 .house-button a {
@@ -127,7 +132,7 @@ nav::after {
     font-size: 30px;
     font-weight: bold;
     margin: 5px 20px;
-    text-shadow: 2px 2px 5px #f3efec;
+    text-shadow: 2px 2px 5px var(--light-skin);
 }
 
 .logout-button {
@@ -140,13 +145,9 @@ nav::after {
     color: red;
     font-size: 26px;
 }
-/*colors :
-light-skin: #f3efec
-lipstick: #390000
-*/
 
 .profile-name {
-    color: #f3efec;
+    color: var(--light-skin);
     font-size: 2em;
 }
 
@@ -177,7 +178,7 @@ lipstick: #390000
 
 .market-wrapper a {
     text-decoration: none;
-    color: #f3efec;
+    color: var(--light-skin);
     font-size: 2.5rem;
     text-shadow: 2px 2px 4px black;
 }
@@ -185,43 +186,41 @@ lipstick: #390000
 /* marketplace */
 
 
-.market-image-inner {
-    width: 20rem;
-    height: 14rem;
-    /*margin-top: 10%;*/
-    /*margin-left: 15%;*/
-    border: 6px solid black;
-    object-fit: fill;
-}
+/*.market-image-inner {*/
+/*    width: 20rem;*/
+/*    height: 14rem;*/
+/*    !*margin-top: 10%;*!*/
+/*    !*margin-left: 15%;*!*/
+/*    border: 6px solid black;*/
+/*    object-fit: fill;*/
+/*}*/
 
-.main-options-inner {
-    display: flex;
-    height: 80%;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-}
+/*.main-options-inner {*/
+/*    display: flex;*/
+/*    height: 80%;*/
+/*    justify-content: space-evenly;*/
+/*    align-items: center;*/
+/*    flex-wrap: wrap;*/
+/*}*/
 
-.market-wrapper-inner {
-    width: 30%;
-    height: 50%;
-    /*margin-top: 3rem;*/
-    /*margin-left: 10%;*/
-    display: flex;
-    flex-direction: column;
-    max-width: 20rem;
-    justify-content: center;
-    align-items: center;
-    flex-basis: 33.33%;
-    flex-grow: 1;
-}
+/*.market-wrapper-inner {*/
+/*    width: 30%;*/
+/*    height: 50%;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    max-width: 20rem;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    flex-basis: 33.33%;*/
+/*    flex-grow: 1;*/
+/*}*/
 
-.market-wrapper-inner a {
-    text-decoration: none;
-    color: #f3efec;
-    font-size: 2.5rem;
-    text-shadow: 2px 2px 4px black;
-}
+/*.market-wrapper-inner a {*/
+/*    text-decoration: none;*/
+/*    color: #f3efec;*/
+/*    font-size: 2.5rem;*/
+/*    text-shadow: 2px 2px 4px black;*/
+/*}*/
 
 .go-back {
     text-decoration: none;

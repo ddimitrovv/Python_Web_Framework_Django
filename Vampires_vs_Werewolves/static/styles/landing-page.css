@@ -14,7 +14,7 @@
     flex: 0 0 100%;
     background: url("../../static/pictures/background2.jpeg") no-repeat;
     background-size: cover;
-    color: #f3efec;
+    color: var(--light-skin);
     height: 55rem;
 }
 

@@ -16,7 +16,7 @@
 .pagination a,
 .pagination span {
     text-decoration: none;
-    color: #f3efec;
+    color: var(--light-skin);
     font-size: 24px;
 /*    text-shadow: 4px 4px 8px black;*/
 /*    background-color: black;*/
