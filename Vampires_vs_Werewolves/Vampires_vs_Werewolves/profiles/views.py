@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
@@ -9,6 +10,7 @@ from Vampires_vs_Werewolves.profiles.forms import UserProfileEditForm
 from Vampires_vs_Werewolves.profiles.models import CustomUser, UserProfile
 from custom.custom_functions import get_user_profile, get_user_object
 from Vampires_vs_Werewolves.profiles.tasks import start_healing
+
 
 class DetailsUserView(LoginRequiredMixin, DetailView):
     model = CustomUser
@@ -34,37 +36,44 @@ class DetailsUserView(LoginRequiredMixin, DetailView):
         return redirect('details user', self.request.user.username)
 
 
-class UpgradeHeroPower(UpdateView, LoginRequiredMixin):
+class UpgradeHeroAttributeView(View, LoginRequiredMixin):
+    attribute = None
+    cost_multiplier = 1.5
+
+    def get_attribute_value(self, profile):
+        raise NotImplementedError("Subclasses must provide a way to get the attribute value")
+
+    def upgrade_attribute(self, profile):
+        if profile.gold >= int((self.get_attribute_value(profile) + 1) * self.cost_multiplier):
+            profile.gold -= int((self.get_attribute_value(profile) + 1) * self.cost_multiplier)
+            setattr(profile, self.attribute, getattr(profile, self.attribute) + 1)
+            profile.save()
 
     def get(self, request, *args, **kwargs):
         profile = get_user_profile(request)
-        if profile.gold >= int((profile.power + 1) * 1.5):
-            profile.gold -= int((profile.power + 1) * 1.5)
-            profile.power += 1
-            profile.save()
+        self.upgrade_attribute(profile)
         return redirect('details user', self.request.user.username)
 
 
-class UpgradeHeroDefence(UpdateView, LoginRequiredMixin):
+class UpgradeHeroPowerView(UpgradeHeroAttributeView):
+    attribute = 'power'
 
-    def get(self, request, *args, **kwargs):
-        profile = get_user_profile(request)
-        if profile.gold >= int((profile.defence + 1) * 1.5):
-            profile.gold -= int((profile.defence + 1) * 1.5)
-            profile.defence += 1
-            profile.save()
-        return redirect('details user', self.request.user.username)
+    def get_attribute_value(self, profile):
+        return profile.power
 
 
-class UpgradeHeroSpeed(UpdateView, LoginRequiredMixin):
+class UpgradeHeroDefenceView(UpgradeHeroAttributeView):
+    attribute = 'defence'
 
-    def get(self, request, *args, **kwargs):
-        profile = get_user_profile(request)
-        if profile.gold >= int((profile.speed + 1) * 1.5):
-            profile.gold -= int((profile.speed + 1) * 1.5)
-            profile.speed += 1
-            profile.save()
-        return redirect('details user', self.request.user.username)
+    def get_attribute_value(self, profile):
+        return profile.defence
+
+
+class UpgradeHeroSpeedView(UpgradeHeroAttributeView):
+    attribute = 'speed'
+
+    def get_attribute_value(self, profile):
+        return profile.speed
 
 
 class ChooseOpponentView(LoginRequiredMixin, View):
@@ -125,19 +134,7 @@ class UserProfileEditView(UpdateView):
         return context
 
 
-# def fight_view(request, pk):
-#     user_profile = get_user_profile(request)
-#     opponent = UserProfile.objects.get(user_id=pk)
-#     winner = user_profile.fight(opponent)
-#
-#     context = {
-#         'current_user': get_user_object(request),
-#         'opponent': opponent,
-#         'winner': winner,
-#         'user': user_profile
-#     }
-#
-#     return render(request, 'profiles/fight-details.html', context)
+@login_required
 def fight_view(request, pk):
     user = request.user
     user_profile = get_user_profile(request)
@@ -160,4 +157,3 @@ def fight_view(request, pk):
     }
 
     return render(request, 'profiles/fight-details.html', context)
-

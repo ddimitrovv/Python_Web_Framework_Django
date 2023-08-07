@@ -140,7 +140,7 @@ class SellItemView(LoginRequiredMixin, View):
         'boots': Boots,
     }
 
-    def post(self, request, item_type):
+    def post(self, request, item_type, item_id):
         user_profile = get_object_or_404(UserProfile, user=request.user)
         item_model = self.item_model_mapping.get(item_type)
 
@@ -155,13 +155,6 @@ class SellItemView(LoginRequiredMixin, View):
 
         old_item = getattr(user_profile, item_attribute_name)
         user_profile.gold += old_item.sell_price
-
-        if item_type == 'sword':
-            user_profile.power -= old_item.damage
-        elif item_type == 'shield':
-            user_profile.defence -= old_item.defence
-        elif item_type == 'boots':
-            user_profile.speed -= old_item.speed_bonus
 
         setattr(user_profile, item_attribute_name, None)
         user_profile.save()
