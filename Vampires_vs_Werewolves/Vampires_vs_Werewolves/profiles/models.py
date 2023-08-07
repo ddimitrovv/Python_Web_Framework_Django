@@ -57,14 +57,15 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(username, password, **extra_fields)
 
 
+class HeroTypes(models.TextChoices):
+    Vampire = 'Vampire',
+    Werewolf = 'Werewolf'
+
+
 class CustomUser(PermissionsMixin, AbstractBaseUser):
     class Meta:
         verbose_name = 'Users'
         verbose_name_plural = 'Users'
-
-    class HeroTypes(models.TextChoices):
-        Vampire = 'Vampire',
-        Werewolf = 'Werewolf'
 
     username = models.CharField(
         max_length=150,
@@ -100,10 +101,12 @@ class CustomUser(PermissionsMixin, AbstractBaseUser):
         return self.username
 
 
+class Gender(models.TextChoices):
+    FEMALE = 'Female', 'Female'
+    MALE = 'Male', 'Male'
+
+
 class UserProfile(models.Model):
-    class Gender(models.TextChoices):
-        FEMALE = 'Female', 'Female'
-        MALE = 'Male', 'Male'
 
     xp = models.IntegerField(default=100)
     health = models.IntegerField(default=100)
@@ -221,10 +224,6 @@ class UserProfile(models.Model):
         self.max_xp_for_level = get_max_hp_for_current_level(self)
 
         super(UserProfile, self).save(*args, **kwargs)
-
-        # if self.health < self.max_health_for_level:
-        #     # If health is below max_health, start healing asynchronously
-        #     'profiles.start_healing'.delay(self.id)
 
     def __str__(self):
         return f'Username: {CustomUser.objects.get(id=self.pk)}'

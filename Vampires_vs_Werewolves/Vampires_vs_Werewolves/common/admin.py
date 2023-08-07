@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from Vampires_vs_Werewolves.common.models import Sword, Shield, Boots, Work
+from Vampires_vs_Werewolves.common.models import (Sword, Shield, Boots, Work,
+                                                  PowerPotion, DefencePotion, SpeedPotion, HealthPotion)
 
 
 @admin.register(Sword)
@@ -29,3 +30,23 @@ class WorkAdmin(admin.ModelAdmin):
     list_display = ['user', 'start_time', 'end_time', 'hours_worked', 'hourly_wage']
     search_fields = ['user']
     search_help_text = 'Search for work by username'
+
+
+@admin.register(PowerPotion)
+class PowerPotionAdmin(admin.ModelAdmin):
+    list_display = ['type', 'price', 'hours_active', 'percent_bonus']
+
+
+@admin.register(DefencePotion)
+class DefencePotionAdmin(admin.ModelAdmin):
+    list_display = ['type', 'price', 'hours_active', 'percent_bonus']
+
+
+@admin.register(SpeedPotion)
+class SpeedPotionAdmin(admin.ModelAdmin):
+    list_display = ['type', 'price', 'hours_active', 'percent_bonus']
+
+
+@admin.register(HealthPotion)
+class HealthPotionAdmin(admin.ModelAdmin):
+    list_display = ['type', 'price', 'hours_active', 'percent_bonus']

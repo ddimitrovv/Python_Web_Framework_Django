@@ -1,6 +1,10 @@
+from abc import ABC, abstractmethod
+from datetime import timedelta
+
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Sword(models.Model):
@@ -69,21 +73,73 @@ class Work(models.Model):
         return f'{self.__class__.__name__} - {self.user}'
 
 
-# class UserHiding(models.Model):
-#     user = models.OneToOneField('profiles.UserProfile', on_delete=models.CASCADE)
-#     hidden_at = models.DateTimeField(default=timezone.now)
-#     next_available_hiding_time = models.DateTimeField(default=timezone.now)
-#
-#     def can_hide(self):
-#         # Check if the user can hide their profile based on the next available hiding time
-#         return timezone.now() >= self.next_available_hiding_time
-#
-#     def hide_profile(self):
-#         # Hide the profile and update the hidden_at and next_available_hiding_time fields
-#         if self.can_hide():
-#             now = timezone.now()
-#             self.hidden_at = now
-#             self.next_available_hiding_time = now + timezone.timedelta(hours=12)
-#             self.save()
-#             return True
-#         return False
+class UserHiding(models.Model):
+    user = models.OneToOneField('profiles.UserProfile', on_delete=models.CASCADE)
+    hidden_at = models.DateTimeField(default=timezone.now)
+    can_stop_hiding_at = models.DateTimeField(blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        # Calculate when user can stop hiding (min hiding time = 12 hours)
+        self.can_stop_hiding_at = self.hidden_at + timedelta(hours=12)
+        super(UserHiding, self).save(*args, **kwargs)
+
+
+class PotionTypes(models.TextChoices):
+    Health = 'Health',
+    Power = 'Power',
+    Defence = 'Defence',
+    Speed = 'Speed',
+
+
+class Potion(models.Model):
+    class Meta:
+        abstract = True
+
+    @property
+    @abstractmethod
+    def type(self):
+        ...
+
+    price = models.PositiveIntegerField(blank=True, null=True)
+    hours_active = models.PositiveIntegerField(
+        default=1,
+        validators=(
+            MinValueValidator(1),
+            MaxValueValidator(24)
+        ),
+    )
+    image = models.ImageField()
+    percent_bonus = models.PositiveIntegerField(default=10)
+
+    def save(self, *args, **kwargs):
+        # Calculate the potion price
+        self.price = self.percent_bonus * self.hours_active * 10
+        super(Potion, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return f'{self.type}'
+
+
+class PowerPotion(Potion):
+    @property
+    def type(self):
+        return PotionTypes.Power
+
+
+class DefencePotion(Potion):
+    @property
+    def type(self):
+        return PotionTypes.Defence
+
+
+class SpeedPotion(Potion):
+    @property
+    def type(self):
+        return PotionTypes.Speed
+
+
+class HealthPotion(Potion):
+    @property
+    def type(self):
+        return PotionTypes.Health
+
