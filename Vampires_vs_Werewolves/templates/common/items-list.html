@@ -10,7 +10,18 @@
                     <div class="items-inner-wrapper">
                         <h2>{{ item.name }}</h2>
                         <img src="{{ item.image.url }}" alt="item image">
-                        <p class="required-level" id="{{ user_profile.level }}">Required level: {{ item.required_level }}</p>
+                        {% if not item.required_level %}
+                            <p class="required-level" id="{{ user_profile.level }}">
+                                Hours active: {{ item.hours_active }}
+                            </p>
+                            <p class="required-level" id="{{ user_profile.level }}">
+                                Percent bonus: {{ item.percent_bonus }}
+                            </p>
+                        {% else %}
+                            <p class="required-level" id="{{ user_profile.level }}">
+                                Required level: {{ item.required_level }}
+                            </p>
+                        {% endif %}
                         <p class="item-price" id="{{ user_profile.gold }}">Price: {{ item.price }}</p>
                     </div>
                     <form method="post" action="{% url 'buy item' item_type=item|model_name_lower item_id=item.pk %}">

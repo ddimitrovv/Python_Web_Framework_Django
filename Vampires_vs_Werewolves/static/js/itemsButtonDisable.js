@@ -1,10 +1,10 @@
 window.addEventListener('DOMContentLoaded', () => {
     const items = document.querySelectorAll('.item-details')
     items.forEach(element => {
-        const price = Number(element.querySelector('.item-price')
-            .textContent.replace('Price: ', ''));
+        const priceElement = element.querySelector('.item-price')
+        const price = Number(priceElement.textContent.replace('Price: ', ''));
         const button = element.querySelector('button')
-        const heroGold = Number(price.id)
+        const heroGold = Number(priceElement.id)
         const requiredLevel = Number(element.querySelector('.required-level')
             .textContent.replace('Required level: ', ''));
         const heroLevel = Number(element.querySelector('.required-level').id)
