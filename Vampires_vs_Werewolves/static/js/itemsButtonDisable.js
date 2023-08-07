@@ -9,8 +9,8 @@ window.addEventListener('DOMContentLoaded', () => {
             .textContent.replace('Required level: ', ''));
         const heroLevel = Number(element.querySelector('.required-level').id)
         if ((heroGold < price) || (requiredLevel > heroLevel)) {
-            button.style.background = '#f3efec'; // Change the color from red to gray when not enough money
-            button.style.pointerEvents = 'none'; // Prevent clicking on the link when not enough money
+            button.style.background = '#f3efec'; // Change the color from red to gray when not enough money or lower level
+            button.style.pointerEvents = 'none'; // Prevent clicking on the link when not enough money or lower level
         }
     });
 });
