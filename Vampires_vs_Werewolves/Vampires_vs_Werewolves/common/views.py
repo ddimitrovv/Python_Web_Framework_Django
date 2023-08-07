@@ -8,12 +8,11 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView
 from django.shortcuts import render, redirect
 from django.views import View
-
-from .forms import WorkForm
-from .models import Work
 from django.utils import timezone
 
-from Vampires_vs_Werewolves.common.models import Sword, Shield, Boots
+from Vampires_vs_Werewolves.common.forms import WorkForm
+from Vampires_vs_Werewolves.common.models import (Work, HealthPotion, PowerPotion, DefencePotion, SpeedPotion,
+                                                  Sword, Shield, Boots)
 from Vampires_vs_Werewolves.profiles.forms import UserRegisterForm
 from Vampires_vs_Werewolves.profiles.models import CustomUser, UserProfile
 
@@ -68,6 +67,10 @@ class MarketplaceItemView(LoginRequiredMixin, TemplateView):
         'swords': Sword,
         'shields': Shield,
         'boots': Boots,
+        'health_potions': HealthPotion,
+        'power_potions': PowerPotion,
+        'defence_potions': DefencePotion,
+        'speed_potions': SpeedPotion,
     }
 
     def get_context_data(self, **kwargs):
@@ -78,7 +81,10 @@ class MarketplaceItemView(LoginRequiredMixin, TemplateView):
         if item_model is None:
             raise Http404("Item type does not exist")
 
-        items = item_model.objects.all().order_by('required_level')
+        if item_type in ['swords', 'shields', 'boots']:
+            items = item_model.objects.all().order_by('required_level')
+        else:
+            items = item_model.objects.all().order_by('hours_active')
 
         paginator = Paginator(items, 3)
         page_number = self.request.GET.get('page')
