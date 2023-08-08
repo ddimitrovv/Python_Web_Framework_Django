@@ -113,7 +113,7 @@ class Potion(models.Model):
 
     def save(self, *args, **kwargs):
         # Calculate the potion price
-        self.price = self.percent_bonus * self.hours_active * 10
+        self.price = self.percent_bonus * self.hours_active * 2
         super(Potion, self).save(*args, **kwargs)
 
     def __str__(self):

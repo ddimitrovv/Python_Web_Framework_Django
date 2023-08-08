@@ -84,7 +84,7 @@ class MarketplaceItemView(LoginRequiredMixin, TemplateView):
         if item_type in ['swords', 'shields', 'boots']:
             items = item_model.objects.all().order_by('required_level')
         else:
-            items = item_model.objects.all().order_by('hours_active')
+            items = item_model.objects.all().order_by('price')
 
         paginator = Paginator(items, 3)
         page_number = self.request.GET.get('page')
@@ -97,42 +97,53 @@ class MarketplaceItemView(LoginRequiredMixin, TemplateView):
 
 
 class BuyItemView(LoginRequiredMixin, View):
+
+    item_models = {
+        'sword': Sword,
+        'shield': Shield,
+        'boots': Boots,
+        'healthpotion': HealthPotion,
+        'powerpotion': PowerPotion,
+        'defencepotion': DefencePotion,
+        'speedpotion': SpeedPotion,
+    }
+
+    item_fields = {
+        'sword': 'sword',
+        'shield': 'shield',
+        'boots': 'boots',
+        'healthpotion': 'health_potion',
+        'powerpotion': 'power_potion',
+        'defencepotion': 'defence_potion',
+        'speedpotion': 'speed_potion',
+    }
+
     def post(self, request, item_type, item_id):
         user_profile = get_object_or_404(UserProfile, user=request.user)
 
         # Check if the user is already equipped with an item of the same type
-        if item_type == 'sword' and user_profile.sword:
-            return redirect('marketplace')
-        elif item_type == 'shield' and user_profile.shield:
-            return redirect('marketplace')
-        elif item_type == 'boots' and user_profile.boots:
+        equipped_item_field = self.item_fields.get(item_type)
+        if equipped_item_field and getattr(user_profile, equipped_item_field):
             return redirect('marketplace')
 
-        item_model = None
-        if item_type == 'sword':
-            item_model = Sword
-        elif item_type == 'shield':
-            item_model = Shield
-        elif item_type == 'boots':
-            item_model = Boots
-
-        if item_model is None:
+        item_model = self.item_models.get(item_type)
+        if not item_model:
             return redirect('marketplace')
 
         item = get_object_or_404(item_model, pk=item_id)
 
-        # Check if the user has enough gold to buy the item
-        if user_profile.gold < item.price or user_profile.level < item.required_level:
+        if (user_profile.gold < item.price or
+                (hasattr(item, 'required_level') and user_profile.level < item.required_level)):
             return redirect('marketplace')
+
+        # Multiply the price by hero level for potions
+        if 'potion' in item_type:
+            item.price *= user_profile.level
 
         user_profile.gold -= item.price
 
-        if item_type == 'sword':
-            user_profile.sword = item
-        elif item_type == 'shield':
-            user_profile.shield = item
-        elif item_type == 'boots':
-            user_profile.boots = item
+        if equipped_item_field:
+            setattr(user_profile, equipped_item_field, item)
 
         user_profile.save()
 

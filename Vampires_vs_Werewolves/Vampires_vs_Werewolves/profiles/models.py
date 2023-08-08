@@ -2,7 +2,8 @@ from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.db import models
 
-from Vampires_vs_Werewolves.common.models import Sword, Shield, Boots
+from Vampires_vs_Werewolves.common.models import (Sword, Shield, Boots,
+                                                  HealthPotion, PowerPotion, DefencePotion, SpeedPotion)
 
 
 def get_level_from_hp(hp, base_hp=250, multiplier=2.5):
@@ -108,10 +109,10 @@ class Gender(models.TextChoices):
 
 class UserProfile(models.Model):
 
-    xp = models.IntegerField(default=100)
+    xp = models.IntegerField(default=0)
     health = models.IntegerField(default=100)
-    max_health_for_level = models.IntegerField(default=0)
-    max_xp_for_level = models.IntegerField(default=0)
+    max_health_for_level = models.IntegerField(default=100)
+    max_xp_for_level = models.IntegerField(default=100)
     level = models.IntegerField(default=1)
     gold = models.IntegerField(default=100)
     gender = models.CharField(
@@ -150,6 +151,31 @@ class UserProfile(models.Model):
         blank=True,
         on_delete=models.SET_NULL
     )
+    health_potion = models.ForeignKey(
+        HealthPotion,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+    )
+    power_potion = models.ForeignKey(
+        PowerPotion,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+    )
+    defence_potion = models.ForeignKey(
+        DefencePotion,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+    )
+    speed_potion = models.ForeignKey(
+        SpeedPotion,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL
+    )
+
     hourly_wage = models.PositiveIntegerField(default=10)
     is_working = models.BooleanField(default=False)
     is_healing = models.BooleanField(default=False)
@@ -220,8 +246,9 @@ class UserProfile(models.Model):
         self.total_power = self.power + self.sword.damage if self.sword else self.power
         self.total_defence = self.defence + self.shield.defence if self.shield else self.defence
         self.total_speed = self.speed + self.boots.speed_bonus if self.boots else self.speed
-        self.max_health_for_level = get_max_health_for_current_level(self)
-        self.max_xp_for_level = get_max_hp_for_current_level(self)
+        if self.level != 1:
+            self.max_health_for_level = get_max_health_for_current_level(self)
+            self.max_xp_for_level = get_max_hp_for_current_level(self)
 
         super(UserProfile, self).save(*args, **kwargs)
 
