@@ -57,6 +57,9 @@
                 </div>
                 <div class="market-wrapper">
                     <a href="{% url 'messages' %}">
+                        {% if has_unread_messages %}
+                            <i class="fa-solid fa-envelope"></i>
+                        {% endif %}
                         <img class="market-image" src="{% static 'pictures/messages.jpg' %}" alt="messages">
                     </a>
                     <a href="{% url 'messages' %}">Messages</a>

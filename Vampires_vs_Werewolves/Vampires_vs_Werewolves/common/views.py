@@ -15,6 +15,7 @@ from Vampires_vs_Werewolves.common.models import (Work, HealthPotion, PowerPotio
                                                   Sword, Shield, Boots)
 from Vampires_vs_Werewolves.profiles.forms import UserRegisterForm
 from Vampires_vs_Werewolves.profiles.models import CustomUser, UserProfile
+from Vampires_vs_Werewolves.user_messages.models import CustomMessage
 
 
 class HomeView(TemplateView):
@@ -23,7 +24,11 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        current_user = self.request.user
+        received_messages = CustomMessage.objects.filter(recipient=current_user).order_by('-timestamp')
+        has_unread_messages = any(not message.read for message in received_messages)
         context['current_user'] = self.request.user
+        context['has_unread_messages'] = has_unread_messages
         return context
 
 

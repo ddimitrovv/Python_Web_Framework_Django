@@ -15,7 +15,7 @@ def start_healing(user_profile_id):
         total_healing_time = 3 * 60  # 3 hours in minutes
 
         # Calculate the amount of health points to be added per minute
-        healing_increment = max_health // total_healing_time
+        healing_increment = max_health / total_healing_time
 
         while user_profile.health < max_health:
             time.sleep(60)

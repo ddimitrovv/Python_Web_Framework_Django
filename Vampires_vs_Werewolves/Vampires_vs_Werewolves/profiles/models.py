@@ -1,6 +1,7 @@
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.db import models
+from django.core.validators import MinValueValidator
 
 from Vampires_vs_Werewolves.common.models import (Sword, Shield, Boots,
                                                   HealthPotion, PowerPotion, DefencePotion, SpeedPotion)
@@ -110,7 +111,12 @@ class Gender(models.TextChoices):
 class UserProfile(models.Model):
 
     xp = models.IntegerField(default=0)
-    health = models.IntegerField(default=250)
+    health = models.FloatField(
+        default=250,
+        validators=(
+            MinValueValidator(0),
+        ),
+    )
     max_health_for_level = models.IntegerField(default=0)
     max_xp_for_level = models.IntegerField(default=0)
     level = models.IntegerField(default=1)
@@ -225,9 +231,12 @@ class UserProfile(models.Model):
             loser = self if self_total_damage < opponent_total_damage else opponent
 
         if winner and loser:
+            current_winner_level = winner.level
             winner.gold += int(0.3 * loser.gold)  # Winner receives 30% of the loser's gold
             winner.xp += winner.level * 5  # Increase winner's HP
             winner.level = get_level_from_hp(winner.xp)  # Set winner level
+            if winner.level > current_winner_level:
+                winner.health = get_max_health_for_current_level(winner)
             loser.gold -= int(0.3 * loser.gold) if int(0.3 * loser.gold) >= 0 else 0
             winner.health = max(0, winner.health)
             loser.health = max(0, loser.health)

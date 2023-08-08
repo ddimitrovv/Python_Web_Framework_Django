@@ -53,7 +53,7 @@
                 </li>
 {#                <li>Level: {{ profile.level }}</li>#}
                 {% if current_user == user %}
-                    <li>Health: {{ profile.health }} / {{ profile.max_health_for_level }}
+                    <li>Health: {{ profile.health|floatformat:0 }} / {{ profile.max_health_for_level }}
                         <div class="progress-container">
                             <div class="progress-bar" style="width: {{ profile.health|percent:profile.max_health_for_level }}%;"></div>
                         </div>
