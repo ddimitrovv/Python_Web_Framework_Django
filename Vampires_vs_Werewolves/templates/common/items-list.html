@@ -1,6 +1,6 @@
 {% extends 'common/index.html' %}
 {% load static %}
-{% load lowercase_filter %}
+{% load lowercase_filter multiple_filter %}
 {% block content %}
     <p class="go-back-wrapper"><a class="go-back" href="{% url 'marketplace' %}">Back to Marketplace</a></p>
     <div class="items-wrapper">
@@ -17,12 +17,16 @@
                             <p class="required-level" id="{{ user_profile.level }}">
                                 Percent bonus: {{ item.percent_bonus }}
                             </p>
+                            <p class="item-price" id="{{ user_profile.gold }}">
+                                Price: {{ item.price|multiply:user_profile.level  }}
+                            </p>
                         {% else %}
                             <p class="required-level" id="{{ user_profile.level }}">
                                 Required level: {{ item.required_level }}
                             </p>
+                            <p class="item-price" id="{{ user_profile.gold }}">Price: {{ item.price }}</p>
                         {% endif %}
-                        <p class="item-price" id="{{ user_profile.gold }}">Price: {{ item.price }}</p>
+
                     </div>
                     <form method="post" action="{% url 'buy item' item_type=item|model_name_lower item_id=item.pk %}">
                         {% csrf_token %}

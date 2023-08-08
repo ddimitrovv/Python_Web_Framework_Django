@@ -1,6 +1,6 @@
 {% extends 'common/index.html' %}
 {% load static %}
-{% load custom_filter lowercase_filter %}
+{% load custom_filter lowercase_filter calculate_percent_filter %}
 {% block content %}
 
     <section class="details-section">
@@ -46,10 +46,18 @@
             <div class="profile-details">
             <ul class="user-details" role="list">
 {#                <li><span class="profile-name">{{ current_user }}</span> </li>#}
-                <li>XP: {{ profile.xp }} / {{ profile.max_xp_for_level }}</li>
+                <li>XP: {{ profile.xp }} / {{ profile.max_xp_for_level }}
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: {{ profile.xp|percent:profile.max_xp_for_level }}%;"></div>
+                    </div>
+                </li>
 {#                <li>Level: {{ profile.level }}</li>#}
                 {% if current_user == user %}
-                    <li>Health: {{ profile.health }} / {{ profile.max_health_for_level }}</li>
+                    <li>Health: {{ profile.health }} / {{ profile.max_health_for_level }}
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: {{ profile.health|percent:profile.max_health_for_level }}%;"></div>
+                        </div>
+                    </li>
                     <li class="hero-gold">Gold: {{ profile.gold }}</li>
                 {% endif %}
                 <li>Wins: {{ profile.wins }}</li>
@@ -71,6 +79,7 @@
                         <td class="cost">
                             Cost: {{ profile.power|calculate_cost }}
                         </td>
+                        <td>Total power: {{ profile.total_power }}</td>
                     {% endif %}
                 </tr>
                 <tr>
@@ -85,6 +94,7 @@
                         <td class="cost">
                             Cost: {{ profile.defence|calculate_cost }}
                         </td>
+                        <td>Total defence: {{ profile.total_defence }}</td>
                     {% endif %}
                 </tr>
                 <tr>
@@ -99,6 +109,7 @@
                         <td class="cost">
                             Cost: {{ profile.speed|calculate_cost }}
                         </td>
+                        <td>Total speed: {{ profile.total_speed }}</td>
                     {% endif %}
                 </tr>
             </table>
