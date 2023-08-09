@@ -140,7 +140,12 @@ class SpeedPotion(Potion):
 
 
 class HealthPotion(Potion):
+    # Health potion is not using hour active and percent_bonus is used for percent healing from max_health
     @property
     def type(self):
         return PotionTypes.Health
 
+    def save(self, *args, **kwargs):
+        # Calculate the potion price without using hours_active
+        self.price = self.percent_bonus * 2
+        super(Potion, self).save(*args, **kwargs)
