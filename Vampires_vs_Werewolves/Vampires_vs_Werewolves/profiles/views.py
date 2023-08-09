@@ -4,8 +4,11 @@ from django.core.paginator import Paginator
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
 from django.views.generic import DetailView, UpdateView
+from django.db.models import Q
+from django.utils import timezone
 
-from Vampires_vs_Werewolves.common.models import Work
+
+from Vampires_vs_Werewolves.common.models import Work, UserHiding
 from Vampires_vs_Werewolves.profiles.forms import UserProfileEditForm
 from Vampires_vs_Werewolves.profiles.models import CustomUser, UserProfile
 from custom.custom_functions import get_user_profile, get_user_object
@@ -80,25 +83,31 @@ class ChooseOpponentView(LoginRequiredMixin, View):
     template_name = 'profiles/choose-opponent.html'
 
     def get(self, request):
-        user = request.user  # Get the currently authenticated user
-        user_profile = user.userprofile
+        current_user = request.user  # Get the currently authenticated user
+        user_profile = current_user.userprofile
 
         # Check if the user is currently working
         if user_profile.is_working:
-            active_work = Work.objects.filter(user=user, end_time__isnull=True).first()
+            active_work = Work.objects.filter(user=current_user, end_time__isnull=True).first()
             return redirect('work status', active_work.pk)  # Redirect to the work page
 
+        if current_user.userprofile.is_hiding:
+            hide = UserHiding.objects.filter(user=current_user).first()
+            return redirect('stop hiding', hide.pk)
+
+        if user_profile.is_hiding:
+            ...
+
         # Get users by hero type
-        hero_type_ = 'Vampire' if user.hero_type == 'Werewolf' else 'Werewolf'
+        hero_type_ = 'Vampire' if current_user.hero_type == 'Werewolf' else 'Werewolf'
         users = CustomUser.objects.filter(hero_type=hero_type_)
 
         # Filter profiles by level within the specified range
         opponents = UserProfile.objects.filter(
             user__in=users,
-            level__range=(
-               user_profile.level - 5,
-               user_profile.level + 5
-            )
+            level__range=(user_profile.level - 5, user_profile.level + 5)
+        ).exclude(
+            Q(user__userprofile__is_hiding=True)
         ).order_by('?')
 
         paginator = Paginator(opponents, 3)
@@ -106,7 +115,7 @@ class ChooseOpponentView(LoginRequiredMixin, View):
         opponents_page = paginator.get_page(page_number)
 
         context = {
-            'current_user': user,
+            'current_user': current_user,
             'user_profile': user_profile,
             'opponents': opponents_page,
         }

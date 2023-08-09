@@ -1,0 +1,16 @@
+{% extends 'common/index.html' %}
+{% block content %}
+
+    <div class="hiding">
+        <h2>Hiding Status</h2>
+        <h2>{{ current_user }}</h2>
+        <div>You can stop hiding at: {{ hiding_details.can_stop_hiding_at }}</div>
+        {% if stop_hiding %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="hide-user">Stop hiding</button>
+            </form>
+        {% endif %}
+    </div>
+
+{% endblock %}

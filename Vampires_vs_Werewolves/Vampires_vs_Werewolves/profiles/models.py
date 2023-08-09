@@ -185,6 +185,7 @@ class UserProfile(models.Model):
     hourly_wage = models.PositiveIntegerField(default=10)
     is_working = models.BooleanField(default=False)
     is_healing = models.BooleanField(default=False)
+    is_hiding = models.BooleanField(default=False)
 
     def fight(self, opponent):
         min_damage = 3

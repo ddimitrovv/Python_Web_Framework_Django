@@ -74,7 +74,8 @@ class Work(models.Model):
 
 
 class UserHiding(models.Model):
-    user = models.OneToOneField('profiles.UserProfile', on_delete=models.CASCADE)
+    # user = models.ForeignKey('profiles.UserProfile', on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     hidden_at = models.DateTimeField(default=timezone.now)
     can_stop_hiding_at = models.DateTimeField(blank=True, null=True)
 

@@ -1,0 +1,46 @@
+.hiding {
+    width: 100%;
+    height:100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.hiding h2,
+.hiding h3,
+.hiding span {
+    color: var(--light-skin);
+}
+
+.hiding h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+}
+
+.hiding h3 {
+    font-size: 1.8rem;
+}
+
+.hiding span {
+    margin-top: 2rem;
+    font-size: 2.5rem;
+}
+
+.hiding span:first-of-type {
+     color: red;
+}
+
+.hide-user {
+    margin-top: 4rem;
+    font-size: 1.5rem;
+    padding: 5px 20px;
+    border-radius: 20px 0 20px 0;
+    cursor: pointer;
+}
+
+.hiding div {
+    color: var(--light-skin);
+    font-size: 1.8rem;
+}

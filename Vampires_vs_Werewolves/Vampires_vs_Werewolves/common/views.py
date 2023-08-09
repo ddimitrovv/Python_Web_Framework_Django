@@ -12,7 +12,7 @@ from django.utils import timezone
 
 from Vampires_vs_Werewolves.common.forms import WorkForm
 from Vampires_vs_Werewolves.common.models import (Work, HealthPotion, PowerPotion, DefencePotion, SpeedPotion,
-                                                  Sword, Shield, Boots)
+                                                  Sword, Shield, Boots, UserHiding)
 from Vampires_vs_Werewolves.profiles.forms import UserRegisterForm
 from Vampires_vs_Werewolves.profiles.models import CustomUser, UserProfile
 from Vampires_vs_Werewolves.user_messages.models import CustomMessage
@@ -184,56 +184,60 @@ class SellItemView(LoginRequiredMixin, View):
         return redirect('details user', user_profile.user.username)
 
 
-class WorkView(View):
+class WorkView(LoginRequiredMixin, View):
     template_name = 'common/work.html'
 
     def get(self, request):
-        user = request.user
+        current_user = request.user
         form = WorkForm()
 
-        if user.userprofile.is_working:
-            active_work = Work.objects.filter(user=user, end_time__isnull=True).first()
+        if current_user.userprofile.is_hiding:
+            hide = UserHiding.objects.filter(user=current_user).first()
+            return redirect('stop hiding', hide.pk)
+
+        if current_user.userprofile.is_working:
+            active_work = Work.objects.filter(user=current_user, end_time__isnull=True).first()
             return redirect('work status', active_work.pk)  # Redirect to the work page
 
         context = {
-            'current_user': user,
+            'current_user': current_user,
             'form': form,
         }
         return render(request, self.template_name, context)
 
     def post(self, request):
-        user = request.user
+        current_user = request.user
         start_time = timezone.now()
         form = WorkForm(request.POST)
 
         if form.is_valid():
             hours_worked = int(form.cleaned_data['hours'])
-            hourly_wage = user.userprofile.hourly_wage
+            hourly_wage = current_user.userprofile.hourly_wage
 
-            active_work = Work.objects.filter(user=user, end_time__isnull=True).first()
+            active_work = Work.objects.filter(user=current_user, end_time__isnull=True).first()
             if active_work:
                 return redirect('work status', work_id=active_work.id)
 
             work = Work.objects.create(
-                user=user,
+                user=current_user,
                 start_time=start_time,
                 hourly_wage=hourly_wage,
                 hours_worked=hours_worked,
             )
 
-            user.userprofile.is_working = True
-            user.userprofile.save()
+            current_user.userprofile.is_working = True
+            current_user.userprofile.save()
 
             return redirect('work status', work_id=work.id)
 
         context = {
-            'user': user,
+            'user': current_user,
             'form': form,
         }
         return render(request, self.template_name, context)
 
 
-class WorkStatusView(View):
+class WorkStatusView(LoginRequiredMixin, View):
     template_name = 'common/work-status.html'
 
     def get(self, request, work_id):
@@ -259,7 +263,7 @@ class WorkStatusView(View):
         return render(request, self.template_name, context)
 
 
-class CollectMoneyView(View):
+class CollectMoneyView(LoginRequiredMixin, View):
     def get(self, request, work_id):
         # Get the work entry with the specified ID
         try:
@@ -287,4 +291,61 @@ class CollectMoneyView(View):
         user_profile.gold += earned_money
         user_profile.is_working = False
         user_profile.save()
+        return redirect('home')
+
+
+class HideUserView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        current_user = request.user
+
+        if current_user.userprofile.is_hiding:
+            hide = UserHiding.objects.filter(user=current_user).first()
+            return redirect('stop hiding', hide.pk)
+
+        # Render the template for showing hide user details
+        return render(request, 'common/hiding.html', {'current_user': current_user})
+
+    def post(self, request, *args, **kwargs):
+        current_user = request.user
+        user_profile = current_user.userprofile
+
+        if not user_profile.is_hiding:
+            UserHiding.objects.create(user=current_user)
+            user_profile.is_hiding = True
+            user_profile.save()
+
+        hide = UserHiding.objects.filter(user=current_user).first()
+        return redirect('stop hiding', hide.pk)
+
+
+class StopHidingView(LoginRequiredMixin, View):
+    template_name = 'common/hiding-details.html'  # Replace with the actual template name
+
+    def get(self, request, pk):
+        current_user = request.user
+        user_profile = current_user.userprofile
+        hiding_details = UserHiding.objects.get(id=pk)
+
+        # Calculate whether it's time to stop hiding
+        stop_hiding = hiding_details.can_stop_hiding_at <= timezone.now()
+
+        context = {
+            'current_user': current_user,
+            'user_profile': user_profile,
+            'hiding_details': hiding_details,
+            'stop_hiding': stop_hiding,
+        }
+
+        return render(request, self.template_name, context)
+
+    def post(self, request, pk):
+        hiding_details = UserHiding.objects.get(id=pk)
+
+        if hiding_details.can_stop_hiding_at and hiding_details.can_stop_hiding_at <= timezone.now():
+            # Stop hiding and update user's hiding status
+            user_profile = hiding_details.user.userprofile
+            hiding_details.delete()
+            user_profile.is_hiding = False
+            user_profile.save()
+
         return redirect('home')
