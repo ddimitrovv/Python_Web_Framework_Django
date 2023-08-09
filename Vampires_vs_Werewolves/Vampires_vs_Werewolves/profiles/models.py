@@ -238,8 +238,8 @@ class UserProfile(models.Model):
             if winner.level > current_winner_level:
                 winner.health = get_max_health_for_current_level(winner)
             loser.gold -= int(0.3 * loser.gold) if int(0.3 * loser.gold) >= 0 else 0
-            winner.health = max(0, winner.health)
-            loser.health = max(0, loser.health)
+            winner.health = max(0.0, winner.health)
+            loser.health = max(0.0, loser.health)
             winner.wins += 1  # Increment wins for the winner
             loser.losses += 1  # Increment losses for the loser
 

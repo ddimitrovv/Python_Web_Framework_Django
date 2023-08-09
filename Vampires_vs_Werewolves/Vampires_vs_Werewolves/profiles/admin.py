@@ -13,8 +13,7 @@ class CustomUserAdmin(admin.ModelAdmin):
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
     list_display = ['user', 'xp', 'health', 'level', 'gold', 'gender',
-                    'power', 'total_power', 'defence', 'total_defence',
-                    'speed', 'total_speed', 'wins', 'losses', 'sword',
+                    'power', 'defence', 'speed', 'wins', 'losses', 'sword',
                     'shield', 'boots', 'hourly_wage', 'is_working']
 
     search_fields = ['user__username']
