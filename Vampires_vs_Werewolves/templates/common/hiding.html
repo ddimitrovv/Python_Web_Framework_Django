@@ -2,16 +2,18 @@
 {% block content %}
 
     <section class="hiding">
-        <h2>While you are hiding you can not:</h2>
-        <h3>- work</h3>
-        <h3>- attack other players</h3>
-        <h3>- be attacked by other players</h3>
-        <span>Minimum time that you can not stop hiding is 12 hours!</span>
-        <span>After this time you can stop hiding whenever you want!</span>
-        <form method="post">
-            {% csrf_token %}
-            <button type="submit" class="hide-user">Hide User</button>
-        </form>
+{#        <div class="hiding-inner">#}
+            <h2>While you are hiding you can not:</h2>
+            <h3>- work</h3>
+            <h3>- attack other players</h3>
+            <h3>- be attacked by other players</h3>
+            <span>Minimum time that you can not stop hiding is 12 hours!</span>
+            <span>After this time you can stop hiding whenever you want!</span>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="hide-user">Hide User</button>
+            </form>
+{#        </div>#}
     </section>
 
 {% endblock %}

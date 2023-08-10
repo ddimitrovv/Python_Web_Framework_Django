@@ -25,10 +25,13 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         current_user = self.request.user
-        received_messages = CustomMessage.objects.filter(recipient=current_user).order_by('-timestamp')
-        has_unread_messages = any(not message.read for message in received_messages)
+        print(current_user)
+        if current_user.is_authenticated:
+            received_messages = CustomMessage.objects.filter(recipient=current_user).order_by('-timestamp')
+            has_unread_messages = any(not message.read for message in received_messages)
+            context['has_unread_messages'] = has_unread_messages
         context['current_user'] = self.request.user
-        context['has_unread_messages'] = has_unread_messages
+
         return context
 
 
@@ -162,7 +165,7 @@ class SellItemView(LoginRequiredMixin, View):
         'boots': Boots,
     }
 
-    def post(self, request, item_type, item_id):
+    def post(self, request, item_type):
         user_profile = get_object_or_404(UserProfile, user=request.user)
         item_model = self.item_model_mapping.get(item_type)
 
@@ -349,3 +352,29 @@ class StopHidingView(LoginRequiredMixin, View):
             user_profile.save()
 
         return redirect('home')
+
+
+class InventoryView(LoginRequiredMixin, TemplateView):
+    template_name = 'common/inventory.html'
+
+    def get_context_data(self, **kwargs):
+        current_user = self.request.user
+        user_profile = get_object_or_404(UserProfile, user_id=self.request.user.pk)
+
+        items = [
+            user_profile.sword,
+            user_profile.shield,
+            user_profile.boots,
+            user_profile.health_potion,
+            user_profile.power_potion,
+            user_profile.defence_potion,
+            user_profile.speed_potion,
+        ]
+
+        paginator = Paginator(items, 3)
+        page_number = self.request.GET.get('page')
+        items_page = paginator.get_page(page_number)
+        context = {'current_user': current_user,
+                   'user_profile': user_profile,
+                   'items': items_page}
+        return context

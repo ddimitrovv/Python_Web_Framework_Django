@@ -1,8 +1,7 @@
 {% extends 'common/index.html' %}
-{% load static %}
-{% load lowercase_filter multiple_filter %}
+{% load lowercase_filter %}
 {% block content %}
-    <p class="go-back-wrapper"><a class="go-back" href="{% url 'marketplace' %}">Back to Marketplace</a></p>
+    <p class="go-back-wrapper"><a class="go-back" href="{% url 'inventory' %}">Your inventory</a></p>
     <div class="items-wrapper">
         <div class="items">
             {% for item in items %}
@@ -15,14 +14,14 @@
                                 <p class="required-level" id="{{ user_profile.level }}">
                                     Hours active: {{ item.hours_active }}
                                 </p>
-                            {% endif %}
                                 <p class="required-level" id="{{ user_profile.level }}">
                                     Percent{% if item.type != 'Health' %} bonus{% else %} healing{% endif %}
                                     : {{ item.percent_bonus }}
                                 </p>
-                            <p class="item-price" id="{{ user_profile.gold }}">
-                                Price: {{ item.price|multiply:user_profile.level  }}
-                            </p>
+                            {% else %}
+                                <p class="required-level">Healing with {{ item.percent_bonus }}%</p>
+                                <p class="required-level">of your max health!</p>
+                            {% endif %}
                         {% else %}
                             <p class="required-level" id="{{ user_profile.level }}">
                                 Required level: {{ item.required_level }}
@@ -42,16 +41,22 @@
                         {% endif %}
 
                     </div>
-                    <form method="post" action="{% url 'buy item' item_type=item|model_name_lower item_id=item.pk %}">
-                        {% csrf_token %}
-                        <button class="item-button" type="submit"><span>Buy Item</span><i class="fa-solid fa-cart-shopping"></i></button>
-                    </form>
-{#                <a href="#">Buy<i class="fa-solid fa-cart-shopping"></i></a>#}
+                    {% if item.type %}
+                        <form method="post">
+                            {% csrf_token %}
+                            <button class="item-button" type="submit"><span>Activate</span></button>
+                        </form>
+                    {% else %}
+                        <form method="post"
+                              action="{% url 'sell item' item_type=user.userprofile.sword|model_name_lower item_id=user.userprofile.sword.pk %}">
+                            {% csrf_token %}
+                            <button class="item-button" type="submit"><span>Sell</span></button>
+                        </form>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
     </div>
-
     <div class="pagination">
         <div>
             {% if items.has_previous %}
@@ -75,6 +80,5 @@
             {% endif %}
         </div>
     </div>
-    <script src="{% static 'js/itemsButtonDisable.js' %}"></script>
 
 {% endblock %}

@@ -77,3 +77,14 @@
 .items button:hover {
     cursor: pointer;
 }
+
+.item-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 20px;
+}
+
+.item-button span {
+    font-size: 1.2rem;
+}

@@ -2,7 +2,7 @@ from django.urls import path
 
 from Vampires_vs_Werewolves.common.views import HomeView, RegisterUserView, LoginUserView, LogoutUserView, \
     MarketplaceView, MarketplaceItemView, WorkView, WorkStatusView, CollectMoneyView, BuyItemView, SellItemView, \
-    HideUserView, StopHidingView
+    HideUserView, StopHidingView, InventoryView
 
 urlpatterns = (
     path('', HomeView.as_view(), name='home'),
@@ -18,5 +18,5 @@ urlpatterns = (
     path('collect-money/<int:work_id>/', CollectMoneyView.as_view(), name='collect money'),
     path('hide/', HideUserView.as_view(), name='hide user'),
     path('stop-hiding/<int:pk>/', StopHidingView.as_view(), name='stop hiding'),
-
+    path('user-items/', InventoryView.as_view(), name='inventory'),
 )

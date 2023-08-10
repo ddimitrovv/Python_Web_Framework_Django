@@ -82,6 +82,12 @@
                     </a>
                     <a href="{% url 'hide user' %}">Hide</a>
                 </div>
+                <div class="market-wrapper">
+                    <a href="{% url 'inventory' %}">
+                        <img class="market-image" src="{% static 'pictures/inventory.png' %}" alt="hide">
+                    </a>
+                    <a href="{% url 'inventory' %}">Inventory</a>
+                </div>
             </div>
 
         {% endif %}
