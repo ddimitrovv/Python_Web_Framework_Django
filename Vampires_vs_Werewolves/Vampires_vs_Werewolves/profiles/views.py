@@ -5,8 +5,6 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
 from django.views.generic import DetailView, UpdateView
 from django.db.models import Q
-from django.utils import timezone
-
 
 from Vampires_vs_Werewolves.common.models import Work, UserHiding, Attack
 from Vampires_vs_Werewolves.profiles.forms import UserProfileEditForm
@@ -136,7 +134,8 @@ class UserProfileEditView(UpdateView):
     success_url = '/profile/details/'
 
     def get_object(self, queryset=None):
-        return self.request.user.userprofile
+        user_profile = get_user_profile(self.request)
+        return user_profile
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -166,9 +165,6 @@ def fight_view(request, pk):
             'can_fight': False,
         }
         return render(request, 'profiles/fight-details.html', context)
-
-    # Create or get an Attack instance
-    attack, created = Attack.objects.get_or_create(attacker=user, attacked=opponent.user)
 
     # Increment the attack count
     attack.increment_attack_count()
