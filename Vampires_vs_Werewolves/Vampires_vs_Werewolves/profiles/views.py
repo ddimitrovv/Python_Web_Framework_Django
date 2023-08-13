@@ -106,16 +106,13 @@ class ChooseOpponentView(LoginRequiredMixin, View):
 
             return render(request, self.template_name, context)
 
-        # Get users by hero type
-        hero_type_ = 'Vampire' if current_user.hero_type == 'Werewolf' else 'Werewolf'
-        users = CustomUser.objects.filter(hero_type=hero_type_)
-
-        # Filter profiles by level within the specified range
+        # Get users with the opposite hero type who are within the level range and not hiding
+        user_level = user_profile.level
+        opponent_type = 'Vampire'if current_user.hero_type == 'Werewolf' else 'Werewolf'
         opponents = UserProfile.objects.filter(
-            user__in=users,
-            level__range=(user_profile.level - 5, user_profile.level + 5)
-        ).exclude(
-            Q(user__userprofile__is_hiding=True)
+            Q(user__hero_type=opponent_type) &
+            Q(level__range=(user_level - 5, user_level + 5)) &
+            ~Q(user__userprofile__is_hiding=True)
         ).order_by('?')
 
         paginator = Paginator(opponents, 3)
