@@ -1,4 +1,6 @@
 from pathlib import Path
+from celery.schedules import crontab
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -135,3 +137,11 @@ AUTH_USER_MODEL = 'profiles.CustomUser'
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 result_backend = 'redis://localhost:6379/0'
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+
+# # Schedule the task to run initially and then repeat every day at the start of the day
+CELERY_BEAT_SCHEDULE = {
+    'reset-attacks-daily': {
+        'task': 'Vampires_vs_Werewolves.profiles.tasks.reset_attack_counts',
+        'schedule': crontab(minute='0', hour='0'),  # Run at midnight every day
+    },
+}

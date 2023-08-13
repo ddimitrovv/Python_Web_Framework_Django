@@ -14,6 +14,7 @@ from Vampires_vs_Werewolves.common.forms import WorkForm
 from Vampires_vs_Werewolves.common.models import (Work, HealthPotion, PowerPotion, DefencePotion, SpeedPotion,
                                                   Sword, Shield, Boots, UserHiding)
 from Vampires_vs_Werewolves.profiles.forms import UserRegisterForm
+from Vampires_vs_Werewolves.profiles.tasks import remove_bonus
 from Vampires_vs_Werewolves.profiles.models import CustomUser, UserProfile
 from Vampires_vs_Werewolves.user_messages.models import CustomMessage
 
@@ -105,7 +106,6 @@ class MarketplaceItemView(LoginRequiredMixin, TemplateView):
 
 
 class BuyItemView(LoginRequiredMixin, View):
-
     item_models = {
         'sword': Sword,
         'shield': Shield,
@@ -371,10 +371,66 @@ class InventoryView(LoginRequiredMixin, TemplateView):
             user_profile.speed_potion,
         ]
 
-        paginator = Paginator(items, 3)
+        actual_items = [item for item in items if item is not None]
+
+        paginator = Paginator(actual_items, 3)
         page_number = self.request.GET.get('page')
         items_page = paginator.get_page(page_number)
         context = {'current_user': current_user,
                    'user_profile': user_profile,
                    'items': items_page}
         return context
+
+
+class ActivatePotionView(LoginRequiredMixin, View):
+    def post(self, request, potion_type):
+        current_user = request.user
+        user_profile = request.user.userprofile
+
+        potion_types = {
+            'Health': 'health_potion',
+            'Power': 'power_potion',
+            'Defence': 'defence_potion',
+            'Speed': 'speed_potion',
+        }
+
+        field_to_add_bonus = {
+            'Health': 'health',
+            'Power': 'power_bonus',
+            'Defence': 'defence_bonus',
+            'Speed': 'speed_bonus',
+        }
+
+        field_to_get_value_from = {
+            'Health': 'health',
+            'Power': 'power',
+            'Defence': 'defence',
+            'Speed': 'speed',
+        }
+
+        current_potion_type = potion_types[potion_type]
+        current_potion = getattr(user_profile, current_potion_type)
+        bonus = current_potion.percent_bonus / 100
+
+        if potion_type != 'Health':
+            field_to_update = field_to_add_bonus.get(potion_type)
+            actual_value = getattr(user_profile, field_to_get_value_from.get(potion_type))
+            bonus_value = getattr(user_profile, field_to_update)
+
+            if bonus_value != 0:
+                return redirect('inventory', current_user.username)
+
+            new_value = round(actual_value * bonus)
+            setattr(user_profile, field_to_update, new_value)
+
+            # Schedule the Celery task to remove bonus
+            remove_bonus.apply_async(args=[user_profile.id, field_to_update],
+                                     countdown=current_potion.hours_active * 3600)
+        elif potion_type == 'Health':
+            max_health = user_profile.max_health_for_level
+            user_profile.health += min(round(max_health * bonus), user_profile.max_health_for_level)
+
+        setattr(user_profile, current_potion_type, None)
+        user_profile.save()
+
+        return redirect('details user', current_user.username)

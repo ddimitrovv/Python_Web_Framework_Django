@@ -37,12 +37,12 @@
                                     Speed: {{ item.speed_bonus }}
                                 {% endif %}
                             </p>
-                            <p class="item-price" id="{{ user_profile.gold }}">Price: {{ item.price }}</p>
+                            <p class="item-price">Sell price: {{ item.sell_price }}</p>
                         {% endif %}
 
                     </div>
                     {% if item.type %}
-                        <form method="post">
+                        <form method="post" action="{% url 'activate potion' item.type %}">
                             {% csrf_token %}
                             <button class="item-button" type="submit"><span>Activate</span></button>
                         </form>

@@ -20,10 +20,10 @@ def get_max_hp_for_current_level(hero):
     level = hero.level
     max_hp = 0
     multiplier = 2.5
-    base_hp = 100
+    base_hp = 250
     counter = 1
     while counter <= level:
-        max_hp = base_hp * multiplier
+        max_hp += base_hp * multiplier
         base_hp = max_hp
         counter += 1
     return int(max_hp)
@@ -132,10 +132,13 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE,
     )
     power = models.PositiveIntegerField(default=10)
+    power_bonus = models.PositiveIntegerField(default=0)
     total_power = models.PositiveIntegerField(default=0)
     defence = models.PositiveIntegerField(default=10)
+    defence_bonus = models.PositiveIntegerField(default=0)
     total_defence = models.PositiveIntegerField(default=0)
     speed = models.PositiveIntegerField(default=10)
+    speed_bonus = models.PositiveIntegerField(default=0)
     total_speed = models.PositiveIntegerField(default=0)
     wins = models.PositiveIntegerField(default=0)
     losses = models.PositiveIntegerField(default=0)
@@ -253,10 +256,18 @@ class UserProfile(models.Model):
     def save(self, *args, **kwargs):
         # Calculate hourly_wage based on hero's level
         self.hourly_wage = self.level * 10
-        self.total_power = self.power + self.sword.damage if self.sword else self.power
-        self.total_defence = self.defence + self.shield.defence if self.shield else self.defence
-        self.total_speed = self.speed + self.boots.speed_bonus if self.boots else self.speed
+        # Calculate total_power
+        sword_power = self.sword.damage if self.sword else 0
+        self.total_power = self.power + sword_power + self.power_bonus
+        # Calculate total_defence
+        shield_defence = self.shield.defence if self.shield else 0
+        self.total_defence = self.defence + shield_defence + self.defence_bonus
+        # Calculate total_speed
+        boots_speed = self.boots.speed_bonus if self.boots else 0
+        self.total_speed = self.speed + boots_speed + self.speed_bonus
+        # Get max_health
         self.max_health_for_level = get_max_health_for_current_level(self)
+        # Get max_xp
         self.max_xp_for_level = get_max_hp_for_current_level(self)
 
         super(UserProfile, self).save(*args, **kwargs)

@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.utils import timezone
 
 
-from Vampires_vs_Werewolves.common.models import Work, UserHiding
+from Vampires_vs_Werewolves.common.models import Work, UserHiding, Attack
 from Vampires_vs_Werewolves.profiles.forms import UserProfileEditForm
 from Vampires_vs_Werewolves.profiles.models import CustomUser, UserProfile
 from custom.custom_functions import get_user_profile, get_user_object
@@ -148,6 +148,25 @@ def fight_view(request, pk):
     user = request.user
     user_profile = get_user_profile(request)
     opponent = get_object_or_404(UserProfile, user_id=pk)
+
+    # Create or get an Attack instance
+    attack, created = Attack.objects.get_or_create(attacker=user, attacked=opponent.user)
+
+    if attack.attacks == 10:
+        context = {
+            'current_user': get_user_object(request),
+            'opponent': opponent,
+            'user': user_profile,
+            'can_fight': False,
+        }
+        return render(request, 'profiles/fight-details.html', context)
+
+    # Create or get an Attack instance
+    attack, created = Attack.objects.get_or_create(attacker=user, attacked=opponent.user)
+
+    # Increment the attack count
+    attack.increment_attack_count()
+    attack.save()
 
     winner = user_profile.fight(opponent)
 

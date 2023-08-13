@@ -28,14 +28,18 @@
                 </ul>
             </div>
             <div class="fight-result">
-                <span>Winner</span>
-                <span>
-                    {% if user == winner %}
-                        {{ user.user }}
-                    {% else %}
-                        {{ opponent.user }}
-                    {% endif %}
-                </span>
+                {% if can_fight == False %}
+                    <span class="cannot-fight">You can not attack {{ opponent.user }} today anymore!</span>
+                {% else %}
+                    <span>Winner</span>
+                    <span>
+                        {% if user == winner %}
+                            {{ user.user }}
+                        {% else %}
+                            {{ opponent.user }}
+                        {% endif %}
+                    </span>
+                {% endif %}
             </div>
             <div class="heroes-card">
                 <div class="profile-picture-opponent">

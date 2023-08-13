@@ -149,3 +149,27 @@ class HealthPotion(Potion):
         # Calculate the potion price without using hours_active
         self.price = self.percent_bonus * 2
         super(Potion, self).save(*args, **kwargs)
+
+
+class Attack(models.Model):
+    # Count the attacks per dey. If user attack another user more than 10 times per day, should be restricted
+    attacker = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='attacks_made'
+    )
+    attacked = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='attacks_received'
+    )
+    attacks = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        unique_together = ['attacker', 'attacked']
+
+    def increment_attack_count(self):
+        self.attacks += 1
+
+    def __str__(self):
+        return f"{self.attacker} -> {self.attacked} ({self.attacks} attacks)"

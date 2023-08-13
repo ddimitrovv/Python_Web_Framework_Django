@@ -1,6 +1,8 @@
 import time
 from celery import shared_task
+from datetime import datetime, timedelta
 from .models import get_max_health_for_current_level, UserProfile
+from ..common.models import Attack
 
 
 @shared_task
@@ -28,3 +30,34 @@ def start_healing(user_profile_id):
         user_profile.save()
 
     return f"Healing for {user_profile} is complete."
+
+
+@shared_task
+def remove_bonus(user_profile_id, field_to_update):
+    user_profile = UserProfile.objects.get(pk=user_profile_id)
+
+    # Set profile bonus field to 0 when the potion expires
+    setattr(user_profile, field_to_update, 0)
+    user_profile.save()
+
+    return f'Removed {field_to_update} for {user_profile}.'
+
+
+@shared_task
+def reset_attack_counts():
+    # Get the current date and time
+    now = datetime.now()
+    # Calculate the start of the next day
+    next_day_start = now.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1)
+    # Reset attack counts for all users
+    Attack.objects.all().update(attacks=0)
+    # Calculate the time difference in seconds
+    seconds_until_next_day = (next_day_start - now).total_seconds()
+    # Calculate remaining time in hours and minutes
+    hours_until_next_day = seconds_until_next_day // 3600
+    minutes_until_next_day = (seconds_until_next_day % 3600) // 60
+    # Schedule the task again for the next day
+    reset_attack_counts.apply_async(countdown=seconds_until_next_day)
+
+    return (f'All attack counters are reset successfully! Next reset in'
+            f' {hours_until_next_day:.0f} hours: {minutes_until_next_day:.0f} minutes')
