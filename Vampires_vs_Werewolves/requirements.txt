@@ -18,10 +18,14 @@ crashtest==0.4.1
 cryptography==41.0.2
 distlib==0.3.7
 Django==4.2.3
+django-cors-headers==4.2.0
 django-redis==5.3.0
+djangorestframework==3.14.0
 dulwich==0.21.5
 filelock==3.12.2
+flower==2.0.0
 html5lib==1.1
+humanize==4.7.0
 idna==3.4
 importlib-metadata==6.7.0
 installer==0.7.0
@@ -42,6 +46,7 @@ platformdirs==3.10.0
 poetry==1.5.1
 poetry-core==1.6.1
 poetry-plugin-export==1.4.0
+prometheus-client==0.17.1
 prompt-toolkit==3.0.39
 psycopg2-binary==2.9.6
 ptyprocess==0.7.0
@@ -49,6 +54,7 @@ pycparser==2.21
 pyproject_hooks==1.0.0
 pyrsistent==0.19.3
 python-dateutil==2.8.2
+pytz==2023.3
 rapidfuzz==2.15.1
 redis==4.6.0
 requests==2.31.0
@@ -59,6 +65,7 @@ six==1.16.0
 sqlparse==0.4.4
 tomli==2.0.1
 tomlkit==0.11.8
+tornado==6.3.2
 trove-classifiers==2023.5.24
 typing_extensions==4.7.1
 tzdata==2023.3
