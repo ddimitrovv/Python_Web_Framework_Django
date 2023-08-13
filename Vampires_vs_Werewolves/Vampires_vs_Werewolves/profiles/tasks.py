@@ -7,6 +7,7 @@ from ..common.models import Attack
 
 @shared_task
 def start_healing(user_profile_id):
+    # Start healing process to user and stop when user health is the max for current level
     user_profile = UserProfile.objects.get(id=user_profile_id)
     max_health = get_max_health_for_current_level(user_profile)
 
@@ -34,6 +35,7 @@ def start_healing(user_profile_id):
 
 @shared_task
 def remove_bonus(user_profile_id, field_to_update):
+    # Remove the potion bonus when the potion effect expired
     user_profile = UserProfile.objects.get(pk=user_profile_id)
 
     # Set profile bonus field to 0 when the potion expires
@@ -45,6 +47,7 @@ def remove_bonus(user_profile_id, field_to_update):
 
 @shared_task
 def reset_attack_counts():
+    # Reset user attacks to other user every day
     # Get the current date and time
     now = datetime.now()
     # Calculate the start of the next day
