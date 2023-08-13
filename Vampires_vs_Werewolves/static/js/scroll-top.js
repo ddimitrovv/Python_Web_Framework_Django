@@ -1,4 +1,4 @@
 window.addEventListener("load", function() {
-  const container = document.getElementById("scrollable");
+  const container = document.querySelector(".scrollable");
   container.scrollTop = container.scrollHeight;
 });

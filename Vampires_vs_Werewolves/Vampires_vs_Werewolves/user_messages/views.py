@@ -5,9 +5,15 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, CreateView
 
+from rest_framework.generics import UpdateAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
+
 from Vampires_vs_Werewolves.profiles.models import CustomUser
 from Vampires_vs_Werewolves.user_messages.forms import SendMessageForm, SendMessageFormChat
 from Vampires_vs_Werewolves.user_messages.models import CustomMessage
+from Vampires_vs_Werewolves.user_messages.serializers import CustomMessageSerializer
 
 
 class MessageView(LoginRequiredMixin, TemplateView):
@@ -129,3 +135,27 @@ class CreateMessageView(LoginRequiredMixin, CreateView):
         context['current_user'] = user
         context['recipient_username'] = self.kwargs.get('username')
         return context
+
+
+class EditMessageAPIView(UpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = CustomMessage.objects.all()
+    serializer_class = CustomMessageSerializer
+
+    def put(self, request, *args, **kwargs):
+        current_message_pk = self.kwargs.get('pk')
+        current_message = self.queryset.filter(pk=current_message_pk).first()
+        if current_message is None:
+            return Response({"error": "Message not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = self.get_serializer(current_message, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        response_data = {
+            "updated_message": serializer.data,
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
+
+

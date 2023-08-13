@@ -31,11 +31,15 @@ INSTALLED_APPS = [
     'Vampires_vs_Werewolves.profiles',
     'Vampires_vs_Werewolves.common',
     'Vampires_vs_Werewolves.user_messages',
+
+    'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -44,6 +48,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Vampires_vs_Werewolves.urls'
+
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 TEMPLATES = [
     {

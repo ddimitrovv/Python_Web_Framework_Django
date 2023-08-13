@@ -15,26 +15,20 @@
                         <!-- Button to Send Message -->
                         <button type="submit" class="item-button">
                             Send
-{#                            <i class="fa-solid fa-paper-plane"></i>#}
                             <i class="fa-solid fa-envelope"></i>
                         </button>
                     </form>
                 {% for message in messages %}
                     <div class="message {% if message.sender == current_user %} sent {% else %} received {% endif %}">
-                        <p>
+                        <p id="{{ message.id }}">
                             {% if message.sender == current_user %}
-{#                                To: <a href="{% url 'details user' message.recipient.username %}">#}
-{#                                        {{ message.recipient }}#}
-{#                                    </a>#}
-                                     {% if message.sender == current_user and message.read %}
-                                         <i class="fa-solid fa-circle-check"></i>
-                                     {% else %}
-                                         <i class="fa-regular fa-circle-check"></i>
-                                     {% endif %}
-                            {% else %}
-{#                                From: <a href="{% url 'details user' message.sender.username %}">#}
-{#                                        {{ message.sender }}#}
-{#                                    </a>#}
+                                <a class="edit-message" href="#"><i class="fa-solid fa-pencil"></i></a>
+                                <a class="delete-message" href="#"><i class="fa-solid fa-trash"></i></a>
+                                 {% if message.read %}
+                                     <i class="fa-solid fa-circle-check"></i>
+                                 {% else %}
+                                     <i class="fa-regular fa-circle-check"></i>
+                                 {% endif %}
                             {% endif %}
                         </p>
                         <p class="message-content">{{ message.content }}</p>
@@ -66,6 +60,7 @@
             </div>
         </div>
     </div>
-    <script>{% static 'js/scroll-top.js' %}</script>
+    <script src="{% static 'js/scroll-top.js' %}"></script>
+    <script src="{% static 'js/editMessage.js' %}"></script>
 
 {% endblock %}
