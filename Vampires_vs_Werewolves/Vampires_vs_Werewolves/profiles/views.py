@@ -91,12 +91,20 @@ class ChooseOpponentView(LoginRequiredMixin, View):
             active_work = Work.objects.filter(user=current_user, end_time__isnull=True).first()
             return redirect('work status', active_work.pk)  # Redirect to the work page
 
+        # Check if the user is currently hiding
         if current_user.userprofile.is_hiding:
             hide = UserHiding.objects.filter(user=current_user).first()
             return redirect('stop hiding', hide.pk)
 
-        if user_profile.is_hiding:
-            ...
+        # Check if user health is less than 15% of it's max health
+        if user_profile.health < user_profile.max_health_for_level * 0.15:
+            context = {
+                'current_user': current_user,
+                'user_profile': user_profile,
+                'can_fight': False,
+            }
+
+            return render(request, self.template_name, context)
 
         # Get users by hero type
         hero_type_ = 'Vampire' if current_user.hero_type == 'Werewolf' else 'Werewolf'
@@ -118,6 +126,7 @@ class ChooseOpponentView(LoginRequiredMixin, View):
             'current_user': current_user,
             'user_profile': user_profile,
             'opponents': opponents_page,
+            'can_fight': True
         }
 
         return render(request, self.template_name, context)

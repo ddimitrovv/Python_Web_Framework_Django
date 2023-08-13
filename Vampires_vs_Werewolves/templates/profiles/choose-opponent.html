@@ -3,7 +3,10 @@
 {% block content %}
 
     <div class="heroes-card-wrapper">
-    {% for opponent in opponents %}
+    {% if not can_fight %}
+        <p>Your energy is too low! Better come later!</p>
+    {% else %}
+        {% for opponent in opponents %}
         <div class="heroes-card">
             <div class="profile-picture-opponent">
                 {% if opponent.user.hero_type == 'Vampire' %}
@@ -29,6 +32,7 @@
             </ul>
         </div>
         {% endfor %}
+    {% endif %}
     </div>
 
 
