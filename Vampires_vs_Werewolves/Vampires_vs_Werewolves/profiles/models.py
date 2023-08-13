@@ -23,9 +23,11 @@ def get_max_hp_for_current_level(hero):
     base_hp = 250
     counter = 1
     while counter <= level:
-        max_hp += base_hp * multiplier
+        max_hp = base_hp * multiplier
         base_hp = max_hp
         counter += 1
+    if level == 1:
+        max_hp = base_hp
     return int(max_hp)
 
 
