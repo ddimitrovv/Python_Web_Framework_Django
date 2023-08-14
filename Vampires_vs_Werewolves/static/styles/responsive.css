@@ -15,6 +15,24 @@
     .item-details {
         width: 30%;
     }
+
+    .message .message-content {
+        font-size: 1.7rem;
+    }
+
+    .details-section {
+        flex-wrap: wrap;
+    }
+
+    .hero-card {
+        width: 272px;
+        height: 393px;
+        /*display: none;*/
+    }
+
+    .go-back-wrapper {
+        margin-bottom: 1rem;
+    }
 }
 
 
@@ -45,6 +63,34 @@
 
     .items img {
         height: 10rem;
+    }
+
+    .message .message-content {
+        font-size: 1.5rem;
+    }
+
+    .message time {
+        font-size: 0.5rem;
+    }
+
+    .sent time {
+        margin-bottom: 25px;
+    }
+
+    .user-details li {
+        font-size: 1.5rem;
+    }
+
+    .profile-upgrade td {
+        font-size: 1.4rem;
+    }
+
+    .profile-upgrade td .cost {
+        font-size: 0.6rem;
+    }
+
+    .user-items {
+        font-size: 1.4rem;
     }
 
 }
