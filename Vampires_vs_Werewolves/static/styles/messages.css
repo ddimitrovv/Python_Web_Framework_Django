@@ -27,6 +27,10 @@
     height: 75vh;
     display: flex;
     flex-direction: column-reverse;
+    box-shadow:
+        0 0 0.625rem 0.3125rem rgba(0, 0, 0, 0.5),
+        0 0 1.25rem 0.625rem rgba(128, 128, 128, 0.3),
+        0 0 1.875rem 0.9375rem rgba(192, 192, 192, 0.2);
 }
 
 /* Style the scrollbar track */
@@ -70,7 +74,6 @@
     bottom: -5px;
     left: 5px;
     padding: 0;
-    cursor: ;
 }
 
 .delete-message {
@@ -97,11 +100,16 @@
 
 .message.sent.form {
     border: none;
-    width: 40rem;
-	background-color: transparent;
+    width: calc(60% - 8px);
 	color: var(--light-skin);
-    margin: 0 0 5px 0;
+    margin: 0 0 2px 0;
     padding: 0;
+    position: fixed;
+    z-index: 1;
+}
+
+.message:first-of-type {
+    margin-bottom: 150px;
 }
 
 .message p {
@@ -119,6 +127,10 @@
     font-size: 2em;
     white-space: normal;
     width: 95%;
+}
+
+.all-messages {
+    width: 60%;
 }
 
 .all-messages span {
@@ -148,5 +160,11 @@
 }
 
 .message.sent.form textarea {
-    margin: 0 0 5px 0;
+    margin: 0 0 -2px 0;
+}
+
+.send-message {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }

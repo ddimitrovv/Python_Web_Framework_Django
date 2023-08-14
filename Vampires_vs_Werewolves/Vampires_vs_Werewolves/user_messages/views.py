@@ -5,7 +5,8 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, CreateView
 
-from rest_framework.generics import UpdateAPIView
+from rest_framework.generics import UpdateAPIView, DestroyAPIView
+from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
@@ -146,16 +147,45 @@ class EditMessageAPIView(UpdateAPIView):
         current_message_pk = self.kwargs.get('pk')
         current_message = self.queryset.filter(pk=current_message_pk).first()
         if current_message is None:
-            return Response({"error": "Message not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Message not found'}, status=status.HTTP_404_NOT_FOUND)
 
         serializer = self.get_serializer(current_message, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
         response_data = {
-            "updated_message": serializer.data,
+            'updated_message': serializer.data,
         }
 
         return Response(response_data, status=status.HTTP_200_OK)
 
 
+class DeleteMessageAPIView(DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, *args, **kwargs):
+        current_message_pk = self.kwargs.get('pk')
+        current_message = CustomMessage.objects.get(pk=current_message_pk)
+
+        if current_message is None:
+            response = Response(
+                {'error': 'Message not found'},
+                status=status.HTTP_404_NOT_FOUND,
+                content_type='application/json'
+            )
+            print(response)
+            return response
+
+        self.perform_destroy(current_message)
+        response = Response(
+            {'message': 'Message deleted successfully'},
+            status=status.HTTP_204_NO_CONTENT,
+            content_type='application/json'
+        )
+        print(response)
+        return response
+
+    def finalize_response(self, request, response, *args, **kwargs):
+        response = super().finalize_response(request, response, *args, **kwargs)
+        response['content-type'] = 'application/json'
+        return response

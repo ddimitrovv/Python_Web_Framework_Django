@@ -13,7 +13,7 @@
                         {{ form }}
                         {% csrf_token %}
                         <!-- Button to Send Message -->
-                        <button type="submit" class="item-button">
+                        <button type="submit" class="item-button send-message">
                             Send
                             <i class="fa-solid fa-envelope"></i>
                         </button>
@@ -62,5 +62,6 @@
     </div>
     <script src="{% static 'js/scroll-top.js' %}"></script>
     <script src="{% static 'js/editMessage.js' %}"></script>
+    <script src="{% static 'js/deleteMessage.js' %}"></script>
 
 {% endblock %}
