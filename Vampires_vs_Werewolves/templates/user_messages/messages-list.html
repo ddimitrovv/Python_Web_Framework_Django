@@ -1,10 +1,10 @@
 {% extends 'common/index.html' %}
 {% block content %}
 
-    <div class="messages-wrapper">
+    <div class="messages-wrapper messages-with-wrapper">
 
         <div class="all-messages">
-            <div class="messages">
+            <div class="messages messages-with">
                 {% for user_name, user_data in grouped_messages.items %}
                     <div class="message">
                         <p>Messages with:</p>

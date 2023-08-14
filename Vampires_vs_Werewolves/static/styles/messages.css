@@ -7,6 +7,12 @@
     height: 90%;
 }
 
+.messages-with {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .message {
     position: relative;
     display: flex;

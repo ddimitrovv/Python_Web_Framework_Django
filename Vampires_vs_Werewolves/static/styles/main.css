@@ -58,15 +58,6 @@ nav::after {
   background: linear-gradient(to right, var(--light-skin), black, var(--light-skin));
 }
 
-
-/*.home-buttons {*/
-/*    position: absolute;*/
-/*    top: 40%;*/
-/*    left: 50%;*/
-/*    transform: translate(-40%, -50%);*/
-/*    text-align: center;*/
-/*}*/
-
 .home-buttons {
     text-align: center;
     display: flex;

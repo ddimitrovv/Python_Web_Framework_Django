@@ -1,0 +1,50 @@
+@media screen and (max-width: 1050px) {
+
+    a {
+        font-size: 1.8rem !important;
+    }
+
+    .items-inner-wrapper h2 {
+        font-size: 1.8rem;
+    }
+
+    .items-inner-wrapper p {
+        font-size: 1.5rem;
+    }
+
+    .item-details {
+        width: 30%;
+    }
+}
+
+
+@media screen and (max-width: 900px) {
+
+    body {
+        overflow: scroll;
+        background-attachment: fixed;
+    }
+
+    .market-wrapper,
+    .market-wrapper-inner {
+        width: calc(50% - 20px);
+        height: auto;
+    }
+
+    a {
+        font-size: 1.5rem !important;
+    }
+
+    .items-inner-wrapper h2 {
+        font-size: 1.6rem;
+    }
+
+    .items-inner-wrapper p {
+        font-size: 0.8rem;
+    }
+
+    .items img {
+        height: 10rem;
+    }
+
+}
