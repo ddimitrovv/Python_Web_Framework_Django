@@ -7,36 +7,33 @@ from Vampires_vs_Werewolves.common.models import (Sword, Shield, Boots,
                                                   HealthPotion, PowerPotion, DefencePotion, SpeedPotion)
 
 
-def get_level_from_hp(hp, base_hp=250, multiplier=2.5):
+def get_level_from_xp(xp):
+    base_xp = 250
+    multiplier = 2.5
     level = 1
-    while hp >= base_hp:
-        hp -= base_hp
-        base_hp *= multiplier
+    while xp >= base_xp:
+        xp -= base_xp
+        base_xp *= multiplier
         level += 1
     return level
 
 
-def get_max_hp_for_current_level(hero):
+def get_max_xp_for_current_level(hero):
     level = hero.level
-    max_hp = 0
     multiplier = 2.5
-    base_hp = 250
-    counter = 1
-    while counter <= level:
-        max_hp = base_hp * multiplier
-        base_hp = max_hp
-        counter += 1
-    if level == 1:
-        max_hp = base_hp
-    return int(max_hp)
+    base_xp = 250
+    max_xp = base_xp * (multiplier ** (level - 1))
+    return int(max_xp)
 
 
 def get_max_health_for_current_level(hero):
     return int(get_health_from_level(hero.level))
 
 
-def get_health_from_level(level, base_hp=100, multiplier=2.5):
-    health = level * base_hp * multiplier
+def get_health_from_level(level):
+    base_xp = 100
+    multiplier = 2.5
+    health = level * base_xp * multiplier
     return health
 
 
@@ -240,7 +237,7 @@ class UserProfile(models.Model):
             current_winner_level = winner.level
             winner.gold += int(0.3 * loser.gold)  # Winner receives 30% of the loser's gold
             winner.xp += winner.level * 5  # Increase winner's HP
-            winner.level = get_level_from_hp(winner.xp)  # Set winner level
+            winner.level = get_level_from_xp(winner.xp)  # Set winner level
             if winner.level > current_winner_level:
                 winner.health = get_max_health_for_current_level(winner)
             loser.gold -= int(0.3 * loser.gold) if int(0.3 * loser.gold) >= 0 else 0
@@ -270,7 +267,7 @@ class UserProfile(models.Model):
         # Get max_health
         self.max_health_for_level = get_max_health_for_current_level(self)
         # Get max_xp
-        self.max_xp_for_level = get_max_hp_for_current_level(self)
+        self.max_xp_for_level = get_max_xp_for_current_level(self)
 
         super(UserProfile, self).save(*args, **kwargs)
 

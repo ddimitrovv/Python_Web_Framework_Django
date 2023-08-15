@@ -6,7 +6,6 @@ from django.views import View
 from django.views.generic import TemplateView, CreateView
 
 from rest_framework.generics import UpdateAPIView, DestroyAPIView
-from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status

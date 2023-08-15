@@ -1,7 +1,8 @@
 from django.contrib import admin
 
 from Vampires_vs_Werewolves.common.models import (Sword, Shield, Boots, Work,
-                                                  PowerPotion, DefencePotion, SpeedPotion, HealthPotion)
+                                                  PowerPotion, DefencePotion, SpeedPotion, HealthPotion, UserHiding,
+                                                  Attack)
 
 
 @admin.register(Sword)
@@ -50,3 +51,13 @@ class SpeedPotionAdmin(admin.ModelAdmin):
 @admin.register(HealthPotion)
 class HealthPotionAdmin(admin.ModelAdmin):
     list_display = ['type', 'price', 'hours_active', 'percent_bonus']
+
+
+@admin.register(UserHiding)
+class UserHidingAdmin(admin.ModelAdmin):
+    list_display = ['user', 'hidden_at', 'can_stop_hiding_at']
+
+
+@admin.register(Attack)
+class AttackAdmin(admin.ModelAdmin):
+    list_display = ['attacker', 'attacked', 'attacks']
