@@ -19,8 +19,8 @@ application = get_wsgi_application()
 
 
 # Your logic to initiate automatic healing goes here
-def initiate_automatic_healing(user_profile_ids):
-    for user_profile_id in user_profile_ids:
+def initiate_automatic_healing(user_ids):
+    for user_profile_id in user_ids:
         try:
             user_profile = UserProfile.objects.get(id=user_profile_id)
             max_health = get_max_health_for_current_level(user_profile)
@@ -37,4 +37,3 @@ def initiate_automatic_healing(user_profile_ids):
 
 user_profile_ids = [user.pk for user in CustomUser.objects.all()]  # UserProfile ids
 initiate_automatic_healing(user_profile_ids)
-
