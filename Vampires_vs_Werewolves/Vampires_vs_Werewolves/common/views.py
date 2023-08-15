@@ -93,7 +93,7 @@ class MarketplaceItemView(LoginRequiredMixin, TemplateView):
         if item_type in ['swords', 'shields', 'boots']:
             items = item_model.objects.all().order_by('required_level')
         else:
-            items = item_model.objects.all().order_by('price')
+            items = item_model.objects.all().order_by('hours_active', 'percent_bonus')
 
         paginator = Paginator(items, 3)
         page_number = self.request.GET.get('page')
