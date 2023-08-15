@@ -11,6 +11,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+}
+
+.messages-with .message:first-of-type {
+    margin-bottom: 1rem;
 }
 
 .message {

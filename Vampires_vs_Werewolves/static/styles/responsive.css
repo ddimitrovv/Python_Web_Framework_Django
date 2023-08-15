@@ -24,12 +24,6 @@
         flex-wrap: wrap;
     }
 
-    .hero-card {
-        width: 272px;
-        height: 393px;
-        /*display: none;*/
-    }
-
     .go-back-wrapper {
         margin-bottom: 1rem;
     }

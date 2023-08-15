@@ -111,7 +111,7 @@ class ChooseOpponentView(LoginRequiredMixin, View):
             Q(user__hero_type=opponent_type) &
             Q(level__range=(user_level - 5, user_level + 5)) &
             ~Q(user__userprofile__is_hiding=True)
-        ).order_by('?')
+        )
 
         paginator = Paginator(opponents, 3)
         page_number = request.GET.get('page')
