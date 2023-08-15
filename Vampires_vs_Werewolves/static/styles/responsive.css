@@ -88,3 +88,34 @@
     }
 
 }
+
+@media screen and (min-width: 1700px){
+    .user-details li {
+        font-size: 2.5rem;
+    }
+
+    .profile-upgrade td {
+        font-size: 2.5rem;
+    }
+
+    .profile-upgrade td.cost {
+        font-size: 1.6rem;
+    }
+
+    .user-items {
+        font-size: 2.5rem;
+    }
+
+    .hero-card {
+        width: 20rem;
+        margin-top: 1rem;
+    }
+
+    .profile-picture {
+        min-height: 25rem;
+    }
+
+    .user-items .item-button {
+        font-size: 2rem;
+    }
+}
