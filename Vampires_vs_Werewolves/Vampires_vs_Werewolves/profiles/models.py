@@ -7,17 +7,6 @@ from Vampires_vs_Werewolves.common.models import (Sword, Shield, Boots,
                                                   HealthPotion, PowerPotion, DefencePotion, SpeedPotion)
 
 
-def get_level_from_xp(xp):
-    base_xp = 250
-    multiplier = 2.5
-    level = 1
-    while xp >= base_xp:
-        xp -= base_xp
-        base_xp *= multiplier
-        level += 1
-    return level
-
-
 def get_max_xp_for_current_level(hero):
     level = hero.level
     multiplier = 2.5
@@ -234,13 +223,14 @@ class UserProfile(models.Model):
             loser = self if self_total_damage < opponent_total_damage else opponent
 
         if winner and loser:
-            current_winner_level = winner.level
             winner.gold += int(0.3 * loser.gold)  # Winner receives 30% of the loser's gold
             winner.xp += winner.level * 5  # Increase winner's HP
-            winner.level = get_level_from_xp(winner.xp)  # Set winner level
-            if winner.level > current_winner_level:
+            # Set winner level and max_xp
+            if winner.xp > winner.max_xp_for_level:
+                winner.level += 1
+                winner.max_xp_for_level = get_max_xp_for_current_level(winner)
                 winner.health = get_max_health_for_current_level(winner)
-            loser.gold -= int(0.3 * loser.gold) if int(0.3 * loser.gold) >= 0 else 0
+            loser.gold -= int(0.3 * loser.gold) if int(0.3 * loser.gold) > 0 else 0
             winner.health = max(0.0, winner.health)
             loser.health = max(0.0, loser.health)
             winner.wins += 1  # Increment wins for the winner
