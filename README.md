@@ -13,11 +13,11 @@
 
 
 <h2> Demo pictures: </h2>
-<img src="https://github.com/ddimitrovv/Python_Web_Framework_Django/tree/main/Vampires_vs_Werewolves/demo_images/Black-Widow" />
-<img src="https://github.com/ddimitrovv/Python_Web_Framework_Django/tree/main/Vampires_vs_Werewolves/demo_images/home-page" />
-<img src="https://github.com/ddimitrovv/Python_Web_Framework_Django/tree/main/Vampires_vs_Werewolves/demo_images/marketplace" />
-<img src="https://github.com/ddimitrovv/Python_Web_Framework_Django/tree/main/Vampires_vs_Werewolves/demo_images/messages" />
-<img src="https://github.com/ddimitrovv/Python_Web_Framework_Django/tree/main/Vampires_vs_Werewolves/demo_images/hide" />
-<img src="https://github.com/ddimitrovv/Python_Web_Framework_Django/tree/main/Vampires_vs_Werewolves/demo_images/work" />
-<img src="https://github.com/ddimitrovv/Python_Web_Framework_Django/tree/main/Vampires_vs_Werewolves/demo_images/inventory" />
+<img src="https://github.com/ddimitrovv/Python_Web_Framework_Django/tree/main/Vampires_vs_Werewolves/demo_images/Black-Widow.png" />
+<img src="https://github.com/ddimitrovv/Python_Web_Framework_Django/tree/main/Vampires_vs_Werewolves/demo_images/home-page.png" />
+<img src="https://github.com/ddimitrovv/Python_Web_Framework_Django/tree/main/Vampires_vs_Werewolves/demo_images/marketplace.png" />
+<img src="https://github.com/ddimitrovv/Python_Web_Framework_Django/tree/main/Vampires_vs_Werewolves/demo_images/messages.png" />
+<img src="https://github.com/ddimitrovv/Python_Web_Framework_Django/tree/main/Vampires_vs_Werewolves/demo_images/hide.png" />
+<img src="https://github.com/ddimitrovv/Python_Web_Framework_Django/tree/main/Vampires_vs_Werewolves/demo_images/work.png" />
+<img src="https://github.com/ddimitrovv/Python_Web_Framework_Django/tree/main/Vampires_vs_Werewolves/demo_images/inventory.png" />
 
