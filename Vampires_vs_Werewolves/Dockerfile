@@ -10,6 +10,7 @@ RUN pip install -r requirements.txt
 COPY manage.py /app/manage.py
 COPY nginx /app/nginx
 COPY media /app/media
+COPY custom /app/custom
 COPY static /app/static
 COPY static_root /app/static_root
 COPY templates /app/templates
