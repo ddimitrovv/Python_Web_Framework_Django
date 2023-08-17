@@ -29,7 +29,6 @@
     }
 }
 
-
 @media screen and (max-width: 900px) {
 
     body {
@@ -89,6 +88,12 @@
 
 }
 
+@media screen and (max-width: 650px){
+    .user-options i {
+        display: none;
+    }
+}
+
 @media screen and (min-width: 1700px){
     .user-details li {
         font-size: 2.5rem;
@@ -117,5 +122,9 @@
 
     .user-items .item-button {
         font-size: 2rem;
+    }
+
+    .ranking-player a {
+        font-size: 2.8rem;
     }
 }

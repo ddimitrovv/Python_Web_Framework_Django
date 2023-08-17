@@ -1,12 +1,13 @@
 window.addEventListener('DOMContentLoaded', () => {
     const deleteButtons = document.querySelectorAll('.fa-trash');
+    const currentPath = window.location.href.split('/')[0];
 
     deleteButtons.forEach((deleteButton) => {
         deleteButton.addEventListener('click', event => {
             event?.preventDefault();
             const currentDiv = event.target.parentElement.parentElement.parentElement;
             const messageId = event.target.parentElement.parentElement.id;
-            const BASE_URL = `http://127.0.0.1:8000/messages/delete-message/${messageId}/`;
+            const BASE_URL = `${currentPath}/messages/delete-message/${messageId}/`;
 
             const csrfToken = getCSRFToken();
 

@@ -70,6 +70,7 @@
 window.addEventListener('DOMContentLoaded', () => {
     const editButtons = document.querySelectorAll('.fa-pencil');
     const messageForm = document.querySelector('form');
+    const currentPath = window.location.href.split('/')[0];
 
     editButtons.forEach((editButton) => {
         editButton.addEventListener('click', event => {
@@ -87,7 +88,7 @@ window.addEventListener('DOMContentLoaded', () => {
             const sendButton = messageForm.querySelector('.item-button');
             sendButton.textContent = 'Edit message';
 
-            const BASE_URL = `http://127.0.0.1:8000/messages/edit-message/${messageId}/`;
+            const BASE_URL = `${currentPath}/messages/edit-message/${messageId}/`;
 
             const sendButtonClickHandler = (event) => {
                 event?.preventDefault();
