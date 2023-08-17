@@ -434,3 +434,18 @@ class ActivatePotionView(LoginRequiredMixin, View):
         user_profile.save()
 
         return redirect('details user', current_user.username)
+
+
+class RankingView(LoginRequiredMixin, TemplateView):
+    template_name = 'common/ranking.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Retrieve player profiles ordered by
+        all_players = UserProfile.objects.order_by('-xp')
+        context = {
+            'players': all_players,
+            'current_user': self.request.user
+        }
+
+        return context

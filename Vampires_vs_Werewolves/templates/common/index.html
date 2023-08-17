@@ -26,8 +26,15 @@
     <header>
         <nav>
             <div class="user-options">
+                <p>
+                    <a class="logout-button" href="#">
+                         <i class="fa-solid fa-ban"></i>
+                         Delete Profile
+                    </a>
+                </p>
                 <h1 class="hello-user">
                     <a href="{% url 'details user' current_user.username %}">
+                        <i class="fa-solid fa-user"></i>
                         {{ current_user }}
                     </a>
                 </h1>
@@ -36,6 +43,12 @@
                         Home
                     </a>
                 </h1>
+                <p>
+                    <a class="logout-button" href="#">
+                         Ranking
+                         <i class="fa-solid fa-ranking-star"></i>
+                    </a>
+                </p>
                 <p>
                     <a class="logout-button" href="{% url 'logout user' %}">
                          Logout
