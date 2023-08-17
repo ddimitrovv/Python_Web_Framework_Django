@@ -24,6 +24,7 @@ djangorestframework==3.14.0
 dulwich==0.21.5
 filelock==3.12.2
 flower==2.0.0
+gunicorn==21.2.0
 html5lib==1.1
 humanize==4.7.0
 idna==3.4
@@ -54,6 +55,7 @@ pycparser==2.21
 pyproject_hooks==1.0.0
 pyrsistent==0.19.3
 python-dateutil==2.8.2
+python-dotenv==1.0.0
 pytz==2023.3
 rapidfuzz==2.15.1
 redis==4.6.0
