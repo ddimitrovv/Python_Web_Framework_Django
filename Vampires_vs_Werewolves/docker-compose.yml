@@ -52,6 +52,8 @@ services:
   # Celery worker service
   celery-worker:
     image: dimitrovv/vampires-vs-werewolves
+    env_file:
+      - .env
     command: sh -c "export DJANGO_SETTINGS_MODULE=Vampires_vs_Werewolves.settings && celery -A Vampires_vs_Werewolves worker --loglevel=info"
     depends_on:
       - web
