@@ -9,6 +9,7 @@ from django.views.generic import TemplateView, CreateView
 from django.shortcuts import render, redirect
 from django.views import View
 from django.utils import timezone
+from django.db.models import F
 
 from Vampires_vs_Werewolves.common.forms import WorkForm
 from Vampires_vs_Werewolves.common.models import (Work, HealthPotion, PowerPotion, DefencePotion, SpeedPotion,
@@ -26,7 +27,6 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         current_user = self.request.user
-        print(current_user)
         if current_user.is_authenticated:
             received_messages = CustomMessage.objects.filter(recipient=current_user).order_by('-timestamp')
             has_unread_messages = any(not message.read for message in received_messages)
@@ -438,14 +438,25 @@ class ActivatePotionView(LoginRequiredMixin, View):
 
 class RankingView(LoginRequiredMixin, TemplateView):
     template_name = 'common/ranking.html'
+    paginate_by = 10  # Number of players per page
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Retrieve player profiles ordered by
-        all_players = UserProfile.objects.order_by('-xp')
-        context = {
-            'players': all_players,
+
+        # Calculate the difference between wins and losses
+        all_players = UserProfile.objects.annotate(win_loss_diff=F('wins') - F('losses'))
+
+        # Order players by the calculated win-loss difference and then by level
+        all_players = all_players.order_by('-win_loss_diff', '-level')
+
+        # Paginate the players
+        paginator = Paginator(all_players, self.paginate_by)
+        page_number = self.request.GET.get('page')
+        page = paginator.get_page(page_number)
+
+        context.update({
+            'players': page,
             'current_user': self.request.user
-        }
+        })
 
         return context

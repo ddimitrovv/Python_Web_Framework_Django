@@ -13,16 +13,6 @@
     width: 10em;
 }
 
-.user-options {
-    display: flex;
-    align-content: center;
-    justify-content: space-between;
-}
-
-.user-options p {
-    margin-right: 2%;
-}
-
 .fa-right-from-bracket {
     color: red;
 }

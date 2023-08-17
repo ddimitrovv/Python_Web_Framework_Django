@@ -1,6 +1,59 @@
 {% extends 'common/index.html' %}
 {% block content %}
 
+    <section class="ranking">
+        <ol role="list">
+            {% for player in players %}
+                <li class="ranking-player">
+                    <span class="rank">{{ players.start_index|add:forloop.counter0 }} </span>
+                    <a href="{% url 'details user' player.user.username %}">
+                        {{ player.user.username }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ol>
+    </section>
 
+{#    <div class="pagination">#}
+{#        <span class="step-links">#}
+{#            {% if players.has_previous %}#}
+{#                <a href="?page=1">&laquo; first</a>#}
+{#                <a href="?page={{ players.previous_page_number }}">previous</a>#}
+{#            {% endif %}#}
+{##}
+{#            <span class="current">#}
+{#                Page {{ players.number }} of {{ players.paginator.num_pages }}.#}
+{#            </span>#}
+{##}
+{#            {% if players.has_next %}#}
+{#                <a href="?page={{ players.next_page_number }}">next</a>#}
+{#                <a href="?page={{ players.paginator.num_pages }}">last &raquo;</a>#}
+{#            {% endif %}#}
+{#        </span>#}
+{#    </div>#}
+
+        <div class="pagination">
+        <div>
+            {% if players.has_previous %}
+                <a href="?page={{ players.previous_page_number }}">Previous</a>
+            {% else %}
+                <a></a>
+        {% endif %}
+        </div>
+
+        <div>
+            {% if players.paginator.num_pages > 1 %}
+                <span class="current-page">{{ players.number }}/{{ players.paginator.num_pages }}</span>
+            {% endif %}
+        </div>
+
+        <div>
+            {% if players.has_next %}
+                <a href="?page={{ players.next_page_number }}">Next</a>
+            {% else %}
+                <a></a>
+            {% endif %}
+        </div>
+    </div>
 
 {% endblock %}

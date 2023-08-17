@@ -27,6 +27,8 @@ body {
     text-shadow: 1px 1px 2px var(--lipstick);
     letter-spacing: 0.1em;
     height: 100vh;
+    padding-left: 4px;
+    padding-right: 4px;
 }
 
 body::before {
@@ -43,9 +45,8 @@ body::before {
 
 nav {
     position: relative;
-    height: 3rem;
+    height: fit-content;
     margin-top: 0.5rem;
-
 }
 
 nav::after {
@@ -56,6 +57,14 @@ nav::after {
   width: 100%;
   height: 0.25rem;
   background: linear-gradient(to right, var(--light-skin), black, var(--light-skin));
+}
+
+.user-options {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .home-buttons {
@@ -90,7 +99,6 @@ nav::after {
 }
 
 .hello-user {
-    margin-left: 2%;
     color: red;
 }
 
@@ -245,4 +253,19 @@ a > .fa-envelope {
     color: var(--light-skin);
     font-size: 2rem;
     top: 5px;
+}
+
+.ranking {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.ranking-player a {
+    text-decoration: none;
+    font-size: 2.0rem;
+    color: var(--light-skin);
 }
