@@ -1,0 +1,31 @@
+.work-status-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 70%;
+    color: red;
+}
+
+.work-status-wrapper h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.work-status-wrapper p {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.work-status-wrapper a {
+    color: var(--light-skin);
+    border: 2px solid black;
+    padding: 4px 12px;
+    background-color: black;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 0 0 4px var(--light-skin);
+    margin-top: 1.5rem;
+    font-size: 1.25rem;
+}

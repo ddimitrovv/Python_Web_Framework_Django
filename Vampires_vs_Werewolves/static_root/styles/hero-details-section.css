@@ -1,0 +1,125 @@
+.details-section {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 4rem;
+    height: 70%;
+}
+
+.cost {
+    font-size: 20px;
+}
+
+.user-details {
+    width: 10em;
+}
+
+.user-options {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+}
+
+.user-options p {
+    margin-right: 2%;
+}
+
+.fa-right-from-bracket {
+    color: red;
+}
+
+.profile-details {
+    left: 20%;
+    color: red;
+    font-size: 30px;
+}
+
+.profile-details ul {
+    display: flex;
+    width: auto;
+}
+
+.profile-details ul li {
+    margin-right: 0.7em;
+}
+
+.profile-upgrade {
+    left: 45%;
+    color: red;
+    font-size: 30px;
+}
+
+.profile-upgrade ul {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-upgrade table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.profile-upgrade th,
+.profile-upgrade td {
+    padding: 10px;
+    text-align: left;
+}
+
+td:first-child {
+    padding-left: 0;
+}
+
+.profile-upgrade .fa-solid.fa-square-plus {
+    color: red;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    gap: 4em;
+}
+
+.upgrade {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.user-items {
+    display: flex;
+    flex-direction: column;
+    color: red;
+    font-size: 1.5rem;
+    width: 100%;
+    gap: 1rem;
+}
+
+.item {
+    display: flex;
+    flex-basis: 33.33%;
+    flex-grow: 1;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item p {
+    flex-basis: 33.33%;
+    flex-grow: 1;
+}
+
+.item img {
+    max-width: 140px;
+    max-height: 90px;
+}
+
+.item-button {
+    color: red;
+    background-color: black;
+    padding: 0 1rem;
+}
+
+.item-button:hover {
+    cursor: pointer;
+}

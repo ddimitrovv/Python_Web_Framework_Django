@@ -1,0 +1,67 @@
+/* Common styles for carousel container and slides */
+.carousel-container {
+    position: relative;
+    font-size: 1.5rem;
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+    flex: 0 0 100%;
+    background: url("../../static/pictures/background2.jpeg") no-repeat;
+    background-size: cover;
+    color: var(--light-skin);
+    height: 55rem;
+}
+
+/* Styles for slide content */
+.description {
+    padding: 20px;
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 3%;
+}
+
+/* Optional: hide overflow in slide content */
+.slide .description, .slide .rules {
+    overflow-y: hidden;
+}
+
+.hidden {
+    display: none;
+}
+
+.carousel-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+/* Responsive styles using media queries */
+@media screen and (max-width: 1500px) {
+    .slide {
+        height: 30rem;
+    }
+    .description {
+        margin-top: 1%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .description {
+        font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .description {
+        font-size: 1rem;
+    }
+}
