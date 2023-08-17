@@ -11,4 +11,4 @@
   <li>Celery, Redis</li>
 </ul>
 
-
+<img src="https://github.com/ddimitrovv/Python_Web_Framework_Django/blob/main/Vampires_vs_Werewolves/demo_images/Black-Widow.png" />
