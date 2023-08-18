@@ -67,6 +67,11 @@ nav::after {
     flex-wrap: wrap;
 }
 
+.user-options > * {
+    flex: 1; /* Equal width for all child elements */
+    text-align: center; /* Center the content within each link */
+}
+
 .home-buttons {
     text-align: center;
     display: flex;
@@ -294,4 +299,53 @@ a > .fa-envelope {
 .delete-user-buttons button a {
     text-decoration: none;
     color: red;
+}
+
+/* Dropdown Button */
+.menu-button {
+    width: 25%;
+    background-color: transparent;
+    color: red;
+    font-size: 2rem;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.secondary-nav {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #1b1f24;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px #131518;
+    z-index: 1;
+    width: 150px;
+    text-align: left;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: red;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.2s ease;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #171a1e;
+}
+
+/* Show the dropdown menu */
+.show-dropdown .dropdown-content {
+    display: block;
 }

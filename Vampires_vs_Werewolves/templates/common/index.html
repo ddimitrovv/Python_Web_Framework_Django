@@ -24,7 +24,7 @@
     {% include 'common/landing-page.html' %}
     {% else %}
     <header>
-        <nav>
+        <nav class="main-nav">
             <div class="user-options">
                 <p>
                     <a class="logout-button" href="{% url 'delete user options' current_user.username %}">
@@ -57,6 +57,27 @@
                 </p>
             </div>
         </nav>
+        <nav class="secondary-nav hidden">
+            <button onclick="toggleDropdown()" class="menu-button">Menu</button>
+            <div id="dropdownContent" class="dropdown-content">
+                <a href="{% url 'details user' current_user.username %}">
+                    <i class="fa-solid fa-user"></i> {{ current_user }}
+                </a>
+                <a href="{% url 'home' %}">
+                    <i class="fa-solid fa-home"></i> Home
+                </a>
+                <a href="{% url 'ranking' %}">
+                    <i class="fa-solid fa-ranking-star"></i> Ranking
+                </a>
+                <a href="{% url 'logout user' %}">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </a>
+                <a class="logout-button" href="{% url 'delete user options' current_user.username %}">
+                     <i class="fa-solid fa-ban"></i> Delete Profile
+                </a>
+            </div>
+        </nav>
+
     </header>
     {% endif %}
 
@@ -107,5 +128,6 @@
 
         {% endif %}
     {% endblock %}
+    <script src="{% static 'js/menu-navbar.js' %}"></script>
 </body>
 </html>
