@@ -27,7 +27,7 @@
         <nav>
             <div class="user-options">
                 <p>
-                    <a class="logout-button" href="#">
+                    <a class="logout-button" href="{% url 'delete user options' current_user.username %}">
                          <i class="fa-solid fa-ban"></i>
                          Delete Profile
                     </a>

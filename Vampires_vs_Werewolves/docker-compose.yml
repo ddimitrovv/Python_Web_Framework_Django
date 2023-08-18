@@ -57,6 +57,13 @@ services:
     command: sh -c "export DJANGO_SETTINGS_MODULE=Vampires_vs_Werewolves.settings && celery -A Vampires_vs_Werewolves worker --loglevel=info"
     depends_on:
       - web
+  celery-beat:
+    image: dimitrovv/vampires-vs-werewolves
+    command: celery -A Vampires_vs_Werewolves beat -l info
+    env_file:
+      - .env
+    depends_on:
+      - web
 
 volumes:
   redis-data:

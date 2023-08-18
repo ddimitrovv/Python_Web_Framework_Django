@@ -187,3 +187,17 @@ def fight_view(request, pk):
     }
 
     return render(request, 'profiles/fight-details.html', context)
+
+
+@login_required
+def delete_user_options(request, username):
+    if request.user.username == username:
+        return render(request, 'profiles/delete-profile.html', {'current_user': request.user})
+    return redirect('home')
+
+
+@login_required
+def delete_user(request, username):
+    if username == request.user.username:
+        request.user.delete()
+    return redirect('home')
