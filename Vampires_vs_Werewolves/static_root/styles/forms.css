@@ -1,3 +1,5 @@
+/* Default styles */
+
 fieldset {
   margin: 1em auto;
   padding: 2em;
@@ -8,7 +10,7 @@ fieldset {
   box-shadow: 0 2px 2px #131518;
 }
 
-fieldset legend{
+fieldset legend {
   font-weight: 700;
   font-size: 1.8em;
   text-transform: uppercase;
@@ -16,7 +18,6 @@ fieldset legend{
   padding: 0.5em;
   color: red;
   background: #171a1e;
-  -o-border-image: linear-gradient(180deg, rgba(255, 255, 255, 0) 50%, #2d333b 50%) 1 round;
   border-width: 1px;
   border-style: solid;
   display: block;
@@ -33,7 +34,10 @@ fieldset h3 {
   margin-top: 1rem;
 }
 
-input, input + label > i, textarea, select {
+input,
+input + label > i,
+textarea,
+select {
   border-radius: 3px;
   box-shadow: none;
   border: 1px solid #384049;
@@ -44,28 +48,44 @@ input, input + label > i, textarea, select {
   transition: all 0.3s ease;
 }
 
-input[type=text], input[type=number], input[type=url], textarea, select {
+input[type=text],
+input[type=number],
+input[type=url],
+textarea,
+select {
   font-size: 1.2em;
   line-height: 1;
   padding: 0.3em 0.4em;
   margin: 0 0.5em 1em 0;
 }
 
-input[type=text]::-webkit-input-placeholder, input[type=number]::-webkit-input-placeholder, textarea::-webkit-input-placeholder, input[type=url]::-webkit-input-placeholder {
+/* Placeholder styles */
+input[type=text]::-webkit-input-placeholder,
+input[type=number]::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder,
+input[type=url]::-webkit-input-placeholder {
   color: #343b44;
   line-height: 1.2;
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-option{
-  color: red
+
+option {
+  color: red;
 }
 
-input[type=text]:hover, textarea, select, input[type=url]:hover {
+/* Hover and Focus styles */
+input[type=text]:hover,
+textarea,
+select,
+input[type=url]:hover {
   border-color: #4e5966;
 }
 
-input[type=text]:focus, input[type=number]:focus, textarea:focus, input[type=url]:focus {
+input[type=text]:focus,
+input[type=number]:focus,
+textarea:focus,
+input[type=url]:focus {
   outline: none;
   border-color: red;
 }
@@ -77,21 +97,24 @@ textarea {
   resize: none;
 }
 
-.add-album, .edit-album, .delete-album, .delete-profile {
-	width: 150px;
-	height: 50px;
-	cursor: pointer;
-	border: none;
+.add-album,
+.edit-album,
+.delete-album,
+.delete-profile {
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  border: none;
   border-radius: 10px;
-	display: inline;
-	align-items: center;
-	justify-content: center;
-	background-color: #1b2845;
-	background-image: linear-gradient(315deg, #45a29e 0%, #0d324d 74%);
-	background-size: 200% 100%;
-	background-position: left;
-	background-repeat: no-repeat;
-	transition: 500ms;
+  display: inline;
+  align-items: center;
+  justify-content: center;
+  background-color: #1b2845;
+  background-image: linear-gradient(315deg, #45a29e 0%, #0d324d 74%);
+  background-size: 200% 100%;
+  background-position: left;
+  background-repeat: no-repeat;
+  transition: 500ms;
   color: white;
   font-family: "Lato", serif;
   font-size: 20px;
@@ -99,7 +122,8 @@ textarea {
   margin-top: 20px;
 }
 
-.createPage, .editPage {
+.createPage,
+.editPage {
   font-family: "Lato", serif;
   font-size: 16px;
   color: #aab2bd;
@@ -121,7 +145,8 @@ input::-webkit-inner-spin-button {
 
 textarea::-webkit-scrollbar {
   width: 12px;
-  background-color: black; }
+  background-color: black;
+}
 
 textarea::-webkit-scrollbar-thumb {
   border-radius: 10px;
@@ -129,9 +154,9 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 button.register {
-    background: red;
+  background: red;
 }
 
 label {
-    color: red;
+  color: red;
 }
