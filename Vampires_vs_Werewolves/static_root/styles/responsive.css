@@ -58,6 +58,10 @@
         height: 10rem;
     }
 
+    .messages-with .message {
+        width: 80%;
+    }
+
     .message .message-content {
         font-size: 1.5rem;
     }
