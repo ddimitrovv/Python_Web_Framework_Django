@@ -59,7 +59,7 @@ services:
       - web
   celery-beat:
     image: dimitrovv/vampires-vs-werewolves
-    command: celery -A Vampires_vs_Werewolves beat -l info
+    command: sh -c "export DJANGO_SETTINGS_MODULE=Vampires_vs_Werewolves.settings && celery -A Vampires_vs_Werewolves beat -l info"
     env_file:
       - .env
     depends_on:
