@@ -45,22 +45,30 @@ def remove_bonus(user_profile_id, field_to_update):
     return f'Removed {field_to_update} for {user_profile}.'
 
 
+# @shared_task
+# def reset_attack_counts():
+#     # Reset user attacks to other user every day
+#     # Get the current date and time
+#     now = datetime.now()
+#     # Calculate the start of the next day
+#     next_day_start = now.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1)
+#     # Reset attack counts for all users
+#     Attack.objects.all().update(attacks=0)
+#     # Calculate the time difference in seconds
+#     seconds_until_next_day = (next_day_start - now).total_seconds()
+#     # Calculate remaining time in hours and minutes
+#     hours_until_next_day = seconds_until_next_day // 3600
+#     minutes_until_next_day = (seconds_until_next_day % 3600) // 60
+#     # Schedule the task again for the next day
+#     reset_attack_counts.apply_async(countdown=seconds_until_next_day)
+#
+#     return (f'All attack counters are reset successfully! Next reset in'
+#             f' {hours_until_next_day:.0f} hours: {minutes_until_next_day:.0f} minutes')
+
+
 @shared_task
 def reset_attack_counts():
-    # Reset user attacks to other user every day
-    # Get the current date and time
-    now = datetime.now()
-    # Calculate the start of the next day
-    next_day_start = now.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1)
     # Reset attack counts for all users
     Attack.objects.all().update(attacks=0)
-    # Calculate the time difference in seconds
-    seconds_until_next_day = (next_day_start - now).total_seconds()
-    # Calculate remaining time in hours and minutes
-    hours_until_next_day = seconds_until_next_day // 3600
-    minutes_until_next_day = (seconds_until_next_day % 3600) // 60
-    # Schedule the task again for the next day
-    reset_attack_counts.apply_async(countdown=seconds_until_next_day)
 
-    return (f'All attack counters are reset successfully! Next reset in'
-            f' {hours_until_next_day:.0f} hours: {minutes_until_next_day:.0f} minutes')
+    return 'All attack counters are reset successfully!'
