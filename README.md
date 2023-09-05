@@ -1,5 +1,5 @@
 ## Project for Python Web Framework Exam
-<h3>You can see my project <a href="http://ec2-16-171-181-110.eu-north-1.compute.amazonaws.com/">here</a></h3>
+<h3>You can see my project <a href="http://ec2-16-171-181-110.eu-north-1.compute.amazonaws.com/" target="_blank">here</a></h3>
 
 
 <h2> Technologies Used </h2>
