@@ -5,25 +5,7 @@ from django.core.validators import MinValueValidator
 
 from Vampires_vs_Werewolves.common.models import (Sword, Shield, Boots,
                                                   HealthPotion, PowerPotion, DefencePotion, SpeedPotion)
-
-
-def get_max_xp_for_current_level(hero):
-    level = hero.level
-    multiplier = 2.5
-    base_xp = 250
-    max_xp = base_xp * (multiplier ** (level - 1))
-    return int(max_xp)
-
-
-def get_max_health_for_current_level(hero):
-    return int(get_health_from_level(hero.level))
-
-
-def get_health_from_level(level):
-    base_xp = 100
-    multiplier = 2.5
-    health = level * base_xp * multiplier
-    return health
+from custom.custom_functions import get_max_xp_for_current_level, get_max_health_for_current_level, HeroTypes, Gender
 
 
 class CustomUserManager(BaseUserManager):
@@ -45,11 +27,6 @@ class CustomUserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
 
         return self.create_user(username, password, **extra_fields)
-
-
-class HeroTypes(models.TextChoices):
-    Vampire = 'Vampire',
-    Werewolf = 'Werewolf'
 
 
 class CustomUser(PermissionsMixin, AbstractBaseUser):
@@ -89,11 +66,6 @@ class CustomUser(PermissionsMixin, AbstractBaseUser):
 
     def __str__(self):
         return self.username
-
-
-class Gender(models.TextChoices):
-    FEMALE = 'Female', 'Female'
-    MALE = 'Male', 'Male'
 
 
 class UserProfile(models.Model):
